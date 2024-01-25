@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Form, Button, Card, FloatingLabel } from 'react-bootstrap'
 import axios from 'axios';
@@ -18,12 +18,16 @@ import apiRoutes from '../api/route.js'
     .min(8, 'Password should be of minimum 8 characters length')
     .required('Password is required'),
 }); */
-const chatImg = require('../../src/images/chat.gif');
+const chatImg = require('../assets/images/chat.gif');
 
 const Login = () => {
   const authHook = useAuth();
   const navigate = useNavigate();
   const [isNotAuth, setIsNotAuth] = useState(false);
+  const inputRef = useRef()
+  useEffect(() => {
+    inputRef.current.focus();
+  }, []);
   const formik = useFormik({
     initialValues: {
       username: '',
@@ -75,6 +79,7 @@ const Login = () => {
                         onChange={formik.handleChange}
                         value={formik.values.username}
                         isInvalid={isNotAuth}
+                        ref={inputRef}
                       />
                     </Form.Group>
                     <Form.Group className='mb-4'>

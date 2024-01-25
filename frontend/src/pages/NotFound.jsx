@@ -1,7 +1,7 @@
 import React from "react";
 import { Form, Button, Card, FloatingLabel } from 'react-bootstrap'
 
-const notFoundImg = require('../../src/images/notfound.gif');
+const notFoundImg = require('../assets/images/notfound.gif');
 
 const NotFound = () => {
   return (
