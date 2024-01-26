@@ -1,12 +1,14 @@
 import { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Form, Button, Card, FloatingLabel } from 'react-bootstrap'
+import {
+  Form, Button, Card,
+} from 'react-bootstrap';
 import axios from 'axios';
-//import * as yup from "yup";
+// import * as yup from "yup";
 import { useFormik } from 'formik';
 import useAuth from '../hooks/index.js';
-import pageRoutes from './route.jsx'
-import apiRoutes from '../api/route.js'
+import pageRoutes from './route.jsx';
+import apiRoutes from '../api/route.js';
 
 /* const validationSchema = yup.object({
   email: yup
@@ -24,7 +26,7 @@ const Login = () => {
   const authHook = useAuth();
   const navigate = useNavigate();
   const [isNotAuth, setIsNotAuth] = useState(false);
-  const inputRef = useRef()
+  const inputRef = useRef();
   useEffect(() => {
     inputRef.current.focus();
   }, []);
@@ -43,16 +45,13 @@ const Login = () => {
         navigate(pageRoutes.home);
       } catch (err) {
         formik.setSubmitting(false);
-        console.log(err.isAxiosError && err.response.status === 401)
+        console.log(err.isAxiosError && err.response.status === 401);
         if (err.isAxiosError && err.response.status === 401) {
           setIsNotAuth(true);
-          return;
         }
       }
     },
   });
-
-
 
   return (
     <div className="d-flex flex-column h-100">
@@ -67,10 +66,10 @@ const Login = () => {
                 <Form onSubmit={formik.handleSubmit} className="col-12 col-md-6 mt-3 ">
                   <h1 className="text-center mb-2">Войти</h1>
                   <fieldset>
-                    <Form.Group className='mb-4'>
-                      <Form.Label htmlFor="username"></Form.Label>
+                    <Form.Group className="mb-4">
+                      <Form.Label htmlFor="username" />
                       <Form.Control
-                        placeholder='Ваш ник'
+                        placeholder="Ваш ник"
                         required
                         autoComplete="username"
                         id="username"
@@ -82,12 +81,12 @@ const Login = () => {
                         ref={inputRef}
                       />
                     </Form.Group>
-                    <Form.Group className='mb-4'>
-                      <Form.Label htmlFor="password"></Form.Label>
+                    <Form.Group className="mb-4">
+                      <Form.Label htmlFor="password" />
                       <Form.Control
                         required
                         autoComplete="current-password"
-                        placeholder='Пароль'
+                        placeholder="Пароль"
                         id="password"
                         name="password"
                         type="password"
