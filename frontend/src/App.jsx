@@ -1,7 +1,11 @@
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap';
-import { useEffect, useState } from 'react';
-import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
+import { useState } from 'react';
+import {
+  BrowserRouter, Route, Routes, Navigate,
+} from 'react-router-dom';
+import { Provider } from 'react-redux';
+import store from './store/index.js';
 import Login from './pages/Login.jsx';
 import Home from './pages/Home.jsx';
 import NotFound from './pages/NotFound.jsx';
@@ -19,12 +23,12 @@ const AuthProvider = ({ children }) => {
   };
 
   return (
+    // eslint-disable-next-line react/jsx-no-constructed-context-values
     <AutorizeContext.Provider value={{ loggedIn, logIn, logOut }}>
       {children}
     </AutorizeContext.Provider>
   );
 };
-
 
 const PrivateRoute = ({ children }) => {
   const auth = useAuth();
@@ -34,24 +38,25 @@ const PrivateRoute = ({ children }) => {
   );
 };
 
-const App = () => {
-
-  
-  return (
+const App = () => (
+  <Provider store={store}>
     <AuthProvider>
       <BrowserRouter>
         <Routes>
           <Route path={ROUTES.login} element={<Login />} />
           <Route path={ROUTES.notFound} element={<NotFound />} />
-          <Route path={ROUTES.home} element={(
-            <PrivateRoute>
-              <Home />
-            </PrivateRoute>
-          )} />
+          <Route
+            path={ROUTES.home}
+            element={(
+              <PrivateRoute>
+                <Home />
+              </PrivateRoute>
+            )}
+          />
         </Routes>
       </BrowserRouter>
     </AuthProvider>
-  );
-}
+  </Provider>
+);
 
 export default App;

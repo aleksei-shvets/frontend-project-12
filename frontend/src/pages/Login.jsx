@@ -39,13 +39,11 @@ const Login = () => {
       setIsNotAuth(false);
       try {
         const response = await axios.post(apiRoutes.loginPath(), values);
-        console.log(response);
         localStorage.setItem('userToken', JSON.stringify(response.data));
         authHook.logIn();
         navigate(pageRoutes.home);
       } catch (err) {
         formik.setSubmitting(false);
-        console.log(err.isAxiosError && err.response.status === 401);
         if (err.isAxiosError && err.response.status === 401) {
           setIsNotAuth(true);
         }

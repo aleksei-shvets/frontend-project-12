@@ -1,28 +1,36 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+// import axios from 'axios';
+import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 
-import ROUTES from './route.jsx';
+/* import ROUTES from './route.jsx';
 import useAuth from '../hooks/index.js';
-
-const getAuthHeader = () => {
-  const userToken = JSON.parse(localStorage.getItem('userToken'));
-
-  if (userToken && userToken.token) {
-    return { Authorization: `Bearer ${userToken.token}` };
-  }
-
-  return {};
-};
+import store from '../store/index.js';
+import apiRoutes from '../api/route.js'; */
+import getAuthHeader from '../utils/getAuthHeader.js';
+import { useGetChannelsQuery } from '../store/services/channelsApi.js';
 
 const Home = () => {
+  const token = getAuthHeader();
+  const [getChannels] = useGetChannelsQuery();
+  const { data } = useGetChannelsQuery();
+  const dispatch = useDispatch();
 
-  
+  useEffect(() => {
+    dispatch(getChannels(token));
+    console.log(data);
+  }, []);
+
   return (
     <div>
       <header>
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
+        {data && (
+          <div>
+            {/* Здесь используйте данные */}
+            {data.map((item) => (
+              <div key={item.id}>{item.name}</div>
+            ))}
+          </div>
+        )}
         <a
           href="https://reactjs.org"
           target="_blank"
@@ -32,7 +40,7 @@ const Home = () => {
         </a>
       </header>
     </div>
-  )
+  );
 };
 
 export default Home;

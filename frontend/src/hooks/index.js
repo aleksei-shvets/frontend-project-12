@@ -1,6 +1,6 @@
-import { useContext } from "react";
+import { useContext } from 'react';
 
-import AutorizeContext from "../contexts/index.js";
+import AutorizeContext from '../contexts/index.js';
 
 const useAuth = () => useContext(AutorizeContext);
 
