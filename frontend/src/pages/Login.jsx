@@ -8,7 +8,7 @@ import axios from 'axios';
 import { useFormik } from 'formik';
 import useAuth from '../hooks/index.js';
 import pageRoutes from './route.jsx';
-import apiRoutes from '../api/route.js';
+import apiRoutes from '../fetchApi/route.js';
 
 /* const validationSchema = yup.object({
   email: yup
