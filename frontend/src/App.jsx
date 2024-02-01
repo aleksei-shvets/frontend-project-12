@@ -1,6 +1,8 @@
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap';
-import { useState } from 'react';
+import {
+  useState, useCallback, useMemo,
+} from 'react';
 import {
   BrowserRouter, Route, Routes, Navigate,
 } from 'react-router-dom';
@@ -16,15 +18,16 @@ import useAuth from './hooks/index.js';
 const AuthProvider = ({ children }) => {
   const [loggedIn, setLoggedIn] = useState(false);
 
-  const logIn = () => setLoggedIn(true);
-  const logOut = () => {
-    localStorage.removeItem('userId');
+  const logIn = useCallback(() => setLoggedIn(true));
+  const logOut = useCallback(() => {
+    localStorage.removeItem('userToken');
     setLoggedIn(false);
-  };
+  });
+
+  const prop = useMemo(() => ({ loggedIn, logIn, logOut }), [loggedIn, logIn, logOut]);
 
   return (
-    // eslint-disable-next-line react/jsx-no-constructed-context-values
-    <AutorizeContext.Provider value={{ loggedIn, logIn, logOut }}>
+    <AutorizeContext.Provider value={prop}>
       {children}
     </AutorizeContext.Provider>
   );
