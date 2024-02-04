@@ -3,6 +3,7 @@ import fetchDataThunk from './fetchDataThunk.js';
 
 const channelsAdapter = createEntityAdapter();
 
+const defaultChannelId = 1;
 const statusName = {
   loading: 'loading',
   loaded: 'loaded',
@@ -10,7 +11,7 @@ const statusName = {
 };
 
 const initialState = channelsAdapter.getInitialState({
-  currentChannelId: null,
+  currentChannelId: defaultChannelId,
   statusbar: null,
   errors: null,
 });
