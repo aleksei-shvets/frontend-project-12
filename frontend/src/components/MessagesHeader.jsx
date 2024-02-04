@@ -1,7 +1,8 @@
 const MessagesHeader = ({ currentChannel }) => (
   <div className="bg-light mb-4 p-3 shadow-sm small">
+    {console.log(currentChannel)}
     <p className="m-0">
-      <b>{`# ${currentChannel}`}</b>
+      <b>{`# ${currentChannel ? currentChannel.name : null}`}</b>
     </p>
     <span className="text-muted">0 сообщений</span>
   </div>
