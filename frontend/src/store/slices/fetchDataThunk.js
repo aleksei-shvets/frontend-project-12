@@ -9,7 +9,7 @@ const fetchDataThunk = createAsyncThunk(
   'channels/fetchChannels',
   async () => {
     const response = await axios.get(ROUTES.dataPath(), { headers: token });
-    return response.data;
+    return response;
   },
 );
 
