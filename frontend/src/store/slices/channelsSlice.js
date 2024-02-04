@@ -6,11 +6,11 @@ const channelsAdapter = createEntityAdapter();
 const statusName = {
   loading: 'loading',
   loaded: 'loaded',
-  notloaded: 'notloaded',
+  failed: 'failed',
 };
 
 const initialState = channelsAdapter.getInitialState({
-  currentChannelId: 1,
+  currentChannelId: null,
   statusbar: null,
   errors: null,
 });
@@ -29,8 +29,9 @@ const channelsSlice = createSlice({
     })
       .addCase(fetchDataThunk.fulfilled, (state, action) => {
         state.statusbar = statusName.loaded;
+        state.currentChannelId = action.payload.data.currentChannelId;
         state.errors = null;
-        channelsAdapter.setAll(state, action.payload.channels);
+        channelsAdapter.setAll(state, action.payload.data.channels);
       })
       .addCase(fetchDataThunk.rejected, (state, action) => {
         state.statusbar = 'failed';
@@ -39,6 +40,9 @@ const channelsSlice = createSlice({
   },
 });
 
+export const statusbarSelector = (state) => state.channels.statusbar;
+export const currentChannelIdSelector = (state) => state.channels.currentChannelId;
+export const getChannelsSelector = (state) => state.channels.enteties;
 export const { actions } = channelsSlice;
 export const channelsSelector = channelsAdapter.getSelectors((state) => state.channels);
 
