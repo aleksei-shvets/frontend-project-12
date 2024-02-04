@@ -16,7 +16,8 @@ import ROUTES from './pages/route.jsx';
 import useAuth from './hooks/index.js';
 
 const AuthProvider = ({ children }) => {
-  const [loggedIn, setLoggedIn] = useState(false);
+  const isLogged = localStorage.getItem('userToken');
+  const [loggedIn, setLoggedIn] = useState(isLogged);
 
   const logIn = useCallback(() => setLoggedIn(true));
   const logOut = useCallback(() => {
