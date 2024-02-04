@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import Form from 'react-bootstrap/Form';
 
-const MessagesList = ({ addMessage }) => {
+const MessagesList = ({ addMessage, messages }) => {
   const [message, setMessage] = useState('');
   return (
     <>
       <div id="messages-box" className="chat-messages overflow-auto px-5 ">
-        {[]}
+        {messages.map((item) => (<p key={item.id}>{item.body}</p>))}
       </div>
       <div className="mt-auto px-5 py-3">
         <Form onSubmit={addMessage} className="py-1 border rounded-2">
