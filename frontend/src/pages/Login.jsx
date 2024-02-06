@@ -1,14 +1,16 @@
 import { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import {
   Form, Button, Card,
 } from 'react-bootstrap';
 import axios from 'axios';
 // import * as yup from "yup";
 import { useFormik } from 'formik';
-import useAuth from '../hooks/index.js';
+import useAuth from '../hooks/useAuth.js';
 import pageRoutes from './route.jsx';
 import apiRoutes from '../fetchApi/route.js';
+import { userActions } from '../store/slices/userSlice.js';
 
 /* const validationSchema = yup.object({
   email: yup
@@ -23,6 +25,7 @@ import apiRoutes from '../fetchApi/route.js';
 const chatImg = require('../assets/images/chat.gif');
 
 const Login = () => {
+  const dispatch = useDispatch();
   const authHook = useAuth();
   const navigate = useNavigate();
   const [isNotAuth, setIsNotAuth] = useState(false);
@@ -38,12 +41,13 @@ const Login = () => {
     onSubmit: async (values) => {
       setIsNotAuth(false);
       try {
+        formik.setSubmitting(true);
         const response = await axios.post(apiRoutes.loginPath(), values);
-        if (localStorage.getItem('userToken') === null) {
-          localStorage.setItem('userToken', JSON.stringify(response.data));
-          authHook.logIn();
-        }
+        localStorage.setItem('userToken', JSON.stringify(response.data));
+        authHook.logIn();
+        dispatch(userActions.setUser({ id: 'userId', name: values.username }));
         navigate(pageRoutes.home);
+        formik.setSubmitting(false);
       } catch (err) {
         formik.setSubmitting(false);
         if (err.isAxiosError && err.response.status === 401) {

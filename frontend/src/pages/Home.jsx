@@ -1,12 +1,9 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Container } from 'react-bootstrap';
-// import Spinner from 'react-bootstrap/Spinner';
 import ChannelsContainer from '../containers/ChannelsContainer.jsx';
 import MessagesContainer from '../containers/MessagesContainer.jsx';
-// import { channelsSelector, currentChannelIdSelector } from '../store/slices/channelsSlice.js';
 import fetchDataThunk from '../store/slices/fetchDataThunk.js';
-// import store from '../store/index.js';
 
 const Home = () => {
   const dispatch = useDispatch();

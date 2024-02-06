@@ -11,11 +11,14 @@ const MessagesContainer = () => {
   );
   const messages = useSelector((state) => messagesSelectors.selectAll(state))
     .filter((message) => message.id === currentChannelId);
+
+  console.log(messages);
+
   return (
     <div className="col p-0 h-100">
       <div className="d-flex flex-column h-100">
         <MessagesHeader currentChannel={currentChannel} />
-        <MessagesList messages={messages} />
+        <MessagesList messages={messages} currentChannelId={currentChannelId} />
       </div>
     </div>
   );
