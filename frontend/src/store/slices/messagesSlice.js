@@ -19,25 +19,17 @@ const messagesSlice = createSlice({
   name: 'messages',
   initialState,
   reducers: {
-    addMessages: messagesAdapter.addOne,
+    addMessage: messagesAdapter.addOne,
   },
   extraReducers: (builder) => {
-    builder.addCase(fetchDataThunk.pending, (state) => {
-      state.statusbar = statusName.loading;
+    builder.addCase(fetchDataThunk.fulfilled, (state, action) => {
+      state.statusbar = statusName.loaded;
       state.errors = null;
-    })
-      .addCase(fetchDataThunk.fulfilled, (state, action) => {
-        state.statusbar = statusName.loaded;
-        state.errors = null;
-        messagesAdapter.setAll(state, action.payload.data.messages);
-      })
-      .addCase(fetchDataThunk.rejected, (state, action) => {
-        state.statusbar = 'failed';
-        state.errors = action.error;
-      });
+      messagesAdapter.setAll(state, action.payload.data.messages);
+    });
   },
 });
 
-export const { actions } = messagesSlice;
+export const { actions: messageActions } = messagesSlice;
 export const messagesSelectors = messagesAdapter.getSelectors((state) => state.messages);
 export default messagesSlice.reducer;
