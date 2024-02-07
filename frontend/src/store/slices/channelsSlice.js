@@ -22,6 +22,9 @@ const channelsSlice = createSlice({
   reducers: {
     addChannel: channelsAdapter.addOne,
     removeChannel: channelsAdapter.removeOne,
+    switchChannel: (state, action) => {
+      state.currentChannelId = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchDataThunk.pending, (state) => {
