@@ -8,6 +8,7 @@ const ChannelsList = ({ channels, handleChoose, currentChannelId }) => (
         {channel.removeble
           ? (
             <Button
+              id={channel.id}
               onClick={handleChoose}
               type="button"
               variant={currentChannelId === channel.id ? 'secondary' : 'light'}
@@ -19,6 +20,7 @@ const ChannelsList = ({ channels, handleChoose, currentChannelId }) => (
           )
           : (
             <Button
+              id={channel.id}
               onClick={handleChoose}
               type="button"
               variant={currentChannelId === channel.id ? 'secondary' : 'light'}
