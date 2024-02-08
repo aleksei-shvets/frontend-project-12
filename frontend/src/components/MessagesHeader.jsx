@@ -1,6 +1,5 @@
 const MessagesHeader = ({ currentChannel }) => (
   <div className="bg-light mb-4 p-3 shadow-sm small">
-    {console.log(currentChannel)}
     <p className="m-0">
       <b>{`# ${currentChannel ? currentChannel.name : null}`}</b>
     </p>

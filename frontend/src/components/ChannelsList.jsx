@@ -1,5 +1,6 @@
 // import { ListGroup } from 'react-bootstrap';
 import { Button } from 'react-bootstrap';
+// import { useState } from 'react';
 
 const ChannelsList = ({ channels, handleChoose, currentChannelId }) => (
   <ul className="nav flex-column nav-pills nav-fill px-2 mb-3 overflow-auto h-100 d-block">
@@ -8,9 +9,10 @@ const ChannelsList = ({ channels, handleChoose, currentChannelId }) => (
         {channel.removeble
           ? (
             <Button
-              onClick={handleChoose}
+              id={channel.id}
+              onClick={() => handleChoose(channel.id)}
               type="button"
-              variant={currentChannelId === channel.id ? 'secondary' : 'light'}
+              variant={(currentChannelId === channel.id ? 'secondary' : 'light')}
               className="text-start w-100 rounded-0"
             >
               <span className="me-1">#</span>
@@ -19,9 +21,10 @@ const ChannelsList = ({ channels, handleChoose, currentChannelId }) => (
           )
           : (
             <Button
-              onClick={handleChoose}
+              id={channel.id}
+              onClick={() => handleChoose(channel.id)}
               type="button"
-              variant={currentChannelId === channel.id ? 'secondary' : 'light'}
+              variant={(currentChannelId === channel.id ? 'secondary' : 'light')}
               className="w-100 rounded-0 text-start"
             >
               <span className="me-1">#</span>

@@ -10,7 +10,6 @@ const statusName = {
 };
 
 const initialState = messagesAdapter.getInitialState({
-  currentChannelId: null,
   statusbar: null,
   errors: null,
 });
@@ -22,22 +21,15 @@ const messagesSlice = createSlice({
     addMessages: messagesAdapter.addOne,
   },
   extraReducers: (builder) => {
-    builder.addCase(fetchDataThunk.pending, (state) => {
-      state.statusbar = statusName.loading;
-      state.errors = null;
-    })
+    builder
       .addCase(fetchDataThunk.fulfilled, (state, action) => {
         state.statusbar = statusName.loaded;
         state.errors = null;
         messagesAdapter.setAll(state, action.payload.data.messages);
-      })
-      .addCase(fetchDataThunk.rejected, (state, action) => {
-        state.statusbar = 'failed';
-        state.errors = action.error;
       });
   },
 });
 
-export const { actions } = messagesSlice;
+export const { actions: messageActions } = messagesSlice;
 export const messagesSelectors = messagesAdapter.getSelectors((state) => state.messages);
 export default messagesSlice.reducer;

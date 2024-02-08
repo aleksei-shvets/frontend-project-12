@@ -21,6 +21,9 @@ const channelsSlice = createSlice({
   reducers: {
     addChannel: channelsAdapter.addOne,
     removeChannel: channelsAdapter.removeOne,
+    switchChannel: (state, action) => {
+      state.currentChannelId = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchDataThunk.pending, (state) => {
@@ -43,7 +46,7 @@ const channelsSlice = createSlice({
 export const statusbarSelector = (state) => state.channels.statusbar;
 export const currentChannelIdSelector = (state) => state.channels.currentChannelId;
 export const getChannelsSelector = (state) => state.channels.enteties;
-export const { actions } = channelsSlice;
+export const { actions: channelActions } = channelsSlice;
 export const channelsSelector = channelsAdapter.getSelectors((state) => state.channels);
 
 export default channelsSlice.reducer;

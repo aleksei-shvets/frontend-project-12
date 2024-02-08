@@ -6,7 +6,7 @@ import {
 import axios from 'axios';
 // import * as yup from "yup";
 import { useFormik } from 'formik';
-import useAuth from '../hooks/index.js';
+import useAuth from '../hooks/useAuth.js';
 import pageRoutes from './route.jsx';
 import apiRoutes from '../fetchApi/route.js';
 
