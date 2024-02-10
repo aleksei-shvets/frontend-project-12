@@ -1,5 +1,17 @@
-import { createSlice, createEntityAdapter } from '@reduxjs/toolkit';
-import fetchDataThunk from './fetchDataThunk.js';
+import { createSlice, createEntityAdapter, createAsyncThunk } from '@reduxjs/toolkit';
+import axios from 'axios';
+import getAuthHeader from '../../utils/getAuthHeader.js';
+import ROUTES from '../../fetchApi/route.js';
+
+export const fetchMessagesThunk = createAsyncThunk(
+  'messages/fetchMessages',
+  async () => {
+    const token = getAuthHeader();
+    const response = await axios.get(ROUTES.messagesPath(), { headers: token });
+    console.log(response);
+    return response;
+  },
+);
 
 const messagesAdapter = createEntityAdapter();
 
@@ -22,10 +34,10 @@ const messagesSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchDataThunk.fulfilled, (state, action) => {
+      .addCase(fetchMessagesThunk.fulfilled, (state, action) => {
         state.statusbar = statusName.loaded;
         state.errors = null;
-        messagesAdapter.setAll(state, action.payload.data.messages);
+        messagesAdapter.addMany(state, action.payload.data);
       });
   },
 });
