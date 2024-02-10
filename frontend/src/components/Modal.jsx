@@ -1,16 +1,28 @@
 import { Form } from 'react-bootstrap';
+import * as yup from 'yup';
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-// import useModal from '../hooks/useModal';
 import ROUTES from '../fetchApi/route.js';
 import getAuthHeader from '../utils/getAuthHeader';
 import { isShownSelector, modalActions } from '../store/slices/modalSlice.js';
+import { channelActions, channelsSelector } from '../store/slices/channelsSlice.js';
 
 const AddChannelModal = () => {
-  // const modalHook = useModal();
+  const channelNames = useSelector((state) => channelsSelector.selectAll(state))
+    .map((channel) => channel.name);
+  console.log(useSelector((state) => isShownSelector(state)));
+  const channelNameSchema = yup.object({
+    nameInput: yup
+      .string('Enter your email')
+      .required('Обязательно')
+      .min(3, 'Минимум 3')
+      .max(20, 'Максимум 20')
+      .notOneOf(channelNames),
+  });
+
   const isShownModal = useSelector((state) => isShownSelector(state));
   const dispatch = useDispatch();
   const hideModal = () => dispatch(modalActions.hideModal());
@@ -19,6 +31,7 @@ const AddChannelModal = () => {
     initialValues: {
       nameInput: '',
     },
+    validationSchema: channelNameSchema,
     onSubmit: async (values) => {
       const token = getAuthHeader();
       formik.setSubmitting(true);
@@ -32,8 +45,10 @@ const AddChannelModal = () => {
               Authorization: token.Authorization,
             },
           });
-        // modalHook.hideModal();
+        console.log(response);
         hideModal();
+        dispatch(channelActions.addChannel(response.data));
+        dispatch(channelActions.switchChannel(response.data.id));
         formik.resetForm();
         console.log(response.data);
         return true;
@@ -67,9 +82,12 @@ const AddChannelModal = () => {
               name="nameInput"
               id="nameInput"
               onChange={formik.handleChange}
-              value={formik.values.name}
+              value={formik.values.nameInput}
+              isInvalid={!formik.isValid}
             />
-            <Form.Control.Feedback type="invalid" />
+            <Form.Control.Feedback type="invalid">
+              {formik.errors.nameInput}
+            </Form.Control.Feedback>
           </Form.Group>
           <div className="d-flex justify-content-end">
             <Button variant="outline-secondary" onClick={hideModal} className="me-2 ">Отменить</Button>
