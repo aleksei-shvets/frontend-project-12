@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Container } from 'react-bootstrap';
 // import Spinner from 'react-bootstrap/Spinner';
 import ChannelsContainer from '../containers/ChannelsContainer.jsx';
@@ -9,9 +9,11 @@ import { fetchChannelsThunk } from '../store/slices/channelsSlice.js';
 import { fetchMessagesThunk } from '../store/slices/messagesSlice.js';
 import AddChannelModal from '../components/Modal.jsx';
 // import store from '../store/index.js';
+import { isShownSelector } from '../store/slices/modalSlice.js';
 
 const Home = () => {
   const dispatch = useDispatch();
+  const isShownModal = useSelector(isShownSelector);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -29,7 +31,7 @@ const Home = () => {
           <ChannelsContainer />
           <MessagesContainer />
         </div>
-        <AddChannelModal />
+        {isShownModal ? <AddChannelModal /> : null}
       </Container>
     </div>
   );
