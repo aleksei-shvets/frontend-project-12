@@ -6,9 +6,11 @@ import {
 import axios from 'axios';
 // import * as yup from "yup";
 import { useFormik } from 'formik';
+import { useDispatch } from 'react-redux';
 import useAuth from '../hooks/useAuth.js';
 import pageRoutes from './route.jsx';
 import apiRoutes from '../fetchApi/route.js';
+import { setUser } from '../store/slices/userSlice.js';
 
 /* const validationSchema = yup.object({
   email: yup
@@ -24,6 +26,7 @@ const chatImg = require('../assets/images/chat.gif');
 
 const Login = () => {
   const authHook = useAuth();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [isNotAuth, setIsNotAuth] = useState(false);
   const inputRef = useRef();
@@ -40,6 +43,7 @@ const Login = () => {
       try {
         const response = await axios.post(apiRoutes.loginPath(), values);
         localStorage.setItem('userToken', JSON.stringify(response.data));
+        dispatch(setUser(response.data.username));
         authHook.logIn();
         navigate(pageRoutes.home);
       } catch (err) {
