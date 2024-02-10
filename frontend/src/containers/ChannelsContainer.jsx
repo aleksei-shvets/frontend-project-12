@@ -17,11 +17,11 @@ const ChannelsContainer = () => {
   ); */
   const handleChoose = (id) => {
     dispath(channelActions.switchChannel(id));
+    console.log(store.getState());
   };
 
   const newChannelModalHandler = () => {
     dispath(modalActions.showModal());
-    console.log(store.getState());
   };
 
   return (

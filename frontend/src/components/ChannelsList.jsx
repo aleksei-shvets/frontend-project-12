@@ -1,5 +1,6 @@
 // import { ListGroup } from 'react-bootstrap';
 import { Button } from 'react-bootstrap';
+import Dropdown from 'react-bootstrap/Dropdown';
 // import { useState } from 'react';
 
 const ChannelsList = ({ channels, handleChoose, currentChannelId }) => (
@@ -13,10 +14,21 @@ const ChannelsList = ({ channels, handleChoose, currentChannelId }) => (
               onClick={() => handleChoose(channel.id)}
               type="button"
               variant={(Number(currentChannelId) === Number(channel.id) ? 'secondary' : 'light')}
-              className="text-start w-100 rounded-0"
+              className="text-start w-100 rounded-pill mb-1"
             >
               <span className="me-1">#</span>
               {channel.name}
+              <Dropdown>
+                <Dropdown.Toggle variant="success" id="dropdown-basic">
+                  Dropdown Button
+                </Dropdown.Toggle>
+
+                <Dropdown.Menu>
+                  <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
+                  <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
+                  <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
             </Button>
           )
           : (
@@ -25,7 +37,7 @@ const ChannelsList = ({ channels, handleChoose, currentChannelId }) => (
               onClick={() => handleChoose(channel.id)}
               type="button"
               variant={(Number(currentChannelId) === Number(channel.id) ? 'secondary' : 'light')}
-              className="w-100 rounded-0 text-start"
+              className="w-100 rounded-pill text-start mb-1"
             >
               <span className="me-1">#</span>
               {channel.name}
