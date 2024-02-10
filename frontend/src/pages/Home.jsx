@@ -5,7 +5,9 @@ import { Container } from 'react-bootstrap';
 import ChannelsContainer from '../containers/ChannelsContainer.jsx';
 import MessagesContainer from '../containers/MessagesContainer.jsx';
 // import { channelsSelector, currentChannelIdSelector } from '../store/slices/channelsSlice.js';
-import fetchDataThunk from '../store/slices/fetchDataThunk.js';
+import { fetchChannelsThunk } from '../store/slices/channelsSlice.js';
+import { fetchMessagesThunk } from '../store/slices/messagesSlice.js';
+import AddChannelModal from '../components/Modal.jsx';
 // import store from '../store/index.js';
 
 const Home = () => {
@@ -13,7 +15,8 @@ const Home = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      await dispatch(fetchDataThunk());
+      await dispatch(fetchChannelsThunk());
+      await dispatch(fetchMessagesThunk());
     };
 
     fetchData();
@@ -26,6 +29,7 @@ const Home = () => {
           <ChannelsContainer />
           <MessagesContainer />
         </div>
+        <AddChannelModal />
       </Container>
     </div>
   );
