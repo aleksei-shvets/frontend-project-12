@@ -1,14 +1,20 @@
 import { Form } from 'react-bootstrap';
 import { useFormik } from 'formik';
+import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-import useModal from '../hooks/useModal';
+// import useModal from '../hooks/useModal';
 import ROUTES from '../fetchApi/route.js';
 import getAuthHeader from '../utils/getAuthHeader';
+import { isShownSelector, modalActions } from '../store/slices/modalSlice.js';
 
 const AddChannelModal = () => {
-  const modalHook = useModal();
+  // const modalHook = useModal();
+  const isShownModal = useSelector((state) => isShownSelector(state));
+  const dispatch = useDispatch();
+  const hideModal = () => dispatch(modalActions.hideModal());
+
   const formik = useFormik({
     initialValues: {
       nameInput: '',
@@ -26,7 +32,8 @@ const AddChannelModal = () => {
               Authorization: token.Authorization,
             },
           });
-        modalHook.hideModal();
+        // modalHook.hideModal();
+        hideModal();
         formik.resetForm();
         console.log(response.data);
         return true;
@@ -43,8 +50,8 @@ const AddChannelModal = () => {
     <Modal
       size="lg"
       centered
-      show={modalHook.isModal}
-      onHide={modalHook.hideModal}
+      show={isShownModal}
+      onHide={hideModal}
     >
       <Modal.Header closeButton>
         <Modal.Title id="name">
@@ -65,7 +72,7 @@ const AddChannelModal = () => {
             <Form.Control.Feedback type="invalid" />
           </Form.Group>
           <div className="d-flex justify-content-end">
-            <Button variant="outline-secondary" onClick={modalHook.hideModal} className="me-2 ">Отменить</Button>
+            <Button variant="outline-secondary" onClick={hideModal} className="me-2 ">Отменить</Button>
             <Button variant="secondary" type="submit">Отправить</Button>
           </div>
         </Form>
