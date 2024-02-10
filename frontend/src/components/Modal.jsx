@@ -24,7 +24,7 @@ const AddChannelModal = () => {
       formik.setSubmitting(true);
       try {
         const newChannel = {
-          name: values.name,
+          name: values.nameInput,
         };
         const response = await axios
           .post(ROUTES.channelsPath(), newChannel, {
@@ -54,7 +54,7 @@ const AddChannelModal = () => {
       onHide={hideModal}
     >
       <Modal.Header closeButton>
-        <Modal.Title id="name">
+        <Modal.Title id="nameInput">
           Добавить канал
         </Modal.Title>
       </Modal.Header>
