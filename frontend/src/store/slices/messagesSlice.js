@@ -8,7 +8,6 @@ export const fetchMessagesThunk = createAsyncThunk(
   async () => {
     const token = getAuthHeader();
     const response = await axios.get(ROUTES.messagesPath(), { headers: token });
-    console.log(response);
     return response;
   },
 );
@@ -30,7 +29,7 @@ const messagesSlice = createSlice({
   name: 'messages',
   initialState,
   reducers: {
-    addMessages: messagesAdapter.addOne,
+    addMessage: messagesAdapter.addOne,
   },
   extraReducers: (builder) => {
     builder
