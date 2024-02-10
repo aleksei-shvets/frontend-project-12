@@ -1,16 +1,28 @@
-import { createSlice, createEntityAdapter } from '@reduxjs/toolkit';
-import fetchDataThunk from './fetchDataThunk.js';
+import { createSlice, createEntityAdapter, createAsyncThunk } from '@reduxjs/toolkit';
+import axios from 'axios';
+import getAuthHeader from '../../utils/getAuthHeader.js';
+import ROUTES from '../../fetchApi/route.js';
 
 const channelsAdapter = createEntityAdapter();
+
+export const fetchChannelsThunk = createAsyncThunk(
+  'channels/fetchChannels',
+  async () => {
+    const token = getAuthHeader();
+    const response = await axios.get(ROUTES.channelsPath(), { headers: token });
+    console.log(response);
+    return response;
+  },
+);
 
 const statusName = {
   loading: 'loading',
   loaded: 'loaded',
   failed: 'failed',
 };
-
+const defaultCurrentChannelId = 1;
 const initialState = channelsAdapter.getInitialState({
-  currentChannelId: null,
+  currentChannelId: defaultCurrentChannelId,
   statusbar: null,
   errors: null,
 });
@@ -26,17 +38,16 @@ const channelsSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(fetchDataThunk.pending, (state) => {
+    builder.addCase(fetchChannelsThunk.pending, (state) => {
       state.statusbar = statusName.loading;
       state.errors = null;
     })
-      .addCase(fetchDataThunk.fulfilled, (state, action) => {
+      .addCase(fetchChannelsThunk.fulfilled, (state, action) => {
         state.statusbar = statusName.loaded;
-        state.currentChannelId = action.payload.data.currentChannelId;
         state.errors = null;
-        channelsAdapter.setAll(state, action.payload.data.channels);
+        channelsAdapter.addMany(state, action.payload.data);
       })
-      .addCase(fetchDataThunk.rejected, (state, action) => {
+      .addCase(fetchChannelsThunk.rejected, (state, action) => {
         state.statusbar = 'failed';
         state.errors = action.error;
       });
