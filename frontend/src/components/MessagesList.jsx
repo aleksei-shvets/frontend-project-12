@@ -4,17 +4,18 @@ import axios from 'axios';
 import Form from 'react-bootstrap/Form';
 import ROUTES from '../fetchApi/route.js';
 import getAuthHeader from '../utils/getAuthHeader';
-import { useUserSelector } from '../store/slices/userSlice.js';
+import { getUserIdSelector } from '../store/slices/userSlice.js';
+import { CurrentUserMessage, OtherUsersMessage } from './MessageItem.jsx';
+// import store from '../store/index.js';
 
 const MessagesList = ({ messages, currentChannelId }) => {
-  const username = useSelector((state) => useUserSelector.selectById(state, 'userId')?.name);
+  const username = useSelector(getUserIdSelector);
   const formik = useFormik({
     initialValues: {
       message: '',
     },
     onSubmit: async (values) => {
       const token = getAuthHeader();
-      console.log(token);
       formik.setSubmitting(true);
       try {
         const newMessage = {
@@ -35,10 +36,15 @@ const MessagesList = ({ messages, currentChannelId }) => {
       }
     },
   });
+
   return (
     <>
       <div id="messages-box" className="chat-messages overflow-auto px-5 ">
-        {messages.map((item) => (<p key={item.id}>{item.body}</p>))}
+        {messages.map((item) => (
+          item.username === username
+            ? <CurrentUserMessage item={item} />
+            : <OtherUsersMessage item={item} />
+        ))}
       </div>
       <div className="mt-auto px-5 py-3">
         <Form onSubmit={formik.handleSubmit} className="py-1 border rounded-2">
