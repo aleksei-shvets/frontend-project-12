@@ -42,8 +42,8 @@ const MessagesList = ({ messages, currentChannelId }) => {
       <div id="messages-box" className="chat-messages overflow-auto px-5 ">
         {messages.map((item) => (
           item.username === username
-            ? <CurrentUserMessage item={item} />
-            : <OtherUsersMessage item={item} />
+            ? <CurrentUserMessage key={item.id} item={item} />
+            : <OtherUsersMessage key={item.id} item={item} />
         ))}
       </div>
       <div className="mt-auto px-5 py-3">
