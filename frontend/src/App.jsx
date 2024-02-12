@@ -13,7 +13,7 @@ import SocketProvider from './providers/socketProvider.js';
 import ROUTES from './pages/route.jsx';
 import useAuth from './hooks/useAuth.js';
 // import ModalProvider from './providers/modalProvider.js';
-// import Nav from './components/Nav.jsx';
+import Nav from './components/Nav.jsx';
 
 const PrivateRoute = ({ children }) => {
   const auth = useAuth();
@@ -27,6 +27,7 @@ const App = () => (
   <Provider store={store}>
     <AuthProvider>
       <SocketProvider>
+        <Nav />
         <BrowserRouter>
           <Routes>
             <Route path={ROUTES.login} element={<Login />} />
