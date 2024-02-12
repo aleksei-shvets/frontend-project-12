@@ -5,13 +5,11 @@ import AutorizeContext from '../contexts/authContext.js';
 
 const AuthProvider = ({ children }) => {
   const isLogged = localStorage.getItem('userToken');
+  const isLoggedUser = JSON.parse(localStorage.getItem('username'));
   const [loggedIn, setLoggedIn] = useState(isLogged);
-  /* const [username, setUsername] = useState(null);
-  if (localStorage.getItem('username')) {
-    const userName = JSON.parse(localStorage.getItem('username'));
-    setUsername(userName);
-  } */
+  const [username, setUsername] = useState(isLoggedUser);
 
+  const setUser = useCallback(() => setUsername(isLoggedUser));
   const logIn = useCallback(() => setLoggedIn(true));
   const logOut = useCallback(() => {
     localStorage.removeItem('userToken');
@@ -19,8 +17,12 @@ const AuthProvider = ({ children }) => {
   });
 
   const prop = useMemo(() => ({
-    loggedIn, logIn, logOut,
-  }), [loggedIn, logIn, logOut]);
+    loggedIn,
+    logIn,
+    logOut,
+    username,
+    setUser,
+  }), [loggedIn, logIn, logOut, username, setUser]);
 
   return (
     <AutorizeContext.Provider value={prop}>
