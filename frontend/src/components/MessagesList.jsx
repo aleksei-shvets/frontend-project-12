@@ -1,15 +1,18 @@
 import { useFormik } from 'formik';
-import { useSelector } from 'react-redux';
+// import { useSelector } from 'react-redux';
 import axios from 'axios';
 import Form from 'react-bootstrap/Form';
 import ROUTES from '../fetchApi/route.js';
 import getAuthHeader from '../utils/getAuthHeader';
-import { getUserIdSelector } from '../store/slices/userSlice.js';
+// import { getUserIdSelector } from '../store/slices/userSlice.js';
 import { CurrentUserMessage, OtherUsersMessage } from './MessageItem.jsx';
+import useAuth from '../hooks/useAuth.js';
 // import store from '../store/index.js';
 
 const MessagesList = ({ messages, currentChannelId }) => {
-  const username = useSelector((state) => getUserIdSelector(state));
+  const authHook = useAuth();
+  const userName = authHook.username;
+  console.log(userName);
   const formik = useFormik({
     initialValues: {
       message: '',
@@ -21,7 +24,7 @@ const MessagesList = ({ messages, currentChannelId }) => {
         const newMessage = {
           body: values.message,
           channelId: currentChannelId,
-          username,
+          username: userName,
         };
         const response = await axios
           .post(ROUTES.messagesPath(), newMessage, { headers: token });
@@ -41,7 +44,7 @@ const MessagesList = ({ messages, currentChannelId }) => {
     <>
       <div id="messages-box" className="chat-messages overflow-auto px-5 ">
         {messages.map((item) => (
-          item.username === username
+          item.username === userName
             ? <CurrentUserMessage key={item.id} item={item} />
             : <OtherUsersMessage key={item.id} item={item} />
         ))}
