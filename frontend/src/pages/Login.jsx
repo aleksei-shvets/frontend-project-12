@@ -6,11 +6,11 @@ import {
 import axios from 'axios';
 // import * as yup from "yup";
 import { useFormik } from 'formik';
-import { useDispatch } from 'react-redux';
+// import { useDispatch } from 'react-redux';
 import useAuth from '../hooks/useAuth.js';
 import pageRoutes from './route.jsx';
 import apiRoutes from '../fetchApi/route.js';
-import { setUser } from '../store/slices/userSlice.js';
+// import { setUser } from '../store/slices/userSlice.js';
 
 /* const validationSchema = yup.object({
   email: yup
@@ -26,7 +26,7 @@ const chatImg = require('../assets/images/chat.gif');
 
 const Login = () => {
   const authHook = useAuth();
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const navigate = useNavigate();
   const [isNotAuth, setIsNotAuth] = useState(false);
   const inputRef = useRef();
@@ -42,9 +42,10 @@ const Login = () => {
       setIsNotAuth(false);
       try {
         const response = await axios.post(apiRoutes.loginPath(), values);
-        localStorage.setItem('userToken', JSON.stringify(response.data));
-        dispatch(setUser(response.data.username));
+        localStorage.setItem('userToken', JSON.stringify(response.data.token));
+        localStorage.setItem('username', JSON.stringify(response.data.username));
         authHook.logIn();
+        authHook.setUser(); // TODO - скорее всего лишняя вызов, можно все делать в контексте
         navigate(pageRoutes.home);
       } catch (err) {
         formik.setSubmitting(false);
