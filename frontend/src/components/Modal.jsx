@@ -13,7 +13,6 @@ import { channelActions, channelsSelector } from '../store/slices/channelsSlice.
 const AddChannelModal = () => {
   const channelNames = useSelector((state) => channelsSelector.selectAll(state))
     .map((channel) => channel.name);
-  console.log(useSelector((state) => isShownSelector(state)));
   const channelNameSchema = yup.object({
     nameInput: yup
       .string('Enter your email')
