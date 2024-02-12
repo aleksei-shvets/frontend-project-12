@@ -25,15 +25,13 @@ const Home = () => {
   }, [dispatch]);
 
   return (
-    <div className="d-flex flex-column h-100">
-      <Container className="h-100 my-4 overflow-hidden rounded shadow">
-        <div className="row h-100 bg-white flex-md-row">
-          <ChannelsContainer />
-          <MessagesContainer />
-        </div>
-        {isShownModal ? <AddChannelModal /> : null}
-      </Container>
-    </div>
+    <Container className="h-100 my-4 overflow-hidden rounded shadow">
+      <div className="row h-100 bg-white flex-md-row">
+        <ChannelsContainer />
+        <MessagesContainer />
+      </div>
+      {isShownModal ? <AddChannelModal /> : null}
+    </Container>
   );
 };
 
