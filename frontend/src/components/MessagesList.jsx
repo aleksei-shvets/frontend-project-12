@@ -9,7 +9,7 @@ import { CurrentUserMessage, OtherUsersMessage } from './MessageItem.jsx';
 // import store from '../store/index.js';
 
 const MessagesList = ({ messages, currentChannelId }) => {
-  const username = useSelector(getUserIdSelector);
+  const username = useSelector((state) => getUserIdSelector(state));
   const formik = useFormik({
     initialValues: {
       message: '',
