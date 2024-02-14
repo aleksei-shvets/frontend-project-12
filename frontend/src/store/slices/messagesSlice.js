@@ -2,6 +2,7 @@ import { createSlice, createEntityAdapter, createAsyncThunk } from '@reduxjs/too
 import axios from 'axios';
 import getAuthHeader from '../../utils/getAuthHeader.js';
 import ROUTES from '../../fetchApi/route.js';
+import { channelActions } from './channelsSlice.js';
 
 export const fetchMessagesThunk = createAsyncThunk(
   'messages/fetchMessages',
@@ -37,6 +38,12 @@ const messagesSlice = createSlice({
         state.statusbar = statusName.loaded;
         state.errors = null;
         messagesAdapter.addMany(state, action.payload.data);
+      })
+      .addCase(channelActions.removeChannel, (state, action) => {
+        const removedChannelId = action.payload;
+        const filtredMessages = Object.values(state.entities)
+          .filter((message) => message.channelId !== removedChannelId);
+        messagesAdapter.setAll(state, filtredMessages);
       });
   },
 });
