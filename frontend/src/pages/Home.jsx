@@ -7,13 +7,15 @@ import MessagesContainer from '../containers/MessagesContainer.jsx';
 // import { channelsSelector, currentChannelIdSelector } from '../store/slices/channelsSlice.js';
 import { fetchChannelsThunk } from '../store/slices/channelsSlice.js';
 import { fetchMessagesThunk } from '../store/slices/messagesSlice.js';
-import AddChannelModal from '../components/Modal.jsx';
+import ModalItem from '../components/Modal.jsx';
 // import store from '../store/index.js';
-import { isShownSelector } from '../store/slices/modalSlice.js';
+import { isShownSelector, getModalTypeSelector } from '../store/slices/modalSlice.js';
 
 const Home = () => {
   const dispatch = useDispatch();
   const isShownModal = useSelector(isShownSelector);
+  const modalType = useSelector(getModalTypeSelector);
+  // console.log(store.getState());
 
   useEffect(() => {
     const fetchData = async () => {
@@ -30,7 +32,7 @@ const Home = () => {
         <ChannelsContainer />
         <MessagesContainer />
       </div>
-      {isShownModal ? <AddChannelModal /> : null}
+      {isShownModal ? <ModalItem type={modalType} /> : null}
     </Container>
   );
 };
