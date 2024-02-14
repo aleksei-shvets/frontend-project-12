@@ -12,7 +12,6 @@ import useAuth from '../hooks/useAuth.js';
 const MessagesList = ({ messages, currentChannelId }) => {
   const authHook = useAuth();
   const userName = authHook.username;
-  console.log(userName);
   const formik = useFormik({
     initialValues: {
       message: '',
@@ -26,10 +25,9 @@ const MessagesList = ({ messages, currentChannelId }) => {
           channelId: currentChannelId,
           username: userName,
         };
-        const response = await axios
+        await axios
           .post(ROUTES.messagesPath(), newMessage, { headers: token });
         formik.resetForm();
-        console.log(response.data);
         return true;
       } catch (e) {
         console.log(e.message);
