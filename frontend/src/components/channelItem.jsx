@@ -3,15 +3,29 @@ import {
   Dropdown,
   ButtonGroup,
 } from 'react-bootstrap';
+import { useDispatch } from 'react-redux';
+import { modalActions } from '../store/slices/modalSlice.js';
 
 export const RemovableItem = ({
   channel,
   handleChoose,
   currentChannelId,
 }) => {
+  const dispath = useDispatch();
+
+  const removeChannelHandler = (id) => {
+    dispath(modalActions.showModal());
+    dispath(modalActions.setModalType('removingChannel'));
+    dispath(modalActions.setUpdatedChannelId(id));
+  };
+
+  const renameChannelHandler = (id) => {
+    dispath(modalActions.showModal());
+    dispath(modalActions.setModalType('renamingChannel'));
+    dispath(modalActions.setUpdatedChannelId(id));
+  };
+
   const variantColor = () => (Number(currentChannelId) === Number(channel.id) ? 'secondary' : 'light');
-  const renameHandle = () => { };
-  const deleteHandle = () => { };
   return (
     <Dropdown as={ButtonGroup} className="m-0 p-0 col w-100 container w-100">
       <Button
@@ -31,8 +45,8 @@ export const RemovableItem = ({
       />
 
       <Dropdown.Menu variant="dark">
-        <Dropdown.Item onClick={deleteHandle} as="button">Удалить</Dropdown.Item>
-        <Dropdown.Item onClick={renameHandle} as="button">Переименовать</Dropdown.Item>
+        <Dropdown.Item onClick={() => removeChannelHandler(channel.id)} as="button">Удалить</Dropdown.Item>
+        <Dropdown.Item onClick={() => renameChannelHandler(channel.id)} as="button">Переименовать</Dropdown.Item>
       </Dropdown.Menu>
     </Dropdown>
   );
