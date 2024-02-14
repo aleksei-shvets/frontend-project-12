@@ -11,7 +11,6 @@ const MessagesContainer = () => {
   );
   const messages = useSelector((state) => messagesSelectors.selectAll(state))
     .filter((message) => Number(message.channelId) === Number(currentChannelId));
-  console.log(messages);
 
   return (
     <div className="col p-0 h-100">
