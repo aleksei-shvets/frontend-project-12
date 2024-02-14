@@ -1,4 +1,4 @@
-import { Form } from 'react-bootstrap';
+/* import { Form } from 'react-bootstrap';
 import * as yup from 'yup';
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
@@ -8,15 +8,27 @@ import Modal from 'react-bootstrap/Modal';
 import ROUTES from '../fetchApi/route.js';
 import getAuthHeader from '../utils/getAuthHeader';
 import { isShownSelector, modalActions } from '../store/slices/modalSlice.js';
-import { channelActions, channelsSelector } from '../store/slices/channelsSlice.js';
+import { channelActions, channelsSelector } from '../store/slices/channelsSlice.js'; */
+import AddChannelModal from './AddChannelModal.jsx';
+import RenameChannelModal from './RenameChannelModal.jsx';
+import RemoveChannelModal from './RemoveChannelModal.jsx';
 
-const AddChannelModal = () => {
+const ModalItem = ({ type }) => {
+  const modalTypes = {
+    addingChannel: <AddChannelModal />,
+    removingChannel: <RemoveChannelModal />,
+    renamingChannel: <RenameChannelModal />,
+  };
+  return modalTypes[type];
+};
+
+/* const AddChannelModal = () => {
   const channelNames = useSelector((state) => channelsSelector.selectAll(state))
     .map((channel) => channel.name);
   const channelNameSchema = yup.object({
     nameInput: yup
-      .string('Enter your email')
-      .required('Обязательно')
+      .string()
+      .required('Обязательное поле')
       .min(3, 'Минимум 3')
       .max(20, 'Максимум 20')
       .notOneOf(channelNames),
@@ -89,7 +101,8 @@ const AddChannelModal = () => {
             </Form.Control.Feedback>
           </Form.Group>
           <div className="d-flex justify-content-end">
-            <Button variant="outline-secondary" onClick={hideModal} className="me-2 ">Отменить</Button>
+            <Button
+            variant="outline-secondary" onClick={hideModal} className="me-2 ">Отменить</Button>
             <Button variant="secondary" type="submit">Отправить</Button>
           </div>
         </Form>
@@ -97,5 +110,5 @@ const AddChannelModal = () => {
     </Modal>
   );
 };
-
-export default AddChannelModal;
+ */
+export default ModalItem;
