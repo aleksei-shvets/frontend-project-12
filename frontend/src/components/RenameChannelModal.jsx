@@ -2,6 +2,7 @@ import { Form } from 'react-bootstrap';
 import * as yup from 'yup';
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
+import { useEffect, useRef } from 'react';
 import axios from 'axios';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
@@ -11,8 +12,22 @@ import { isShownSelector, modalActions, getUpdatedChannelId } from '../store/sli
 import { channelActions, channelsSelector } from '../store/slices/channelsSlice.js';
 
 const RenameChannelModal = () => {
+  const inputEl = useRef(null);
   const channelNames = useSelector((state) => channelsSelector.selectAll(state))
     .map((channel) => channel.name);
+
+  useEffect(() => {
+    inputEl.current.focus();
+    inputEl.current.select();
+  }, []);
+
+  const updatedChannelId = useSelector(getUpdatedChannelId);
+  const updatedChanne = useSelector((state) => channelsSelector.selectAll(state))
+    .find((channel) => channel.id === updatedChannelId);
+  const isShownModal = useSelector((state) => isShownSelector(state));
+  const dispatch = useDispatch();
+  const hideModal = () => dispatch(modalActions.hideModal());
+
   const channelNameSchema = yup.object({
     nameInput: yup
       .string()
@@ -21,13 +36,6 @@ const RenameChannelModal = () => {
       .max(20, 'Максимум 20')
       .notOneOf(channelNames),
   });
-
-  const updatedChannelId = useSelector(getUpdatedChannelId);
-  const updatedChanne = useSelector((state) => channelsSelector.selectAll(state))
-    .find((channel) => channel.id === updatedChannelId);
-  const isShownModal = useSelector((state) => isShownSelector(state));
-  const dispatch = useDispatch();
-  const hideModal = () => dispatch(modalActions.hideModal());
 
   const formik = useFormik({
     initialValues: {
@@ -86,6 +94,7 @@ const RenameChannelModal = () => {
               onChange={formik.handleChange}
               value={formik.values.nameInput}
               isInvalid={!formik.isValid}
+              ref={inputEl}
             />
             <Form.Control.Feedback type="invalid">
               {formik.errors.nameInput}

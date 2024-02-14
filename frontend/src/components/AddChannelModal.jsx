@@ -2,6 +2,7 @@ import { Form } from 'react-bootstrap';
 import * as yup from 'yup';
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
+import { useEffect, useRef } from 'react';
 import axios from 'axios';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
@@ -20,6 +21,12 @@ import store from '../store/index.js';
 const AddChannelModal = () => {
   const channelNames = useSelector((state) => channelsSelector.selectAll(state))
     .map((channel) => channel.name);
+
+  const inputEl = useRef(null);
+  useEffect(() => {
+    inputEl.current.focus();
+  }, []);
+
   const channelNameSchema = yup.object({
     nameInput: yup
       .string()
@@ -91,6 +98,7 @@ const AddChannelModal = () => {
               onChange={formik.handleChange}
               value={formik.values.nameInput}
               isInvalid={!formik.isValid}
+              ref={inputEl}
             />
             <Form.Control.Feedback type="invalid">
               {formik.errors.nameInput}
