@@ -34,10 +34,17 @@ const SocketProvider = ({ children }) => {
 
       socket.on('removeChannel', (payload) => {
         dispatch(channelActions.removeChannel(payload.id));
+        console.log(payload);
       });
 
       socket.on('renameChannel', (payload) => {
-        console.log(payload);
+        console.log(payload.name);
+        dispatch(channelActions.renameChannel({
+          id: payload.id,
+          changes: {
+            name: payload.name,
+          },
+        }));
       });
     }
   }, [socket]);
