@@ -6,6 +6,7 @@ import {
 import { Provider } from 'react-redux';
 import store from './store/index.js';
 import Login from './pages/Login.jsx';
+import Signup from './pages/Signup.jsx';
 import Home from './pages/Home.jsx';
 import NotFound from './pages/NotFound.jsx';
 import AuthProvider from './providers/authProvider.js';
@@ -31,6 +32,7 @@ const App = () => (
         <BrowserRouter>
           <Routes>
             <Route path={ROUTES.login} element={<Login />} />
+            <Route path={ROUTES.signup} element={<Signup />} />
             <Route path={ROUTES.notFound} element={<NotFound />} />
             <Route
               path={ROUTES.home}
