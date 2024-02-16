@@ -116,7 +116,7 @@ const Signup = () => {
                       <Form.Control.Feedback type="invalid">
                         {formik.errors.username}
                       </Form.Control.Feedback>
-                      {console.log((regErrorEl(regError)))}
+                      {regErrorEl(regError)}
                     </Form.Group>
                     <Form.Group className="mb-3">
                       <Form.Label htmlFor="password" />
