@@ -1,5 +1,5 @@
 import { useFormik } from 'formik';
-// import { useSelector } from 'react-redux';
+import { useEffect, useRef } from 'react';
 import axios from 'axios';
 import Form from 'react-bootstrap/Form';
 import ROUTES from '../fetchApi/route.js';
@@ -10,6 +10,10 @@ import useAuth from '../hooks/useAuth.js';
 // import store from '../store/index.js';
 
 const MessagesList = ({ messages, currentChannelId }) => {
+  const inputEl = useRef(null);
+  useEffect(() => {
+    inputEl.current.focus();
+  }, [currentChannelId]);
   const authHook = useAuth();
   const userName = authHook.username;
   const formik = useFormik({
@@ -57,6 +61,7 @@ const MessagesList = ({ messages, currentChannelId }) => {
               placeholder="Введите сообщение..."
               className="border-0 p-0 ps-2 form-control"
               value={formik.values.message}
+              ref={inputEl}
             />
             <button type="submit" className="btn btn-group-vertical">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="20" height="20" fill="currentColor">
