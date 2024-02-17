@@ -1,5 +1,17 @@
-import { createSlice, createEntityAdapter } from '@reduxjs/toolkit';
-import fetchDataThunk from './fetchDataThunk.js';
+import { createSlice, createEntityAdapter, createAsyncThunk } from '@reduxjs/toolkit';
+import axios from 'axios';
+import getAuthHeader from '../../utils/getAuthHeader.js';
+import ROUTES from '../../fetchApi/route.js';
+import { channelActions } from './channelsSlice.js';
+
+export const fetchMessagesThunk = createAsyncThunk(
+  'messages/fetchMessages',
+  async () => {
+    const token = getAuthHeader();
+    const response = await axios.get(ROUTES.messagesPath(), { headers: token });
+    return response;
+  },
+);
 
 const messagesAdapter = createEntityAdapter();
 
@@ -10,7 +22,6 @@ const statusName = {
 };
 
 const initialState = messagesAdapter.getInitialState({
-  currentChannelId: null,
   statusbar: null,
   errors: null,
 });
@@ -22,11 +33,18 @@ const messagesSlice = createSlice({
     addMessage: messagesAdapter.addOne,
   },
   extraReducers: (builder) => {
-    builder.addCase(fetchDataThunk.fulfilled, (state, action) => {
-      state.statusbar = statusName.loaded;
-      state.errors = null;
-      messagesAdapter.setAll(state, action.payload.data.messages);
-    });
+    builder
+      .addCase(fetchMessagesThunk.fulfilled, (state, action) => {
+        state.statusbar = statusName.loaded;
+        state.errors = null;
+        messagesAdapter.addMany(state, action.payload.data);
+      })
+      .addCase(channelActions.removeChannel, (state, action) => {
+        const removedChannelId = action.payload;
+        const filtredMessages = Object.values(state.entities)
+          .filter((message) => message.channelId !== removedChannelId);
+        messagesAdapter.setAll(state, filtredMessages);
+      });
   },
 });
 

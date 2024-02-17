@@ -1,16 +1,16 @@
-import { createSlice, createEntityAdapter } from '@reduxjs/toolkit';
-// import fetchDataThunk from './fetchDataThunk.js';
+import { createSlice } from '@reduxjs/toolkit';
 
-// const initialState = { userId: '' };
-const usersAdapter = createEntityAdapter();
+const initialState = { userId: '' };
 const userSlice = createSlice({
   name: 'user',
-  initialState: usersAdapter.getInitialState(),
+  initialState,
   reducers: {
-    setUser: usersAdapter.addOne,
+    setUser: (state, actions) => {
+      state.userId = actions.payload;
+    },
   },
 });
 
-export const useUserSelector = usersAdapter.getSelectors((state) => state.user);
-export const { actions: userActions } = userSlice;
+export const getUserIdSelector = (state) => state.user.userId;
+export const { setUser } = userSlice.actions;
 export default userSlice.reducer;

@@ -1,34 +1,41 @@
 import { useFormik } from 'formik';
-import { useSelector } from 'react-redux';
+import { useEffect, useRef } from 'react';
 import axios from 'axios';
 import Form from 'react-bootstrap/Form';
 import ROUTES from '../fetchApi/route.js';
 import getAuthHeader from '../utils/getAuthHeader';
-// import { messageActions } from '../store/slices/messagesSlice.js';
+// import { getUserIdSelector } from '../store/slices/userSlice.js';
+import { CurrentUserMessage, OtherUsersMessage } from './MessageItem.jsx';
+import useAuth from '../hooks/useAuth.js';
 // import store from '../store/index.js';
-import { useUserSelector } from '../store/slices/userSlice.js';
 
 const MessagesList = ({ messages, currentChannelId }) => {
-  const username = useSelector((state) => useUserSelector.selectById(state, 'userId')?.name);
+  const inputEl = useRef(null);
+  useEffect(() => {
+    inputEl.current.focus();
+  }, [currentChannelId]);
+  const authHook = useAuth();
+  const userName = authHook.username;
   const formik = useFormik({
     initialValues: {
       message: '',
     },
     onSubmit: async (values) => {
+      const token = getAuthHeader();
       formik.setSubmitting(true);
       try {
         const newMessage = {
           body: values.message,
           channelId: currentChannelId,
-          username,
+          username: userName,
         };
-        const response = await axios
-          .post(ROUTES.messagesPath(), newMessage, { headers: getAuthHeader() });
-        console.log(response);
+        await axios
+          .post(ROUTES.messagesPath(), newMessage, { headers: token });
+        formik.resetForm();
         return true;
       } catch (e) {
-        console.log(e);
-        return (e);
+        console.log(e.message);
+        return e;
       } finally {
         formik.setSubmitting(false);
       }
@@ -37,7 +44,11 @@ const MessagesList = ({ messages, currentChannelId }) => {
   return (
     <>
       <div id="messages-box" className="chat-messages overflow-auto px-5 ">
-        {messages.map((item) => (<p key={item.id}>{item.body}</p>))}
+        {messages.map((item) => (
+          item.username === userName
+            ? <CurrentUserMessage key={item.id} item={item} />
+            : <OtherUsersMessage key={item.id} item={item} />
+        ))}
       </div>
       <div className="mt-auto px-5 py-3">
         <Form onSubmit={formik.handleSubmit} className="py-1 border rounded-2">
@@ -49,6 +60,7 @@ const MessagesList = ({ messages, currentChannelId }) => {
               placeholder="Введите сообщение..."
               className="border-0 p-0 ps-2 form-control"
               value={formik.values.message}
+              ref={inputEl}
             />
             <button type="submit" className="btn btn-group-vertical">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="20" height="20" fill="currentColor">

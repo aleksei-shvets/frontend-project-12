@@ -10,10 +10,7 @@ const MessagesContainer = () => {
     (state) => channelsSelector.selectById(state, currentChannelId),
   );
   const messages = useSelector((state) => messagesSelectors.selectAll(state))
-    .filter((message) => message.id === currentChannelId);
-
-  console.log(messages);
-
+    .filter((message) => Number(message.channelId) === Number(currentChannelId));
   return (
     <div className="col p-0 h-100">
       <div className="d-flex flex-column h-100">
