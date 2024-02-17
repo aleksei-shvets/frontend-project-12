@@ -3,6 +3,7 @@ import 'bootstrap';
 import {
   BrowserRouter, Route, Routes, Navigate,
 } from 'react-router-dom';
+import { I18nextProvider } from 'react-i18next';
 import { Provider } from 'react-redux';
 import store from './store/index.js';
 import Login from './pages/Login.jsx';
@@ -13,8 +14,8 @@ import AuthProvider from './providers/authProvider.js';
 import SocketProvider from './providers/socketProvider.js';
 import ROUTES from './pages/route.jsx';
 import useAuth from './hooks/useAuth.js';
-// import ModalProvider from './providers/modalProvider.js';
 import Nav from './components/Nav.jsx';
+import i18n from './i18n.js';
 
 const PrivateRoute = ({ children }) => {
   const auth = useAuth();
@@ -25,29 +26,31 @@ const PrivateRoute = ({ children }) => {
 };
 
 const App = () => (
-  <Provider store={store}>
-    <AuthProvider>
-      <SocketProvider>
+  <I18nextProvider i18n={i18n} defaultNS="translation">
+    <Provider store={store}>
+      <AuthProvider>
+        <SocketProvider>
 
-        <Nav />
-        <BrowserRouter>
-          <Routes>
-            <Route path={ROUTES.login} element={<Login />} />
-            <Route path={ROUTES.signup} element={<Signup />} />
-            <Route path={ROUTES.notFound} element={<NotFound />} />
-            <Route
-              path={ROUTES.home}
-              element={(
-                <PrivateRoute>
-                  <Home />
-                </PrivateRoute>
-              )}
-            />
-          </Routes>
-        </BrowserRouter>
-      </SocketProvider>
-    </AuthProvider>
-  </Provider>
+          <Nav />
+          <BrowserRouter>
+            <Routes>
+              <Route path={ROUTES.login} element={<Login />} />
+              <Route path={ROUTES.signup} element={<Signup />} />
+              <Route path={ROUTES.notFound} element={<NotFound />} />
+              <Route
+                path={ROUTES.home}
+                element={(
+                  <PrivateRoute>
+                    <Home />
+                  </PrivateRoute>
+                )}
+              />
+            </Routes>
+          </BrowserRouter>
+        </SocketProvider>
+      </AuthProvider>
+    </Provider>
+  </I18nextProvider>
 );
 
 export default App;
