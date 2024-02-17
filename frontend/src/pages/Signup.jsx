@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import {
   Form, Button, Card,
 } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 import * as yup from 'yup';
 import { useFormik } from 'formik';
@@ -13,6 +14,7 @@ import apiRoutes from '../fetchApi/route.js';
 const chatImg = require('../assets/images/chat.gif');
 
 const Signup = () => {
+  const { t } = useTranslation();
   const authHook = useAuth();
   const navigate = useNavigate();
   const [regError, setregErrorEl] = useState(null);
@@ -79,7 +81,7 @@ const Signup = () => {
     if (errMessage) {
       return (
         <div className="invalid-feedback">
-          Пользователь уже существует
+          {t('errorMessages.incorrectSignup')}
         </div>
       );
     }
@@ -97,12 +99,12 @@ const Signup = () => {
                   <Card.Img width={200} src={chatImg} />
                 </div>
                 <Form onSubmit={formik.handleSubmit} className="col-12 col-md-6 mt-3 ">
-                  <h1 className="text-center mb-2">Регистрация</h1>
+                  <h1 className="text-center mb-2">{t('formHeaders.registration')}</h1>
                   <fieldset>
                     <Form.Group className="mb-3">
                       <Form.Label htmlFor="username" />
                       <Form.Control
-                        placeholder="Ваш ник"
+                        placeholder={t('placeholders.username')}
                         required
                         autoComplete="username"
                         id="username"
@@ -122,7 +124,7 @@ const Signup = () => {
                       <Form.Label htmlFor="password" />
                       <Form.Control
                         required
-                        placeholder="Пароль"
+                        placeholder={t('placeholders.password')}
                         id="password"
                         name="password"
                         type="password"
@@ -138,7 +140,7 @@ const Signup = () => {
                       <Form.Label htmlFor="confirmPassword" />
                       <Form.Control
                         required
-                        placeholder="Подтверждение пароля"
+                        placeholder={t('placeholders.confirmPassword')}
                         id="confirmPassword"
                         name="confirmPassword"
                         type="password"
@@ -150,7 +152,7 @@ const Signup = () => {
                         {formik.errors.confirmPassword}
                       </Form.Control.Feedback>
                     </Form.Group>
-                    <Button type="submit" className="w-100 mt-4" variant="outline-secondary">Зарегистрироваться</Button>
+                    <Button type="submit" className="w-100 mt-4" variant="outline-secondary">{t('buttons.registrationBtn')}</Button>
                   </fieldset>
                 </Form>
               </Card.Body>

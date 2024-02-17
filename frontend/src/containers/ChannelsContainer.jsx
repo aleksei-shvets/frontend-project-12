@@ -3,7 +3,7 @@ import { channelsSelector, currentChannelIdSelector, channelActions } from '../s
 import ChannelsHeader from '../components/ChannelsHeader.jsx';
 import ChannelsList from '../components/ChannelsList.jsx';
 import { modalActions } from '../store/slices/modalSlice.js';
-import store from '../store/index.js';
+// import store from '../store/index.js';
 
 const ChannelsContainer = () => {
   const dispath = useDispatch();
@@ -14,7 +14,6 @@ const ChannelsContainer = () => {
   ); */
   const handleChoose = (id) => {
     dispath(channelActions.switchChannel(id));
-    console.log(store.getState());
   };
 
   const addChannelModalHandler = () => {

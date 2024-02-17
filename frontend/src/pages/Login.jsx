@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import {
   Form, Button, Card,
 } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 // import * as yup from "yup";
 import { useFormik } from 'formik';
@@ -25,6 +26,7 @@ import apiRoutes from '../fetchApi/route.js';
 const chatImg = require('../assets/images/chat.gif');
 
 const Login = () => {
+  const { t } = useTranslation();
   const authHook = useAuth();
   // const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -69,12 +71,12 @@ const Login = () => {
                   <Card.Img width={200} src={chatImg} />
                 </div>
                 <Form onSubmit={formik.handleSubmit} className="col-12 col-md-6 mt-3 ">
-                  <h1 className="text-center mb-2">Войти</h1>
+                  <h1 className="text-center mb-2">{t('formHeaders.login')}</h1>
                   <fieldset>
                     <Form.Group className="mb-4">
                       <Form.Label htmlFor="username" />
                       <Form.Control
-                        placeholder="Ваш ник"
+                        placeholder={t('placeholders.nickname')}
                         required
                         autoComplete="username"
                         id="username"
@@ -91,7 +93,7 @@ const Login = () => {
                       <Form.Control
                         required
                         autoComplete="current-password"
-                        placeholder="Пароль"
+                        placeholder={t('placeholders.password')}
                         id="password"
                         name="password"
                         type="password"
@@ -99,16 +101,16 @@ const Login = () => {
                         value={formik.values.password}
                         isInvalid={isNotAuth}
                       />
-                      <Form.Control.Feedback className="text-center" type="invalid">the username or password is incorrect</Form.Control.Feedback>
+                      <Form.Control.Feedback className="text-center" type="invalid">{t('errorMessages.incorrectLogin')}</Form.Control.Feedback>
                     </Form.Group>
-                    <Button type="submit" className="w-100 mt-4" variant="outline-secondary">Воити</Button>
+                    <Button type="submit" className="w-100 mt-4" variant="outline-secondary">{t('buttons.loginBtn')}</Button>
                   </fieldset>
                 </Form>
               </Card.Body>
               <Card.Footer className="p-4">
                 <div className="text-center">
-                  <span>Нет аккаунта? </span>
-                  <a href="/signup">Регистрация</a>
+                  <span>{t('questions.registrationQuestion')}</span>
+                  <a href="/signup">{t('buttons.regLink')}</a>
                 </div>
               </Card.Footer>
             </Card>

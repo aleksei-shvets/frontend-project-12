@@ -1,6 +1,7 @@
 import { Form } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
@@ -11,6 +12,7 @@ import { channelActions } from '../store/slices/channelsSlice.js';
 import store from '../store/index.js';
 
 const RemoveChannelModal = () => {
+  const { t } = useTranslation();
   const updatedChannelId = useSelector(getUpdatedChannelId);
   const isShownModal = useSelector((state) => isShownSelector(state));
   const dispatch = useDispatch();
@@ -54,15 +56,15 @@ const RemoveChannelModal = () => {
     >
       <Modal.Header closeButton>
         <Modal.Title id="nameInput">
-          Удалить канал
+          {t('modalHeaders.removeModal')}
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form onSubmit={formik.handleSubmit}>
-          Уверены?
+          {t('questions.removeChannelQuestion')}
           <div className="d-flex justify-content-end">
-            <Button variant="secondary" onClick={hideModal} className="me-2 ">Отменить</Button>
-            <Button variant="danger" type="submit">Удалить</Button>
+            <Button variant="secondary" onClick={hideModal} className="me-2 ">{t('buttons.cancelBtn')}</Button>
+            <Button variant="danger" type="submit">{t('buttons.deleteBtn')}</Button>
           </div>
         </Form>
       </Modal.Body>

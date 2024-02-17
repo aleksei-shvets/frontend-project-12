@@ -1,7 +1,8 @@
-// import { Button } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 import useAuth from '../hooks/useAuth.js';
 
 const Nav = () => {
+  const { t } = useTranslation();
   const authHook = useAuth();
   return (
     <nav className="shadow-sm navbar navbar-expand-lg navbar-light bg-white">
@@ -9,7 +10,7 @@ const Nav = () => {
         <a className="navbar-brand" href="/">Hexlet Chat</a>
         {
           authHook.loggedIn
-            ? <button onClick={authHook.logOut} type="button" className="action btn bg-info">Выйти</button>
+            ? <button onClick={authHook.logOut} type="button" className="action btn bg-info">{t('buttons.logoutBtn')}</button>
             : null
         }
       </div>

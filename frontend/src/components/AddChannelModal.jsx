@@ -3,6 +3,7 @@ import * as yup from 'yup';
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
@@ -19,6 +20,7 @@ import store from '../store/index.js';
 }; */
 
 const AddChannelModal = () => {
+  const { t } = useTranslation();
   const channelNames = useSelector((state) => channelsSelector.selectAll(state))
     .map((channel) => channel.name);
 
@@ -84,7 +86,7 @@ const AddChannelModal = () => {
     >
       <Modal.Header closeButton>
         <Modal.Title id="nameInput">
-          Добавить канал
+          {t('modalHeaders.addModal')}
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
@@ -105,8 +107,8 @@ const AddChannelModal = () => {
             </Form.Control.Feedback>
           </Form.Group>
           <div className="d-flex justify-content-end">
-            <Button variant="outline-secondary" onClick={hideModal} className="me-2 ">Отменить</Button>
-            <Button variant="secondary" type="submit">Отправить</Button>
+            <Button variant="outline-secondary" onClick={hideModal} className="me-2 ">{t('buttons.cancelBtn')}</Button>
+            <Button variant="secondary" type="submit">{t('buttons.sendBtn')}</Button>
           </div>
         </Form>
       </Modal.Body>
