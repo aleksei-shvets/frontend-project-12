@@ -5,9 +5,6 @@ import ROUTES from '../../fetchApi/route.js';
 
 const channelsAdapter = createEntityAdapter();
 
-<<<<<<< HEAD
-const defaultChannelId = 1;
-=======
 export const fetchChannelsThunk = createAsyncThunk(
   'channels/fetchChannels',
   async () => {
@@ -17,8 +14,6 @@ export const fetchChannelsThunk = createAsyncThunk(
     return response;
   },
 );
-
->>>>>>> correct
 const statusName = {
   loading: 'loading',
   loaded: 'loaded',
@@ -26,11 +21,7 @@ const statusName = {
 };
 const defaultCurrentChannelId = 1;
 const initialState = channelsAdapter.getInitialState({
-<<<<<<< HEAD
-  currentChannelId: defaultChannelId,
-=======
   currentChannelId: defaultCurrentChannelId,
->>>>>>> correct
   statusbar: null,
   errors: null,
 });
@@ -44,10 +35,7 @@ const channelsSlice = createSlice({
     switchChannel: (state, action) => {
       state.currentChannelId = action.payload;
     },
-<<<<<<< HEAD
-=======
     renameChannel: channelsAdapter.updateOne,
->>>>>>> correct
   },
   extraReducers: (builder) => {
     builder.addCase(fetchChannelsThunk.pending, (state) => {
