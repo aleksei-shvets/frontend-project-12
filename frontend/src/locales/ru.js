@@ -8,6 +8,8 @@ export default {
       registrationBtn: 'Зарегистрироваться',
       deleteBtn: 'Удалить',
       renameBtn: 'Переименовать',
+      regLink: 'Регистрация',
+      mainPageLink: 'на главную страницу',
     },
     placeholders: {
       nickname: 'Ваш ник',
@@ -26,9 +28,22 @@ export default {
       addModal: 'Добавить канал',
     },
     questions: {
-      registrationQuestion: 'Нет аккаунта?',
+      registrationQuestion: 'Нет аккаунта? ',
       removeChannelQuestion: 'Уверены?',
     },
-    channelsHeader: 'Каналы',
+    chatHeaders: {
+      channelsHeader: 'Каналы',
+    },
+    errorMessages: {
+      incorrectLogin: 'Неверные имя пользователя или пароль',
+      incorrectSignup: 'Такой пользователь уже существует',
+      notfoundPage: 'Страница не найдена',
+    },
+    userDirection: 'Но вы можете перейти ',
+    messageCount_zero: '{{count}} сообщений',
+    messageCount_one: '{{count}} сообщение',
+    messageCount_few: '{{count}} сообщения',
+    messageCount_many: '{{count}} сообщений',
+    messageCount_other: '{{count}} сообщений',
   },
 };
