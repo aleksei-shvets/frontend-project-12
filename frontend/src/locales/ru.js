@@ -39,6 +39,10 @@ export default {
       incorrectSignup: 'Такой пользователь уже существует',
       notfoundPage: 'Страница не найдена',
     },
+    toastMessage: {
+      removeChannel: 'Канал удален',
+      renameChannel: 'Канал переименован',
+    },
     userDirection: 'Но вы можете перейти ',
     messageCount_zero: '{{count}} сообщений',
     messageCount_one: '{{count}} сообщение',
