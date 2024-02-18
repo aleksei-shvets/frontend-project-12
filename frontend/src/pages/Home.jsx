@@ -1,6 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Container } from 'react-bootstrap';
+import { toast } from 'react-toastify';
+import { useTranslation } from 'react-i18next';
+import 'react-toastify/dist/ReactToastify.css';
 import ChannelsContainer from '../containers/ChannelsContainer.jsx';
 import MessagesContainer from '../containers/MessagesContainer.jsx';
 // import { channelsSelector, currentChannelIdSelector } from '../store/slices/channelsSlice.js';
@@ -11,9 +14,39 @@ import ModalItem from '../components/Modal.jsx';
 import { isShownSelector, getModalTypeSelector } from '../store/slices/modalSlice.js';
 
 const Home = () => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const isShownModal = useSelector(isShownSelector);
   const modalType = useSelector(getModalTypeSelector);
+  const [isToast, setIsToast] = useState(false);
+
+  const notifyMessage = {
+    addingChannel: t('toastMessage.addChannel'),
+    removingChannel: t('toastMessage.removeChannel'),
+    renamingChannel: t('toastMessage.renameChannel'),
+  };
+  if (isToast) {
+    console.log(isToast);
+  }
+
+  useEffect(() => {
+    const notify = (message) => {
+      toast.success(message, {
+        position: 'top-center',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+      });
+    };
+    if (isToast) {
+      notify(notifyMessage[modalType]);
+      setIsToast(false);
+    }
+  }, [isToast]);
   // console.log(store.getState());
 
   useEffect(() => {
@@ -31,7 +64,7 @@ const Home = () => {
         <ChannelsContainer />
         <MessagesContainer />
       </div>
-      {isShownModal ? <ModalItem type={modalType} /> : null}
+      {isShownModal ? <ModalItem type={modalType} toastHandler={setIsToast} /> : null}
     </Container>
   );
 };

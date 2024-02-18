@@ -14,7 +14,7 @@ import { isShownSelector, modalActions } from '../store/slices/modalSlice.js';
 import { channelActions, channelsSelector } from '../store/slices/channelsSlice.js';
 import store from '../store/index.js';
 
-const AddChannelModal = () => {
+const AddChannelModal = ({ toastHandler }) => {
   filterProfanity.loadDictionary('ru');
   const wordsFilter = (message) => filterProfanity.clean(message);
   const { t } = useTranslation();
@@ -60,6 +60,7 @@ const AddChannelModal = () => {
             },
           });
         hideModal();
+        toastHandler(true);
         dispatch(channelActions.addChannel(response.data));
         dispatch(channelActions.switchChannel(response.data.id));
         formik.resetForm();

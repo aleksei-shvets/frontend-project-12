@@ -11,7 +11,7 @@ import { isShownSelector, modalActions, getUpdatedChannelId } from '../store/sli
 import { channelActions } from '../store/slices/channelsSlice.js';
 import store from '../store/index.js';
 
-const RemoveChannelModal = () => {
+const RemoveChannelModal = ({ toastHandler }) => {
   const { t } = useTranslation();
   const updatedChannelId = useSelector(getUpdatedChannelId);
   const isShownModal = useSelector((state) => isShownSelector(state));
@@ -26,15 +26,15 @@ const RemoveChannelModal = () => {
       const token = getAuthHeader();
       formik.setSubmitting(true);
       try {
-        const response = await axios
+        await axios
           .delete(ROUTES.updateChannelPath(updatedChannelId), {
             headers: {
               Authorization: token.Authorization,
             },
           });
-        console.log(response);
         hideModal();
         dispatch(channelActions.switchChannel(1));
+        toastHandler(true);
         formik.resetForm();
         console.log(store.getState());
         return true;

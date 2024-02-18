@@ -12,7 +12,7 @@ import getAuthHeader from '../utils/getAuthHeader.js';
 import { isShownSelector, modalActions, getUpdatedChannelId } from '../store/slices/modalSlice.js';
 import { channelActions, channelsSelector } from '../store/slices/channelsSlice.js';
 
-const RenameChannelModal = () => {
+const RenameChannelModal = ({ toastHandler }) => {
   const { t } = useTranslation();
   const inputEl = useRef(null);
   const channelNames = useSelector((state) => channelsSelector.selectAll(state))
@@ -57,10 +57,10 @@ const RenameChannelModal = () => {
               Authorization: token.Authorization,
             },
           });
-        console.log(response);
         hideModal();
         dispatch(channelActions.addChannel(response.data));
         dispatch(channelActions.switchChannel(response.data.id));
+        toastHandler(true);
         formik.resetForm();
         console.log(response.data);
         return true;
