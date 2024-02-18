@@ -42,6 +42,7 @@ export default {
     toastMessage: {
       removeChannel: 'Канал удален',
       renameChannel: 'Канал переименован',
+      addChannel: 'Канал добавлен',
     },
     userDirection: 'Но вы можете перейти ',
     messageCount_zero: '{{count}} сообщений',
