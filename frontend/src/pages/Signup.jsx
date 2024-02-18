@@ -80,7 +80,7 @@ const Signup = () => {
   const regErrorEl = (errMessage) => {
     if (errMessage) {
       return (
-        <div className="invalid-feedback">
+        <div className="sm text-danger">
           {t('errorMessages.incorrectSignup')}
         </div>
       );
