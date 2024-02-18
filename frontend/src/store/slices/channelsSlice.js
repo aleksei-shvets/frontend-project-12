@@ -1,11 +1,11 @@
 import { createSlice, createEntityAdapter, createAsyncThunk } from '@reduxjs/toolkit';
-import { useRollbar } from '@rollbar/react';
+// import { useRollbar } from '@rollbar/react';
 import axios from 'axios';
 import getAuthHeader from '../../utils/getAuthHeader.js';
 import ROUTES from '../../fetchApi/route.js';
 
 const channelsAdapter = createEntityAdapter();
-const rollbar = useRollbar();
+// const rollbar = useRollbar();
 
 export const fetchChannelsThunk = createAsyncThunk(
   'channels/fetchChannels',
@@ -16,7 +16,7 @@ export const fetchChannelsThunk = createAsyncThunk(
       console.log(response);
       return response;
     } catch (e) {
-      rollbar.error('Fetching channels', e);
+      // rollbar.error('Fetching channels', e);
       return e;
     }
   },
