@@ -38,6 +38,7 @@ export default {
       incorrectLogin: 'Неверные имя пользователя или пароль',
       incorrectSignup: 'Такой пользователь уже существует',
       notfoundPage: 'Страница не найдена',
+      incorrectRenameChannel: 'Должно быть уникальным',
     },
     toastMessage: {
       removeChannel: 'Канал удален',

@@ -36,7 +36,7 @@ const RenameChannelModal = ({ toastHandler }) => {
       .required('Обязательное поле')
       .min(3, 'Минимум 3')
       .max(20, 'Максимум 20')
-      .notOneOf(channelNames),
+      .notOneOf(channelNames, t('errorMessages.incorrectRenameChannel')),
   });
 
   const formik = useFormik({
