@@ -4,6 +4,7 @@ import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useRollbar } from '@rollbar/react';
 import * as filterProfanity from 'leo-profanity';
 import axios from 'axios';
 import Button from 'react-bootstrap/Button';
@@ -15,6 +16,7 @@ import { channelActions, channelsSelector } from '../store/slices/channelsSlice.
 import store from '../store/index.js';
 
 const AddChannelModal = ({ toastHandler }) => {
+  const rollbar = useRollbar();
   filterProfanity.loadDictionary('ru');
   const wordsFilter = (message) => filterProfanity.clean(message);
   const { t } = useTranslation();
@@ -66,7 +68,7 @@ const AddChannelModal = ({ toastHandler }) => {
         formik.resetForm();
         return true;
       } catch (e) {
-        console.log(e.message);
+        rollbar.error('Adding channel', e);
         return e;
       } finally {
         formik.setSubmitting(false);

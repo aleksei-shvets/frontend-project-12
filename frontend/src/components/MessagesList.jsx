@@ -3,6 +3,7 @@ import * as filterProfanity from 'leo-profanity';
 import { useEffect, useRef } from 'react';
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
+import { useRollbar } from '@rollbar/react';
 import Form from 'react-bootstrap/Form';
 import ROUTES from '../fetchApi/route.js';
 import getAuthHeader from '../utils/getAuthHeader';
@@ -11,6 +12,7 @@ import useAuth from '../hooks/useAuth.js';
 // import store from '../store/index.js';
 
 const MessagesList = ({ messages, currentChannelId }) => {
+  const rollbar = useRollbar();
   filterProfanity.loadDictionary('ru');
   const wordsFilter = (message) => filterProfanity.clean(message);
   const { t } = useTranslation();
@@ -36,10 +38,8 @@ const MessagesList = ({ messages, currentChannelId }) => {
         await axios
           .post(ROUTES.messagesPath(), newMessage, { headers: token });
         formik.resetForm();
-        return true;
       } catch (e) {
-        console.log(e.message);
-        return e;
+        rollbar.error('Adding message', e);
       } finally {
         formik.setSubmitting(false);
       }

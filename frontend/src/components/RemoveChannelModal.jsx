@@ -2,6 +2,7 @@ import { Form } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import { useRollbar } from '@rollbar/react';
 import axios from 'axios';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
@@ -12,6 +13,7 @@ import { channelActions } from '../store/slices/channelsSlice.js';
 import store from '../store/index.js';
 
 const RemoveChannelModal = ({ toastHandler }) => {
+  const rollbar = useRollbar();
   const { t } = useTranslation();
   const updatedChannelId = useSelector(getUpdatedChannelId);
   const isShownModal = useSelector((state) => isShownSelector(state));
@@ -37,10 +39,8 @@ const RemoveChannelModal = ({ toastHandler }) => {
         toastHandler(true);
         formik.resetForm();
         console.log(store.getState());
-        return true;
       } catch (e) {
-        console.log(e.message);
-        return e;
+        rollbar.error('Removing channel', e);
       } finally {
         formik.setSubmitting(false);
       }
