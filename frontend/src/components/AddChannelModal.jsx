@@ -4,6 +4,7 @@ import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
+import * as filterProfanity from 'leo-profanity';
 import axios from 'axios';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
@@ -13,13 +14,9 @@ import { isShownSelector, modalActions } from '../store/slices/modalSlice.js';
 import { channelActions, channelsSelector } from '../store/slices/channelsSlice.js';
 import store from '../store/index.js';
 
-/* const modalTypes = {
-  addingChannel: 'addingChannel',
-  removingChannel: 'removingChannel',
-  renamingChannel: 'renamingChannel',
-}; */
-
 const AddChannelModal = () => {
+  filterProfanity.loadDictionary('ru');
+  const wordsFilter = (message) => filterProfanity.clean(message);
   const { t } = useTranslation();
   const channelNames = useSelector((state) => channelsSelector.selectAll(state))
     .map((channel) => channel.name);
@@ -49,10 +46,11 @@ const AddChannelModal = () => {
     validationSchema: channelNameSchema,
     onSubmit: async (values) => {
       const token = getAuthHeader();
+      const channelName = wordsFilter(values.nameInput);
       formik.setSubmitting(true);
       try {
         const newChannel = {
-          name: values.nameInput,
+          name: channelName,
         };
         console.log(store.getState());
         const response = await axios
@@ -61,12 +59,10 @@ const AddChannelModal = () => {
               Authorization: token.Authorization,
             },
           });
-        console.log(response);
         hideModal();
         dispatch(channelActions.addChannel(response.data));
         dispatch(channelActions.switchChannel(response.data.id));
         formik.resetForm();
-        console.log(response.data);
         return true;
       } catch (e) {
         console.log(e.message);

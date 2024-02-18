@@ -1,4 +1,5 @@
 import { useFormik } from 'formik';
+import * as filterProfanity from 'leo-profanity';
 import { useEffect, useRef } from 'react';
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
@@ -10,6 +11,8 @@ import useAuth from '../hooks/useAuth.js';
 // import store from '../store/index.js';
 
 const MessagesList = ({ messages, currentChannelId }) => {
+  filterProfanity.loadDictionary('ru');
+  const wordsFilter = (message) => filterProfanity.clean(message);
   const { t } = useTranslation();
   const inputEl = useRef(null);
   useEffect(() => {
@@ -26,7 +29,7 @@ const MessagesList = ({ messages, currentChannelId }) => {
       formik.setSubmitting(true);
       try {
         const newMessage = {
-          body: values.message,
+          body: wordsFilter(values.message),
           channelId: currentChannelId,
           username: userName,
         };
