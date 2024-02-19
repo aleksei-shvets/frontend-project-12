@@ -4,8 +4,8 @@ install:
 start:
 	npx start-server
 
-run_app:
-	make run_server && cd ./frontend && make run_frontend
+run_frontend:
+	make -C frontend start
 
 lint_frontend:
 	make -C frontend lint
