@@ -7,5 +7,5 @@ start:
 run_frontend:
 	make -C frontend start
 
-lint_frontend:
-	make -C frontend lint
+start-backend:
+	npx start-server
