@@ -1,10 +1,10 @@
 install:
 	npm ci
 
-run_frontend:
+start:
 	npm start
 
-build_frontend:
+build:
 	npm build
 
 lint:
