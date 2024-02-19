@@ -3,3 +3,6 @@ install:
 
 start:
 	npx start-server
+
+build:
+	make -C frontend && make build
