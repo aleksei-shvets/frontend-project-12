@@ -7,5 +7,8 @@ start:
 run_frontend:
 	make -C frontend start
 
-start-backend:
+build_frontend:
+	make -C frontend build
+
+run_backend:
 	npx start-server
