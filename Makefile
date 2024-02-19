@@ -4,8 +4,8 @@ install:
 run_frontend:
 	make -C frontend start
 
-build_frontend:
-	make -C frontend && make build
+build:
+	make -C frontend build
 
 run_backend:
 	npx start-server
