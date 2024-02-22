@@ -5,11 +5,11 @@ import {
 } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import axios from 'axios';
-import * as yup from 'yup';
 import { useFormik } from 'formik';
 import useAuth from '../hooks/useAuth.js';
 import pageRoutes from './route.jsx';
 import apiRoutes from '../fetchApi/route.js';
+import getShema from '../validation/validation.js';
 
 const chatImg = require('../assets/images/chat.gif');
 
@@ -19,6 +19,7 @@ const Signup = () => {
   const navigate = useNavigate();
   const [regError, setregErrorEl] = useState(null);
   const inputNameRef = useRef();
+  const { signupSchema } = getShema(t);
   useEffect(() => {
     inputNameRef.current.focus();
   }, []);
@@ -26,28 +27,11 @@ const Signup = () => {
   useEffect(() => {
     if (regError && inputNameRef.current) {
       inputNameRef.current.select();
-      setregErrorEl('Пользователь уже существует');
-      console.log(regError);
+      setregErrorEl(t('fetchErrors.incorrectSignup'));
     } else {
       setregErrorEl(null);
     }
   }, [regError]);
-
-  const schema = yup.object({
-    username: yup
-      .string('Enter your email')
-      .min(3, 'Минимум 3')
-      .max(20, 'Максимум 20')
-      .required('Email is required'),
-    password: yup
-      .string('Enter your password')
-      .min(6, 'Password should be of minimum 8 characters length')
-      .required('Password is required'),
-    confirmPassword: yup
-      .string()
-      .oneOf([yup.ref('password'), null], 'Пароли должны совпадать')
-      .required('Подтверждение пароля обязательно для заполнения'),
-  });
 
   const formik = useFormik({
     initialValues: {
@@ -55,7 +39,7 @@ const Signup = () => {
       password: '',
       confirmPassword: '',
     },
-    validationSchema: schema,
+    validationSchema: signupSchema,
     onSubmit: async (values) => {
       try {
         const newUser = { username: values.username, password: values.password };
@@ -63,7 +47,6 @@ const Signup = () => {
         localStorage.setItem('userToken', JSON.stringify(response.data.token));
         localStorage.setItem('username', JSON.stringify(response.data.username));
         authHook.logIn();
-        authHook.setUser(); // TODO - скорее всего лишняя вызов, можно все делать в контексте
         navigate(pageRoutes.home);
       } catch (err) {
         formik.setSubmitting(false);

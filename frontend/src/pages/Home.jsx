@@ -6,11 +6,9 @@ import { useTranslation } from 'react-i18next';
 import 'react-toastify/dist/ReactToastify.css';
 import ChannelsContainer from '../containers/ChannelsContainer.jsx';
 import MessagesContainer from '../containers/MessagesContainer.jsx';
-// import { channelsSelector, currentChannelIdSelector } from '../store/slices/channelsSlice.js';
 import { fetchChannelsThunk } from '../store/slices/channelsSlice.js';
 import { fetchMessagesThunk } from '../store/slices/messagesSlice.js';
-import ModalItem from '../components/Modal.jsx';
-// import store from '../store/index.js';
+import ModalItem from '../components/Modal/index.js';
 import { isShownSelector, getModalTypeSelector } from '../store/slices/modalSlice.js';
 
 const Home = () => {
@@ -25,9 +23,6 @@ const Home = () => {
     removingChannel: t('toastMessage.removeChannel'),
     renamingChannel: t('toastMessage.renameChannel'),
   };
-  if (isToast) {
-    console.log(isToast);
-  }
 
   useEffect(() => {
     const notify = (message) => {
@@ -47,7 +42,6 @@ const Home = () => {
       setIsToast(false);
     }
   }, [isToast]);
-  // console.log(store.getState());
 
   useEffect(() => {
     const fetchData = async () => {

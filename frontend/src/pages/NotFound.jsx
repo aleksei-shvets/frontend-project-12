@@ -16,7 +16,7 @@ const NotFound = () => {
                   <Card.Img width={200} src={notFoundImg} />
                 </div>
                 <div className="col-12 col-md-6 mt-0 mb-0">
-                  <h4 className="text-muted text-center mb-4">{t('errorMessages.notfoundPage')}</h4>
+                  <h4 className="text-muted text-center mb-4">{t('fetchErrors.notfoundPage')}</h4>
                   <p className="text-muted text-center mb-4">
                     {t('userDirection')}
                     <a href="/">{t('buttons.mainPageLink')}</a>

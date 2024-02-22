@@ -48,7 +48,6 @@ const Login = () => {
         localStorage.setItem('userToken', JSON.stringify(response.data.token));
         localStorage.setItem('username', JSON.stringify(response.data.username));
         authHook.logIn();
-        authHook.setUser(); // TODO - скорее всего лишняя вызов, можно все делать в контексте
         navigate(pageRoutes.home);
         formik.setSubmitting(false);
       } catch (err) {
@@ -101,7 +100,7 @@ const Login = () => {
                         value={formik.values.password}
                         isInvalid={isNotAuth}
                       />
-                      <Form.Control.Feedback className="text-center" type="invalid">{t('errorMessages.incorrectLogin')}</Form.Control.Feedback>
+                      <Form.Control.Feedback className="text-center" type="invalid">{t('fetchErrors.incorrectLogin')}</Form.Control.Feedback>
                     </Form.Group>
                     <Button type="submit" className="w-100 mt-4" variant="outline-secondary">{t('buttons.loginBtn')}</Button>
                   </fieldset>
