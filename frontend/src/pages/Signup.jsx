@@ -115,7 +115,7 @@ const Signup = () => {
                         value={formik.values.password}
                         isInvalid={!formik.isValid}
                       />
-                      <Form.Control.Feedback className="text-center" type="invalid">
+                      <Form.Control.Feedback type="invalid">
                         {formik.errors.password}
                       </Form.Control.Feedback>
                     </Form.Group>
