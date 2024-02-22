@@ -34,10 +34,16 @@ export default {
     chatHeaders: {
       channelsHeader: 'Каналы',
     },
-    errorMessages: {
+    fetchErrors: {
       incorrectLogin: 'Неверные имя пользователя или пароль',
       incorrectSignup: 'Такой пользователь уже существует',
       notfoundPage: 'Страница не найдена',
+    },
+    validationErrors: {
+      incorrectLength: 'От 3 до 20 символов',
+      minPasswordLength: 'Не менее 6 символов',
+      notConfirmPassword: 'Пароли должны совпадать',
+      requiredFields: 'Обязательное поле',
       incorrectRenameChannel: 'Должно быть уникальным',
     },
     toastMessage: {
@@ -52,4 +58,5 @@ export default {
     messageCount_many: '{{count}} сообщений',
     messageCount_other: '{{count}} сообщений',
   },
+  plusSymbol: '+',
 };
