@@ -6,11 +6,11 @@ import { useRollbar } from '@rollbar/react';
 import axios from 'axios';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-import ROUTES from '../fetchApi/route.js';
-import getAuthHeader from '../utils/getAuthHeader.js';
-import { isShownSelector, modalActions, getUpdatedChannelId } from '../store/slices/modalSlice.js';
-import { channelActions } from '../store/slices/channelsSlice.js';
-import store from '../store/index.js';
+import ROUTES from '../../fetchApi/route.js';
+import getAuthHeader from '../../utils/getAuthHeader.js';
+import { isShownSelector, modalActions, getUpdatedChannelId } from '../../store/slices/modalSlice.js';
+import { channelActions } from '../../store/slices/channelsSlice.js';
+import store from '../../store/index.js';
 
 const RemoveChannelModal = ({ toastHandler }) => {
   const rollbar = useRollbar();

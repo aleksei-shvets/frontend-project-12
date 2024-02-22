@@ -1,5 +1,4 @@
 import { Form } from 'react-bootstrap';
-import * as yup from 'yup';
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useRef } from 'react';
@@ -9,33 +8,27 @@ import * as filterProfanity from 'leo-profanity';
 import axios from 'axios';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-import ROUTES from '../fetchApi/route.js';
-import getAuthHeader from '../utils/getAuthHeader.js';
-import { isShownSelector, modalActions } from '../store/slices/modalSlice.js';
-import { channelActions, channelsSelector } from '../store/slices/channelsSlice.js';
-import store from '../store/index.js';
+import ROUTES from '../../fetchApi/route.js';
+import getAuthHeader from '../../utils/getAuthHeader.js';
+import { isShownSelector, modalActions } from '../../store/slices/modalSlice.js';
+import { channelActions, channelsSelector } from '../../store/slices/channelsSlice.js';
+import getShema from '../../validation/validation.js';
 
 const AddChannelModal = ({ toastHandler }) => {
   const rollbar = useRollbar();
   filterProfanity.loadDictionary('ru');
   const wordsFilter = (message) => filterProfanity.clean(message);
   const { t } = useTranslation();
+
   const channelNames = useSelector((state) => channelsSelector.selectAll(state))
     .map((channel) => channel.name);
+
+  const { channelNameSchema } = getShema(t, channelNames);
 
   const inputEl = useRef(null);
   useEffect(() => {
     inputEl.current.focus();
   }, []);
-
-  const channelNameSchema = yup.object({
-    nameInput: yup
-      .string()
-      .required('Обязательное поле')
-      .min(3, 'Минимум 3')
-      .max(20, 'Максимум 20')
-      .notOneOf(channelNames),
-  });
 
   const isShownModal = useSelector((state) => isShownSelector(state));
   const dispatch = useDispatch();
@@ -54,7 +47,6 @@ const AddChannelModal = ({ toastHandler }) => {
         const newChannel = {
           name: channelName,
         };
-        console.log(store.getState());
         const response = await axios
           .post(ROUTES.channelsPath(), newChannel, {
             headers: {
