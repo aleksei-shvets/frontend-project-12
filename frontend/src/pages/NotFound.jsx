@@ -23,12 +23,6 @@ const NotFound = () => {
                   </p>
                 </div>
               </Card.Body>
-              <Card.Footer className="p-4">
-                <div className="text-center">
-                  <span>{t('questions.registrationQuestion')}</span>
-                  <a href="/signup">{t('buttons.regLink')}</a>
-                </div>
-              </Card.Footer>
             </Card>
           </div>
         </div>
