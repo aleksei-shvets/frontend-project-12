@@ -26,5 +26,17 @@ export default (t, channelNames = []) => {
       .required(t('validationErrors.requiredFields')),
   });
 
-  return { channelNameSchema, signupSchema };
+  const loginSchema = yup.object({
+    username: yup
+      .string()
+      .min(3, t('validationErrors.incorrectLength'))
+      .max(20, t('validationErrors.incorrectLength'))
+      .required(t('validationErrors.requiredFields')),
+    password: yup
+      .string()
+      .min(6, t('validationErrors.minPasswordLength'))
+      .required(t('validationErrors.requiredFields')),
+  });
+
+  return { channelNameSchema, signupSchema, loginSchema };
 };

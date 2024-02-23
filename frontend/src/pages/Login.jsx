@@ -5,33 +5,32 @@ import {
 } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import axios from 'axios';
-// import * as yup from "yup";
 import { useFormik } from 'formik';
-// import { useDispatch } from 'react-redux';
 import useAuth from '../hooks/useAuth.js';
 import pageRoutes from './route.jsx';
 import apiRoutes from '../fetchApi/route.js';
-// import { setUser } from '../store/slices/userSlice.js';
+import getShema from '../validation/validation.js';
 
-/* const validationSchema = yup.object({
-  email: yup
-    .string('Enter your email')
-    .email('Enter a valid email')
-    .required('Email is required'),
-  password: yup
-    .string('Enter your password')
-    .min(8, 'Password should be of minimum 8 characters length')
-    .required('Password is required'),
-}); */
 const chatImg = require('../assets/images/chat.gif');
 
 const Login = () => {
   const { t } = useTranslation();
+  const { loginSchema } = getShema(t);
   const authHook = useAuth();
-  // const dispatch = useDispatch();
   const navigate = useNavigate();
   const [isNotAuth, setIsNotAuth] = useState(false);
   const inputRef = useRef();
+
+  const loginErrorEl = (errMessage) => {
+    if (errMessage) {
+      return (
+        <div className="sm text-danger">
+          {t('fetchErrors.incorrectLogin')}
+        </div>
+      );
+    }
+    return null;
+  };
   useEffect(() => {
     inputRef.current.focus();
   }, []);
@@ -40,6 +39,7 @@ const Login = () => {
       username: '',
       password: '',
     },
+    validationSchema: loginSchema,
     onSubmit: async (values) => {
       setIsNotAuth(false);
       try {
@@ -69,7 +69,7 @@ const Login = () => {
                 <div className="col-12 col-md-6 d-flex align-items-center justify-content-center">
                   <Card.Img width={200} src={chatImg} />
                 </div>
-                <Form onSubmit={formik.handleSubmit} className="col-12 col-md-6 mt-3 ">
+                <Form noValidate onSubmit={formik.handleSubmit} className="col-12 col-md-6 mt-3 ">
                   <h1 className="text-center mb-2">{t('formHeaders.login')}</h1>
                   <fieldset>
                     <Form.Group className="mb-4">
@@ -83,9 +83,12 @@ const Login = () => {
                         type="text"
                         onChange={formik.handleChange}
                         value={formik.values.username}
-                        isInvalid={isNotAuth}
+                        isInvalid={formik.errors.username}
                         ref={inputRef}
                       />
+                      <Form.Control.Feedback type="invalid">
+                        {formik.errors.username}
+                      </Form.Control.Feedback>
                     </Form.Group>
                     <Form.Group className="mb-4">
                       <Form.Label htmlFor="password" />
@@ -98,9 +101,12 @@ const Login = () => {
                         type="password"
                         onChange={formik.handleChange}
                         value={formik.values.password}
-                        isInvalid={isNotAuth}
+                        isInvalid={formik.errors.password}
                       />
-                      <Form.Control.Feedback className="text-center" type="invalid">{t('fetchErrors.incorrectLogin')}</Form.Control.Feedback>
+                      <Form.Control.Feedback type="invalid">
+                        {formik.errors.password}
+                      </Form.Control.Feedback>
+                      {loginErrorEl(isNotAuth)}
                     </Form.Group>
                     <Button type="submit" className="w-100 mt-4" variant="outline-secondary">{t('buttons.loginBtn')}</Button>
                   </fieldset>
