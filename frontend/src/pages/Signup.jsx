@@ -40,7 +40,6 @@ const Signup = () => {
       confirmPassword: '',
     },
     validationSchema: signupSchema,
-    validateOnBlur: false,
     onSubmit: async (values) => {
       try {
         const newUser = { username: values.username, password: values.password };
