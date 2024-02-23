@@ -9,13 +9,11 @@ import { useFormik } from 'formik';
 import useAuth from '../hooks/useAuth.js';
 import pageRoutes from './route.jsx';
 import apiRoutes from '../fetchApi/route.js';
-import getShema from '../validation/validation.js';
 
 const chatImg = require('../assets/images/chat.gif');
 
 const Login = () => {
   const { t } = useTranslation();
-  const { loginSchema } = getShema(t);
   const authHook = useAuth();
   const navigate = useNavigate();
   const [isNotAuth, setIsNotAuth] = useState(false);
@@ -39,7 +37,6 @@ const Login = () => {
       username: '',
       password: '',
     },
-    validationSchema: loginSchema,
     onSubmit: async (values) => {
       setIsNotAuth(false);
       try {
@@ -69,14 +66,14 @@ const Login = () => {
                 <div className="col-12 col-md-6 d-flex align-items-center justify-content-center">
                   <Card.Img width={200} src={chatImg} />
                 </div>
-                <Form noValidate onSubmit={formik.handleSubmit} className="col-12 col-md-6 mt-3 ">
+                <Form onSubmit={formik.handleSubmit} className="col-12 col-md-6 mt-3 ">
                   <h1 className="text-center mb-2">{t('formHeaders.login')}</h1>
                   <fieldset>
                     <Form.Group className="mb-4">
                       <Form.Label htmlFor="username" />
                       <Form.Control
-                        placeholder={t('placeholders.nickname')}
                         required
+                        placeholder={t('placeholders.nickname')}
                         autoComplete="username"
                         id="username"
                         name="username"
