@@ -14,7 +14,7 @@ export const OtherUsersMessage = ({ item }) => (
   <div className="container pl-3 mb-4 row">
     <div className="col-10">
       <p className="fw-bold m-0 small px-3">{item?.username}</p>
-      <div className="rounded px-3 py-1 m-0 bg-primary-subtle text-break">
+      <div className="rounded px-3 py-1 m-0 bg-info-subtle text-break">
         {item?.body}
       </div>
     </div>
