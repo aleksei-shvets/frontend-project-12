@@ -5,7 +5,7 @@ import axios from 'axios';
 import { useTranslation } from 'react-i18next';
 import { useRollbar } from '@rollbar/react';
 import Form from 'react-bootstrap/Form';
-import ROUTES from '../fetchApi/route.js';
+import fetchRoutes from '../fetchApi/route.js';
 import getAuthHeader from '../utils/getAuthHeader';
 import { CurrentUserMessage, OtherUsersMessage } from './MessageItem.jsx';
 import useAuth from '../hooks/useAuth.js';
@@ -36,7 +36,7 @@ const MessagesList = ({ messages, currentChannelId }) => {
           username: userName,
         };
         await axios
-          .post(ROUTES.messagesPath(), newMessage, { headers: token });
+          .post(fetchRoutes.messagesPath(), newMessage, { headers: token });
         formik.resetForm();
       } catch (e) {
         rollbar.error('Adding message', e);

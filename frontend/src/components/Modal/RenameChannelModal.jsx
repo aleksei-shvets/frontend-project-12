@@ -7,7 +7,7 @@ import { useRollbar } from '@rollbar/react';
 import axios from 'axios';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-import ROUTES from '../../fetchApi/route.js';
+import fetchRoutes from '../../fetchApi/route.js';
 import getAuthHeader from '../../utils/getAuthHeader.js';
 import { isShownSelector, modalActions, getUpdatedChannelId } from '../../store/slices/modalSlice.js';
 import { channelActions, channelsSelector } from '../../store/slices/channelsSlice.js';
@@ -47,7 +47,7 @@ const RenameChannelModal = ({ toastHandler }) => {
           name: values.nameInput,
         };
         const response = await axios
-          .patch(ROUTES.updateChannelPath(updatedChannelId), newChannel, {
+          .patch(fetchRoutes.updateChannelPath(updatedChannelId), newChannel, {
             headers: {
               Authorization: token.Authorization,
             },

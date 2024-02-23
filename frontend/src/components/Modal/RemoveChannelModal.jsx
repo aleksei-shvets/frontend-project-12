@@ -6,7 +6,7 @@ import { useRollbar } from '@rollbar/react';
 import axios from 'axios';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-import ROUTES from '../../fetchApi/route.js';
+import fetchRoutes from '../../fetchApi/route.js';
 import getAuthHeader from '../../utils/getAuthHeader.js';
 import { isShownSelector, modalActions, getUpdatedChannelId } from '../../store/slices/modalSlice.js';
 import { channelActions } from '../../store/slices/channelsSlice.js';
@@ -29,7 +29,7 @@ const RemoveChannelModal = ({ toastHandler }) => {
       formik.setSubmitting(true);
       try {
         await axios
-          .delete(ROUTES.updateChannelPath(updatedChannelId), {
+          .delete(fetchRoutes.updateChannelPath(updatedChannelId), {
             headers: {
               Authorization: token.Authorization,
             },

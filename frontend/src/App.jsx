@@ -9,7 +9,7 @@ import Home from './pages/Home.jsx';
 import NotFound from './pages/NotFound.jsx';
 import AuthProvider from './providers/authProvider.js';
 import SocketProvider from './providers/socketProvider.js';
-import ROUTES from './pages/route.jsx';
+import ROUTES from './pages/route.js';
 import useAuth from './hooks/useAuth.js';
 import Nav from './components/Nav.jsx';
 

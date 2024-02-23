@@ -7,8 +7,8 @@ import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 import { useFormik } from 'formik';
 import useAuth from '../hooks/useAuth.js';
-import pageRoutes from './route.jsx';
-import apiRoutes from '../fetchApi/route.js';
+import ROUTES from './route.js';
+import fetchRoutes from '../fetchApi/route.js';
 
 const chatImg = require('../assets/images/chat.gif');
 
@@ -41,11 +41,11 @@ const Login = () => {
       setIsNotAuth(false);
       try {
         formik.setSubmitting(true);
-        const response = await axios.post(apiRoutes.loginPath(), values);
+        const response = await axios.post(fetchRoutes.loginPath(), values);
         localStorage.setItem('userToken', JSON.stringify(response.data.token));
         localStorage.setItem('username', JSON.stringify(response.data.username));
         authHook.logIn();
-        navigate(pageRoutes.home);
+        navigate(ROUTES.home);
         formik.setSubmitting(false);
       } catch (err) {
         formik.setSubmitting(false);
