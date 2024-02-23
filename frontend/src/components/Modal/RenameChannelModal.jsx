@@ -85,7 +85,7 @@ const RenameChannelModal = ({ toastHandler }) => {
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <Form noValidate onSubmit={formik.handleSubmit}>
+        <Form onSubmit={formik.handleSubmit}>
           <Form.Group className="mb-3" id="exampleForm.ControlInput1">
             <Form.Label htmlFor="nameInput" className="visually-hidden" />
             <Form.Control

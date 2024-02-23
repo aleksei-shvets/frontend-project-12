@@ -81,14 +81,13 @@ const Signup = () => {
                 <div className="col-12 col-md-6 d-flex align-items-center justify-content-center">
                   <Card.Img width={200} src={chatImg} />
                 </div>
-                <Form onSubmit={formik.handleSubmit} noValidate className="col-12 col-md-6 mt-3 ">
+                <Form onSubmit={formik.handleSubmit} className="col-12 col-md-6 mt-3 ">
                   <h1 className="text-center mb-2">{t('formHeaders.registration')}</h1>
                   <fieldset>
                     <Form.Group className="mb-3">
                       <Form.Label htmlFor="username" />
                       <Form.Control
                         placeholder={t('placeholders.username')}
-                        required
                         autoComplete="username"
                         id="username"
                         name="username"
@@ -106,7 +105,6 @@ const Signup = () => {
                     <Form.Group className="mb-3">
                       <Form.Label htmlFor="password" />
                       <Form.Control
-                        required
                         placeholder={t('placeholders.password')}
                         id="password"
                         name="password"
@@ -122,7 +120,6 @@ const Signup = () => {
                     <Form.Group className="mb-3">
                       <Form.Label htmlFor="confirmPassword" />
                       <Form.Control
-                        required
                         placeholder={t('placeholders.confirmPassword')}
                         id="confirmPassword"
                         name="confirmPassword"
