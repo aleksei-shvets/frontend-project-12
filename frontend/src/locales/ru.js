@@ -38,6 +38,7 @@ export default {
       incorrectLogin: 'Неверные имя пользователя или пароль',
       incorrectSignup: 'Такой пользователь уже существует',
       notfoundPage: 'Страница не найдена',
+      connectionError: 'Ошибка соединения',
     },
     validationErrors: {
       incorrectLength: 'От 3 до 20 символов',

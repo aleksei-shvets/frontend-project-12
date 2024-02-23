@@ -20,7 +20,7 @@ const Signup = () => {
   const { t } = useTranslation();
   const authHook = useAuth();
   const navigate = useNavigate();
-  const [regError, setregErrorEl] = useState(null);
+  const [regError, setRegErrorEl] = useState(null);
   const inputNameRef = useRef();
   const { signupSchema } = getShema(t);
   useEffect(() => {
@@ -30,9 +30,9 @@ const Signup = () => {
   useEffect(() => {
     if (regError && inputNameRef.current) {
       inputNameRef.current.select();
-      setregErrorEl(t('fetchErrors.incorrectSignup'));
+      setRegErrorEl(t('fetchErrors.incorrectSignup'));
     } else {
-      setregErrorEl(null);
+      setRegErrorEl(null);
     }
   }, [regError]);
 
@@ -54,10 +54,10 @@ const Signup = () => {
       } catch (err) {
         formik.setSubmitting(false);
         if (err.response.status === 409) {
-          setregErrorEl('Пользователь уже существует');
+          setRegErrorEl(t('fetchErrors.incorrectSignup'));
         }
         if (err.isAxiosError && err.response.status !== 409) {
-          console.log(err);
+          setRegErrorEl(t('fetchErrors.connectionError'));
         }
       }
     },

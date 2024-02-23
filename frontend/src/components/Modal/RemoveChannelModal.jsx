@@ -10,7 +10,6 @@ import fetchRoutes from '../../fetchApi/route.js';
 import getAuthHeader from '../../utils/getAuthHeader.js';
 import { isShownSelector, modalActions, getUpdatedChannelId } from '../../store/slices/modalSlice.js';
 import { channelActions } from '../../store/slices/channelsSlice.js';
-import store from '../../store/index.js';
 
 const RemoveChannelModal = ({ toastHandler }) => {
   const rollbar = useRollbar();
@@ -38,7 +37,6 @@ const RemoveChannelModal = ({ toastHandler }) => {
         dispatch(channelActions.switchChannel(1));
         toastHandler(true);
         formik.resetForm();
-        console.log(store.getState());
       } catch (e) {
         rollbar.error('Removing channel', e);
       } finally {
