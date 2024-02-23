@@ -1,7 +1,7 @@
 import { Form, InputGroup } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useRollbar } from '@rollbar/react';
 import * as filterProfanity from 'leo-profanity';
@@ -15,6 +15,7 @@ import { channelActions, channelsSelector } from '../../store/slices/channelsSli
 import getShema from '../../validation/validation.js';
 
 const AddChannelModal = ({ toastHandler }) => {
+  const [connectionError, setConnectionError] = useState(null);
   const rollbar = useRollbar();
   filterProfanity.loadDictionary('ru');
   const wordsFilter = (message) => filterProfanity.clean(message);
@@ -33,6 +34,17 @@ const AddChannelModal = ({ toastHandler }) => {
   const isShownModal = useSelector((state) => isShownSelector(state));
   const dispatch = useDispatch();
   const hideModal = () => dispatch(modalActions.hideModal());
+
+  const connectionErrorEl = (isConnetionErr) => {
+    if (isConnetionErr) {
+      return (
+        <div className="sm text-danger">
+          {t('errorMessages.incorrectSignup')}
+        </div>
+      );
+    }
+    return null;
+  };
 
   const formik = useFormik({
     initialValues: {
@@ -60,6 +72,9 @@ const AddChannelModal = ({ toastHandler }) => {
         formik.resetForm();
         return true;
       } catch (e) {
+        if (e.isAxiosError) {
+          setConnectionError(t('fetchErrors.connectionError'));
+        }
         rollbar.error('Adding channel', e);
         return e;
       } finally {
@@ -103,6 +118,7 @@ const AddChannelModal = ({ toastHandler }) => {
             <Button variant="outline-secondary" onClick={hideModal} className="me-2 ">{t('buttons.cancelBtn')}</Button>
             <Button variant="secondary" type="submit">{t('buttons.sendBtn')}</Button>
           </div>
+          {connectionErrorEl(connectionError)}
         </Form>
       </Modal.Body>
     </Modal>

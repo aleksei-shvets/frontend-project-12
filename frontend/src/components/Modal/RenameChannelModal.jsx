@@ -1,7 +1,7 @@
 import { Form, InputGroup } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useRollbar } from '@rollbar/react';
 import axios from 'axios';
@@ -14,6 +14,7 @@ import { channelActions, channelsSelector } from '../../store/slices/channelsSli
 import getShema from '../../validation/validation.js';
 
 const RenameChannelModal = ({ toastHandler }) => {
+  const [connectionError, setConnectionError] = useState(null);
   const inputEl = useRef(null);
   useEffect(() => {
     inputEl.current.focus();
@@ -26,6 +27,17 @@ const RenameChannelModal = ({ toastHandler }) => {
     .map((channel) => channel.name);
 
   const { channelNameSchema } = getShema(t, channelNames);
+
+  const connectionErrorEl = (isConnetionErr) => {
+    if (isConnetionErr) {
+      return (
+        <div className="sm text-danger">
+          {t('errorMessages.incorrectSignup')}
+        </div>
+      );
+    }
+    return null;
+  };
 
   const updatedChannelId = useSelector(getUpdatedChannelId);
   const updatedChanne = useSelector((state) => channelsSelector.selectAll(state))
@@ -59,6 +71,9 @@ const RenameChannelModal = ({ toastHandler }) => {
         formik.resetForm();
       } catch (e) {
         rollbar.error('Removing channel', e);
+        if (e.isAxiosError) {
+          setConnectionError(t('fetchErrors.connectionError'));
+        }
       } finally {
         formik.setSubmitting(false);
       }
@@ -100,6 +115,7 @@ const RenameChannelModal = ({ toastHandler }) => {
             <Button variant="outline-secondary" onClick={hideModal} className="me-2 ">{t('buttons.cancelBtn')}</Button>
             <Button variant="secondary" type="submit">{t('buttons.sendBtn')}</Button>
           </div>
+          {connectionErrorEl(connectionError)}
         </Form>
       </Modal.Body>
     </Modal>
