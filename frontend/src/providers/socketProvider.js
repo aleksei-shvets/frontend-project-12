@@ -1,24 +1,20 @@
-// SocketContext.js
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { io } from 'socket.io-client';
 import SocketContext from '../contexts/socketContext';
 import { messageActions } from '../store/slices/messagesSlice.js';
 import { channelActions } from '../store/slices/channelsSlice.js';
 
-const SocketProvider = ({ children }) => {
+const SocketProvider = ({ children, newSocket }) => {
   const [socket, setSocket] = useState(null);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const newSocket = io('http://localhost:5001', {
-      transports: ['websocket'],
-    });
-
     setSocket(newSocket);
 
     return () => {
-      newSocket.disconnect();
+      if (socket) {
+        socket.disconnect();
+      }
     };
   }, []);
 
