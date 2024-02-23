@@ -1,7 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
-  Form, Button, Card,
+  Form,
+  Button,
+  Card,
+  InputGroup,
 } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import axios from 'axios';
@@ -86,51 +89,57 @@ const Signup = () => {
                   <fieldset>
                     <Form.Group className="mb-3">
                       <Form.Label htmlFor="username" />
-                      <Form.Control
-                        placeholder={t('placeholders.username')}
-                        autoComplete="username"
-                        id="username"
-                        name="username"
-                        type="text"
-                        onChange={formik.handleChange}
-                        value={formik.values.username}
-                        isInvalid={formik.errors.username}
-                        ref={inputNameRef}
-                      />
-                      <Form.Control.Feedback type="invalid">
-                        {formik.errors.username}
-                      </Form.Control.Feedback>
-                      {regErrorEl(regError)}
+                      <InputGroup hasValidation>
+                        <Form.Control
+                          placeholder={t('placeholders.username')}
+                          autoComplete="username"
+                          id="username"
+                          name="username"
+                          type="text"
+                          onChange={formik.handleChange}
+                          value={formik.values.username}
+                          isInvalid={formik.errors.username}
+                          ref={inputNameRef}
+                        />
+                        <Form.Control.Feedback tooltip type="invalid">
+                          {formik.errors.username}
+                        </Form.Control.Feedback>
+                        {regErrorEl(regError)}
+                      </InputGroup>
                     </Form.Group>
                     <Form.Group className="mb-3">
                       <Form.Label htmlFor="password" />
-                      <Form.Control
-                        placeholder={t('placeholders.password')}
-                        id="password"
-                        name="password"
-                        type="password"
-                        onChange={formik.handleChange}
-                        value={formik.values.password}
-                        isInvalid={formik.errors.password}
-                      />
-                      <Form.Control.Feedback type="invalid">
-                        {formik.errors.password}
-                      </Form.Control.Feedback>
+                      <InputGroup hasValidation>
+                        <Form.Control
+                          placeholder={t('placeholders.password')}
+                          id="password"
+                          name="password"
+                          type="password"
+                          onChange={formik.handleChange}
+                          value={formik.values.password}
+                          isInvalid={formik.errors.password}
+                        />
+                        <Form.Control.Feedback tooltip type="invalid">
+                          {formik.errors.password}
+                        </Form.Control.Feedback>
+                      </InputGroup>
                     </Form.Group>
                     <Form.Group className="mb-3">
                       <Form.Label htmlFor="confirmPassword" />
-                      <Form.Control
-                        placeholder={t('placeholders.confirmPassword')}
-                        id="confirmPassword"
-                        name="confirmPassword"
-                        type="password"
-                        onChange={formik.handleChange}
-                        value={formik.values.confirmPassword}
-                        isInvalid={formik.errors.confirmPassword}
-                      />
-                      <Form.Control.Feedback type="invalid">
-                        {formik.errors.confirmPassword}
-                      </Form.Control.Feedback>
+                      <InputGroup hasValidation>
+                        <Form.Control
+                          placeholder={t('placeholders.confirmPassword')}
+                          id="confirmPassword"
+                          name="confirmPassword"
+                          type="password"
+                          onChange={formik.handleChange}
+                          value={formik.values.confirmPassword}
+                          isInvalid={formik.errors.confirmPassword}
+                        />
+                        <Form.Control.Feedback tooltip type="invalid">
+                          {formik.errors.confirmPassword}
+                        </Form.Control.Feedback>
+                      </InputGroup>
                     </Form.Group>
                     <Button type="submit" className="w-100 mt-4" variant="outline-secondary">{t('buttons.registrationBtn')}</Button>
                   </fieldset>

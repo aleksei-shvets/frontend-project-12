@@ -1,4 +1,4 @@
-import { Form } from 'react-bootstrap';
+import { Form, InputGroup } from 'react-bootstrap';
 import * as yup from 'yup';
 import { useFormik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
@@ -88,18 +88,20 @@ const RenameChannelModal = ({ toastHandler }) => {
         <Form onSubmit={formik.handleSubmit}>
           <Form.Group className="mb-3" id="exampleForm.ControlInput1">
             <Form.Label htmlFor="nameInput" className="visually-hidden" />
-            <Form.Control
-              type="text"
-              name="nameInput"
-              id="nameInput"
-              onChange={formik.handleChange}
-              value={formik.values.nameInput}
-              isInvalid={!formik.isValid}
-              ref={inputEl}
-            />
-            <Form.Control.Feedback type="invalid">
-              {formik.errors.nameInput}
-            </Form.Control.Feedback>
+            <InputGroup hasValidation>
+              <Form.Control
+                type="text"
+                name="nameInput"
+                id="nameInput"
+                onChange={formik.handleChange}
+                value={formik.values.nameInput}
+                isInvalid={!formik.isValid}
+                ref={inputEl}
+              />
+              <Form.Control.Feedback tooltip type="invalid">
+                {formik.errors.nameInput}
+              </Form.Control.Feedback>
+            </InputGroup>
           </Form.Group>
           <div className="d-flex justify-content-end">
             <Button variant="outline-secondary" onClick={hideModal} className="me-2 ">{t('buttons.cancelBtn')}</Button>
