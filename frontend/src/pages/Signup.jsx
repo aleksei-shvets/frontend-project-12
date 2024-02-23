@@ -91,19 +91,25 @@ const Signup = () => {
                       <Form.Label htmlFor="username" />
                       <InputGroup hasValidation>
                         <Form.Control
+                          className={formik.touched.username && formik.errors.username ? 'is-invalid' : ''}
                           placeholder={t('placeholders.username')}
                           autoComplete="username"
                           id="username"
                           name="username"
                           type="text"
-                          onChange={formik.handleChange}
+                          onChange={(e) => {
+                            formik.handleChange(e);
+                            formik.setFieldTouched('username', true);
+                          }}
                           value={formik.values.username}
-                          isInvalid={formik.errors.username}
+                          isInvalid={formik.touched.username && formik.errors.username}
                           ref={inputNameRef}
                         />
-                        <Form.Control.Feedback tooltip type="invalid">
-                          {formik.errors.username}
-                        </Form.Control.Feedback>
+                        {formik.touched.username && formik.errors.username && (
+                          <Form.Control.Feedback tooltip type="invalid">
+                            {formik.errors.username}
+                          </Form.Control.Feedback>
+                        )}
                         {regErrorEl(regError)}
                       </InputGroup>
                     </Form.Group>
@@ -111,34 +117,47 @@ const Signup = () => {
                       <Form.Label htmlFor="password" />
                       <InputGroup hasValidation>
                         <Form.Control
+                          className={formik.touched.password && formik.errors.password ? 'is-invalid' : ''}
                           placeholder={t('placeholders.password')}
                           id="password"
                           name="password"
                           type="password"
-                          onChange={formik.handleChange}
+                          onChange={(e) => {
+                            formik.handleChange(e);
+                            formik.setFieldTouched('password', true);
+                          }}
                           value={formik.values.password}
-                          isInvalid={formik.errors.password}
+                          isInvalid={formik.touched.password && formik.errors.password}
                         />
-                        <Form.Control.Feedback tooltip type="invalid">
-                          {formik.errors.password}
-                        </Form.Control.Feedback>
+                        {formik.touched.password && formik.errors.password && (
+                          <Form.Control.Feedback tooltip type="invalid">
+                            {formik.errors.password}
+                          </Form.Control.Feedback>
+                        )}
                       </InputGroup>
                     </Form.Group>
                     <Form.Group className="mb-3">
                       <Form.Label htmlFor="confirmPassword" />
                       <InputGroup hasValidation>
                         <Form.Control
+                          className={formik.touched.confirmPassword && formik.errors.confirmPassword ? 'is-invalid' : ''}
                           placeholder={t('placeholders.confirmPassword')}
                           id="confirmPassword"
                           name="confirmPassword"
                           type="password"
-                          onChange={formik.handleChange}
+                          onChange={(e) => {
+                            formik.handleChange(e);
+                            formik.setFieldTouched('confirmPassword', true);
+                          }}
                           value={formik.values.confirmPassword}
-                          isInvalid={formik.errors.confirmPassword}
+                          isInvalid={formik.touched.confirmPassword
+                            && formik.errors.confirmPassword}
                         />
-                        <Form.Control.Feedback tooltip type="invalid">
-                          {formik.errors.confirmPassword}
-                        </Form.Control.Feedback>
+                        {formik.touched.confirmPassword && formik.errors.confirmPassword && (
+                          <Form.Control.Feedback tooltip type="invalid">
+                            {formik.errors.confirmPassword}
+                          </Form.Control.Feedback>
+                        )}
                       </InputGroup>
                     </Form.Group>
                     <Button type="submit" className="w-100 mt-4" variant="outline-secondary">{t('buttons.registrationBtn')}</Button>
