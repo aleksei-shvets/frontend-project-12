@@ -40,6 +40,7 @@ const Signup = () => {
       confirmPassword: '',
     },
     validationSchema: signupSchema,
+    validateOnBlur: false,
     onSubmit: async (values) => {
       try {
         const newUser = { username: values.username, password: values.password };
@@ -81,7 +82,7 @@ const Signup = () => {
                 <div className="col-12 col-md-6 d-flex align-items-center justify-content-center">
                   <Card.Img width={200} src={chatImg} />
                 </div>
-                <Form onSubmit={formik.handleSubmit} className="col-12 col-md-6 mt-3 ">
+                <Form onSubmit={formik.handleSubmit} noValidate className="col-12 col-md-6 mt-3 ">
                   <h1 className="text-center mb-2">{t('formHeaders.registration')}</h1>
                   <fieldset>
                     <Form.Group className="mb-3">
@@ -95,7 +96,7 @@ const Signup = () => {
                         type="text"
                         onChange={formik.handleChange}
                         value={formik.values.username}
-                        isInvalid={!formik.isValid}
+                        isInvalid={formik.errors.username}
                         ref={inputNameRef}
                       />
                       <Form.Control.Feedback type="invalid">
@@ -113,7 +114,7 @@ const Signup = () => {
                         type="password"
                         onChange={formik.handleChange}
                         value={formik.values.password}
-                        isInvalid={!formik.isValid}
+                        isInvalid={formik.errors.password}
                       />
                       <Form.Control.Feedback type="invalid">
                         {formik.errors.password}
@@ -129,7 +130,7 @@ const Signup = () => {
                         type="password"
                         onChange={formik.handleChange}
                         value={formik.values.confirmPassword}
-                        isInvalid={!formik.isValid}
+                        isInvalid={formik.errors.confirmPassword}
                       />
                       <Form.Control.Feedback type="invalid">
                         {formik.errors.confirmPassword}
