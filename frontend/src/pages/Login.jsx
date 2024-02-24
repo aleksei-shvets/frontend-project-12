@@ -9,6 +9,7 @@ import { useFormik } from 'formik';
 import useAuth from '../hooks/useAuth.js';
 import ROUTES from './route.js';
 import fetchRoutes from '../fetchApi/route.js';
+import InputComponent from '../components/InputComponent.jsx';
 
 const chatImg = require('../assets/images/chat.gif');
 
@@ -30,8 +31,11 @@ const Login = () => {
     return null;
   };
   useEffect(() => {
-    inputRef.current.focus();
-  }, []);
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [inputRef]);
+
   const formik = useFormik({
     initialValues: {
       username: '',
@@ -69,42 +73,24 @@ const Login = () => {
                 <Form onSubmit={formik.handleSubmit} className="col-12 col-md-6 mt-3 ">
                   <h1 className="text-center mb-2">{t('formHeaders.login')}</h1>
                   <fieldset>
-                    <Form.Group className="mb-4">
-                      <Form.Label htmlFor="username" />
-                      <Form.Control
-                        required
-                        placeholder={t('placeholders.nickname')}
-                        autoComplete="username"
-                        id="username"
-                        name="username"
-                        type="text"
-                        onChange={formik.handleChange}
-                        value={formik.values.username}
-                        isInvalid={formik.errors.username}
-                        ref={inputRef}
-                      />
-                      <Form.Control.Feedback type="invalid">
-                        {formik.errors.username}
-                      </Form.Control.Feedback>
-                    </Form.Group>
-                    <Form.Group className="mb-4">
-                      <Form.Label htmlFor="password" />
-                      <Form.Control
-                        required
-                        autoComplete="current-password"
-                        placeholder={t('placeholders.password')}
-                        id="password"
-                        name="password"
-                        type="password"
-                        onChange={formik.handleChange}
-                        value={formik.values.password}
-                        isInvalid={formik.errors.password}
-                      />
-                      <Form.Control.Feedback type="invalid">
-                        {formik.errors.password}
-                      </Form.Control.Feedback>
-                      {loginErrorEl(isNotAuth)}
-                    </Form.Group>
+                    <InputComponent
+                      fieldName="username"
+                      changeHandler={formik.handleChange}
+                      fieldValue={formik.values.username}
+                      isInvalidMessage={formik.errors.username}
+                      placeholderText={t('placeholders.nickname')}
+                      type="text"
+                      ref={inputRef}
+                    />
+                    <InputComponent
+                      fieldName="password"
+                      changeHandler={formik.handleChange}
+                      fieldValue={formik.values.password}
+                      isInvalidMessage={formik.errors.password}
+                      placeholderText={t('placeholders.password')}
+                      type="password"
+                    />
+                    {loginErrorEl(isNotAuth)}
                     <Button type="submit" className="w-100 mt-4" variant="outline-secondary">{t('buttons.loginBtn')}</Button>
                   </fieldset>
                 </Form>

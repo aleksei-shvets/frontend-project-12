@@ -1,10 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
-  Form,
-  Button,
-  Card,
-  InputGroup,
+  Form, Button, Card,
 } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import axios from 'axios';
@@ -13,6 +10,7 @@ import useAuth from '../hooks/useAuth.js';
 import ROUTES from './route.js';
 import fetchRoutes from '../fetchApi/route.js';
 import getShema from '../validation/validation.js';
+import InputComponent from '../components/InputComponent.jsx';
 
 const chatImg = require('../assets/images/chat.gif');
 
@@ -67,7 +65,7 @@ const Signup = () => {
     if (errMessage) {
       return (
         <div className="sm text-danger">
-          {t('errorMessages.incorrectSignup')}
+          {errMessage}
         </div>
       );
     }
@@ -87,79 +85,50 @@ const Signup = () => {
                 <Form onSubmit={formik.handleSubmit} className="col-12 col-md-6 mt-3 ">
                   <h1 className="text-center mb-2">{t('formHeaders.registration')}</h1>
                   <fieldset>
-                    <Form.Group className="mb-3">
-                      <Form.Label htmlFor="username" />
-                      <InputGroup hasValidation>
-                        <Form.Control
-                          className={formik.touched.username && formik.errors.username ? 'is-invalid' : ''}
-                          placeholder={t('placeholders.username')}
-                          autoComplete="username"
-                          id="username"
-                          name="username"
-                          type="text"
-                          onChange={(e) => {
-                            formik.handleChange(e);
-                            formik.setFieldTouched('username', true);
-                          }}
-                          value={formik.values.username}
-                          isInvalid={formik.touched.username && formik.errors.username}
-                          ref={inputNameRef}
-                        />
-                        {formik.touched.username && formik.errors.username && (
-                          <Form.Control.Feedback tooltip type="invalid">
-                            {formik.errors.username}
-                          </Form.Control.Feedback>
-                        )}
-                        {regErrorEl(regError)}
-                      </InputGroup>
-                    </Form.Group>
-                    <Form.Group className="mb-3">
-                      <Form.Label htmlFor="password" />
-                      <InputGroup hasValidation>
-                        <Form.Control
-                          className={formik.touched.password && formik.errors.password ? 'is-invalid' : ''}
-                          placeholder={t('placeholders.password')}
-                          id="password"
-                          name="password"
-                          type="password"
-                          onChange={(e) => {
-                            formik.handleChange(e);
-                            formik.setFieldTouched('password', true);
-                          }}
-                          value={formik.values.password}
-                          isInvalid={formik.touched.password && formik.errors.password}
-                        />
-                        {formik.touched.password && formik.errors.password && (
-                          <Form.Control.Feedback tooltip type="invalid">
-                            {formik.errors.password}
-                          </Form.Control.Feedback>
-                        )}
-                      </InputGroup>
-                    </Form.Group>
-                    <Form.Group className="mb-3">
-                      <Form.Label htmlFor="confirmPassword" />
-                      <InputGroup hasValidation>
-                        <Form.Control
-                          className={formik.touched.confirmPassword && formik.errors.confirmPassword ? 'is-invalid' : ''}
-                          placeholder={t('placeholders.confirmPassword')}
-                          id="confirmPassword"
-                          name="confirmPassword"
-                          type="password"
-                          onChange={(e) => {
-                            formik.handleChange(e);
-                            formik.setFieldTouched('confirmPassword', true);
-                          }}
-                          value={formik.values.confirmPassword}
-                          isInvalid={formik.touched.confirmPassword
-                            && formik.errors.confirmPassword}
-                        />
-                        {formik.touched.confirmPassword && formik.errors.confirmPassword && (
-                          <Form.Control.Feedback tooltip type="invalid">
-                            {formik.errors.confirmPassword}
-                          </Form.Control.Feedback>
-                        )}
-                      </InputGroup>
-                    </Form.Group>
+                    <InputComponent
+                      blurHandler={() => formik.setFieldTouched('username', true)}
+                      inputClasses={formik.touched.username && formik.errors.username ? 'is-invalid' : ''}
+                      fieldName="username"
+                      type="text"
+                      changeHandler={(e) => {
+                        formik.handleChange(e);
+                        formik.setFieldTouched('username', true);
+                      }}
+                      fieldValue={formik.values.username}
+                      isInvalidMessage={formik.errors.username}
+                      placeholderText={t('placeholders.nickname')}
+                      touchedMarker={formik.touched.username}
+                      ref={inputNameRef}
+                    />
+                    {regErrorEl(regError)}
+                    <InputComponent
+                      blurHandler={() => formik.setFieldTouched('password', true)}
+                      inputClasses={formik.touched.password && formik.errors.password ? 'is-invalid' : ''}
+                      fieldName="password"
+                      type="password"
+                      changeHandler={(e) => {
+                        formik.handleChange(e);
+                        formik.setFieldTouched('password', true);
+                      }}
+                      fieldValue={formik.values.password}
+                      isInvalidMessage={formik.errors.password}
+                      placeholderText={t('placeholders.password')}
+                      touchedMarker={formik.touched.password}
+                    />
+                    <InputComponent
+                      blurHandler={() => formik.setFieldTouched('confirmPassword', true)}
+                      inputClasses={formik.touched.confirmPassword && formik.errors.confirmPassword ? 'is-invalid' : ''}
+                      fieldName="confirmPassword"
+                      type="password"
+                      changeHandler={(e) => {
+                        formik.handleChange(e);
+                        formik.setFieldTouched('confirmPassword', true);
+                      }}
+                      fieldValue={formik.values.confirmPassword}
+                      isInvalidMessage={formik.errors.confirmPassword}
+                      placeholderText={t('placeholders.confirmPassword')}
+                      touchedMarker={formik.touched.confirmPassword}
+                    />
                     <Button type="submit" className="w-100 mt-4" variant="outline-secondary">{t('buttons.registrationBtn')}</Button>
                   </fieldset>
                 </Form>
