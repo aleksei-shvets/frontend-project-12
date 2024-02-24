@@ -1,8 +1,9 @@
 import { useDispatch, useSelector } from 'react-redux';
 import Modal from 'react-bootstrap/Modal';
 import { isShownSelector, modalActions } from '../../store/slices/modalSlice.js';
+import ModalForm from './ModalForm.jsx';
 
-const ModalBox = () => {
+const ModalComponent = ({ t, modalType, toastHandler }) => {
   const isShownModal = useSelector((state) => isShownSelector(state));
   const dispatch = useDispatch();
   const hideModal = () => dispatch(modalActions.hideModal());
@@ -13,8 +14,17 @@ const ModalBox = () => {
       centered
       show={isShownModal}
       onHide={hideModal}
-    />
+    >
+      <Modal.Header closeButton>
+        <Modal.Title id={modalType}>
+          {t(`modalHeaders.${modalType}`)}
+        </Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <ModalForm toastHandler={toastHandler} modalType={modalType} />
+      </Modal.Body>
+    </Modal>
   );
 };
 
-export default ModalBox;
+export default ModalComponent;

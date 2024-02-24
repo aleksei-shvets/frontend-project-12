@@ -23,9 +23,9 @@ export default {
       login: 'Войти',
     },
     modalHeaders: {
-      renameModal: 'Переименовать канал',
-      removeModal: 'Удалить канал',
-      addModal: 'Добавить канал',
+      renamingChannel: 'Переименовать канал',
+      removingChannel: 'Удалить канал',
+      addingChannel: 'Добавить канал',
     },
     questions: {
       registrationQuestion: 'Нет аккаунта? ',

@@ -1,15 +1,33 @@
 import { useTranslation } from 'react-i18next';
-import AddChannelModal from './AddChannelModal.jsx';
-import RenameChannelModal from './RenameChannelModal.jsx';
-import RemoveChannelModal from './RemoveChannelModal.jsx';
+// import AddChannelModal from './AddChannelModal.jsx';
+// import RenameChannelModal from './RenameChannelModal.jsx';
+// import RemoveChannelModal from './RemoveChannelModal.jsx';
+import Modal from './Modal.jsx';
 
-const { t } = useTranslation();
+const modalTypes = {
+  addingChannel: 'addingChannel',
+  removingChannel: 'removingChannel',
+  renamingChannel: 'renamingChannel',
+};
 
 export default ({ type, toastHandler }) => {
-  const modalTypes = {
-    addingChannel: <AddChannelModal toastHandler={toastHandler} t={t} />,
-    removingChannel: <RemoveChannelModal toastHandler={toastHandler} t={t} />,
-    renamingChannel: <RenameChannelModal toastHandler={toastHandler} t={t} />,
+  const { t } = useTranslation();
+  const modal = {
+    addingChannel: <Modal
+      toastHandler={toastHandler}
+      t={t}
+      modalType={modalTypes.addingChannel}
+    />,
+    removingChannel: <Modal
+      toastHandler={toastHandler}
+      t={t}
+      modalType={modalTypes.removingChannel}
+    />,
+    renamingChannel: <Modal
+      toastHandler={toastHandler}
+      t={t}
+      modalType={modalTypes.renamingChannel}
+    />,
   };
-  return modalTypes[type];
+  return modal[type];
 };
