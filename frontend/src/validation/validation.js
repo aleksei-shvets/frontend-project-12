@@ -1,25 +1,23 @@
 import * as yup from 'yup';
 
 export default (t, channelNames = []) => {
+  const commonStringSchema = yup.string()
+    .min(3, t('validationErrors.incorrectLength'))
+    .max(20, t('validationErrors.incorrectLength'));
+
+  const requiredStringSchema = commonStringSchema.required(t('validationErrors.requiredFields'));
+
   const channelNameSchema = yup.object({
-    nameInput: yup
-      .string()
-      .required(t('validationErrors.requiredFields'))
-      .min(3, t('validationErrors.incorrectLength'))
-      .max(20, t('validationErrors.incorrectLength'))
+    nameInput: requiredStringSchema
       .notOneOf(channelNames, t('validationErrors.incorrectRenameChannel')),
   });
 
   const signupSchema = yup.object({
     username: yup.lazy((value) => {
       if (value && value.length > 0) {
-        return yup.string().required(t('validationErrors.requiredFields'))
-          .min(3, t('validationErrors.incorrectLength'))
-          .max(20, t('validationErrors.incorrectLength'));
+        return requiredStringSchema;
       }
-      return yup.string()
-        .min(3, t('validationErrors.incorrectLength'))
-        .max(20, t('validationErrors.incorrectLength'));
+      return commonStringSchema;
     }),
     password: yup.lazy((value) => {
       if (value && value.length > 0) {
@@ -31,10 +29,10 @@ export default (t, channelNames = []) => {
     }),
     confirmPassword: yup.lazy((value) => {
       if (value && value.length > 0) {
-        return yup.string().required(t('validationErrors.requiredFields'))
+        return requiredStringSchema
           .oneOf([yup.ref('password'), null], t('validationErrors.notConfirmPassword'));
       }
-      return yup.string()
+      return commonStringSchema
         .oneOf([yup.ref('password'), null], t('validationErrors.notConfirmPassword'));
     }),
   });
