@@ -14,15 +14,9 @@ export const RemovableItem = ({
 }) => {
   const dispath = useDispatch();
 
-  const removeChannelHandler = (id) => {
+  const updateChannelHandler = (id, modalType) => {
     dispath(modalActions.showModal());
-    dispath(modalActions.setModalType('removingChannel'));
-    dispath(modalActions.setUpdatedChannelId(id));
-  };
-
-  const renameChannelHandler = (id) => {
-    dispath(modalActions.showModal());
-    dispath(modalActions.setModalType('renamingChannel'));
+    dispath(modalActions.setModalType(modalType));
     dispath(modalActions.setUpdatedChannelId(id));
   };
 
@@ -47,8 +41,8 @@ export const RemovableItem = ({
       />
 
       <Dropdown.Menu variant="dark">
-        <Dropdown.Item onClick={() => removeChannelHandler(channel.id)} as="button">{t('buttons.deleteBtn')}</Dropdown.Item>
-        <Dropdown.Item onClick={() => renameChannelHandler(channel.id)} as="button">{t('buttons.renameBtn')}</Dropdown.Item>
+        <Dropdown.Item onClick={() => updateChannelHandler(channel.id, 'removingChannel')} as="button">{t('buttons.deleteBtn')}</Dropdown.Item>
+        <Dropdown.Item onClick={() => updateChannelHandler(channel.id, 'renamingChannel')} as="button">{t('buttons.renameBtn')}</Dropdown.Item>
       </Dropdown.Menu>
     </Dropdown>
   );
