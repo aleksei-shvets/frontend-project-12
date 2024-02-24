@@ -21,7 +21,13 @@ const ModalComponent = ({ t, modalType, toastHandler }) => {
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <ModalForm toastHandler={toastHandler} modalType={modalType} />
+        <ModalForm
+          t={t}
+          toastHandler={toastHandler}
+          modalType={modalType}
+          hideModal={hideModal}
+          dispatch={dispatch}
+        />
       </Modal.Body>
     </Modal>
   );

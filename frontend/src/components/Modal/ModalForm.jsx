@@ -1,17 +1,27 @@
 import { Form, InputGroup } from 'react-bootstrap';
 import { useFormik } from 'formik';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useEffect, useRef, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { useRollbar } from '@rollbar/react';
 import * as filterProfanity from 'leo-profanity';
 import axios from 'axios';
 import Button from 'react-bootstrap/Button';
 import fetchRoutes from '../../fetchApi/route.js';
 import getAuthHeader from '../../utils/getAuthHeader.js';
-import { modalActions, getUpdatedChannelId } from '../../store/slices/modalSlice.js';
+import { getUpdatedChannelId } from '../../store/slices/modalSlice.js';
 import { channelActions, channelsSelector } from '../../store/slices/channelsSlice.js';
 import getShema from '../../validation/validation.js';
+import defaultChannelId from '../../constants/constants.js';
+
+const deleteChannelHandler = async (deletedChannelId, authToken, dispatcher) => {
+  await axios
+    .delete(fetchRoutes.updateChannelPath(deletedChannelId), {
+      headers: {
+        Authorization: authToken.Authorization,
+      },
+    });
+  dispatcher(channelActions.switchChannel(defaultChannelId));
+};
 
 const getDataFetch = (type) => {
   const modalTypes = {
@@ -37,31 +47,33 @@ const getDataFetch = (type) => {
   return modalTypes[type];
 };
 
-const ModalForm = ({ toastHandler, modalType }) => {
+const ModalForm = ({
+  toastHandler, modalType, t, hideModal, dispatch,
+}) => {
   const token = getAuthHeader();
   const [connectionError, setConnectionError] = useState(null);
   const rollbar = useRollbar();
-  const dispatch = useDispatch();
-  const hideModal = () => dispatch(modalActions.hideModal());
   filterProfanity.loadDictionary('ru');
   const wordsFilter = (message) => filterProfanity.clean(message);
+
   const inputEl = useRef(null);
   useEffect(() => {
     if (modalType !== 'removingChannel') {
       inputEl.current.focus();
-      if (inputEl && inputEl.current.value !== '') {
-        inputEl.current.select();
-      }
+      inputEl.current.select();
     }
   }, []);
-  const { t } = useTranslation();
+
   const channelNames = useSelector((state) => channelsSelector.selectAll(state))
     .map((channel) => channel.name);
+
   const { channelNameSchema } = getShema(t, channelNames);
 
   const updatedChannelId = useSelector(getUpdatedChannelId);
+
   const updatedChannel = useSelector((state) => channelsSelector.selectAll(state))
     .find((channel) => channel.id === updatedChannelId);
+
   const nameInitValue = () => {
     if (modalType === 'renamingChannel') {
       return updatedChannel.name;
@@ -80,18 +92,6 @@ const ModalForm = ({ toastHandler, modalType }) => {
     return null;
   };
 
-  const deleteChannelHandler = async (deletedChannelId, authToken, dispatcher) => {
-    await axios
-      .delete(fetchRoutes.updateChannelPath(deletedChannelId), {
-        headers: {
-          Authorization: authToken.Authorization,
-        },
-      });
-    dispatcher(channelActions.switchChannel('1'));
-    hideModal();
-    toastHandler(true);
-  };
-
   const formik = useFormik({
     initialValues: {
       nameInput: nameInitValue(),
@@ -105,10 +105,7 @@ const ModalForm = ({ toastHandler, modalType }) => {
           name: channelName,
         };
         getDataFetch(modalType)({
-          newChannel,
-          token,
-          updatedChannelId,
-          dispatch,
+          newChannel, token, updatedChannelId, dispatch,
         });
         hideModal();
         toastHandler(true);
@@ -163,6 +160,8 @@ const ModalForm = ({ toastHandler, modalType }) => {
           onClick={(e) => {
             e.preventDefault();
             deleteChannelHandler(updatedChannelId, token, dispatch);
+            hideModal();
+            toastHandler(true);
           }}
           type="button"
         >
