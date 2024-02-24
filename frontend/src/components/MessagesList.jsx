@@ -7,8 +7,9 @@ import { useRollbar } from '@rollbar/react';
 import Form from 'react-bootstrap/Form';
 import fetchRoutes from '../fetchApi/route.js';
 import getAuthHeader from '../utils/getAuthHeader';
-import { CurrentUserMessage, OtherUsersMessage } from './MessageItem.jsx';
+// import { CurrentUserMessage, OtherUsersMessage } from './MessageItem.jsx';
 import useAuth from '../hooks/useAuth.js';
+import MessageItem from './MessageItem.jsx';
 // import store from '../store/index.js';
 
 const MessagesList = ({ messages, currentChannelId }) => {
@@ -50,8 +51,8 @@ const MessagesList = ({ messages, currentChannelId }) => {
       <div id="messages-box" className="chat-messages overflow-auto px-5 ">
         {messages.map((item) => (
           item.username === userName
-            ? <CurrentUserMessage key={item.id} item={item} />
-            : <OtherUsersMessage key={item.id} item={item} />
+            ? <MessageItem key={item.id} item={item} userType="CurrentUserMessage" />
+            : <MessageItem key={item.id} item={item} userType="OtherUsersMessage" />
         ))}
       </div>
       <div className="mt-auto px-5 py-3">

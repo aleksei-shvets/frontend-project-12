@@ -1,23 +1,25 @@
-export const CurrentUserMessage = ({ item }) => (
-  <div className="container pl-3 mb-4 row text-end">
-    <div className="col-lg-2" />
-    <div className="col-10">
-      <p className="fw-bold m-0 small px-3">{item?.username}</p>
-      <div className="rounded px-3 py-1 m-0 bg-secondary-subtle text-break">
-        {item?.body}
-      </div>
-    </div>
-  </div>
-);
+import cn from 'classnames';
 
-export const OtherUsersMessage = ({ item }) => (
-  <div className="container pl-3 mb-4 row">
-    <div className="col-10">
-      <p className="fw-bold m-0 small px-3">{item?.username}</p>
-      <div className="rounded px-3 py-1 m-0 bg-info-subtle text-break">
-        {item?.body}
+const MessageItem = ({ item, userType }) => {
+  const containerClasses = cn('container', 'pl-3', 'mb-4', 'row', {
+    'text-end': (userType === 'CurrentUserMessage'),
+  });
+  const textsBoxClasses = cn('rounded', 'px-3', 'py-1', 'm-0', 'text-break', {
+    'bg-secondary-subtle': (userType === 'CurrentUserMessage'),
+    'bg-info-subtle': (userType === 'OtherUsersMessage'),
+  });
+  return (
+    <div className={containerClasses}>
+      {userType === 'CurrentUserMessage' ? <div className="col-lg-2" /> : null}
+      <div className="col-10">
+        <div className={textsBoxClasses}>
+          <p className="fw-bold m-0 small mb-2">{`${item?.username}:`}</p>
+          <p className="m-0">{item?.body}</p>
+        </div>
       </div>
+      {userType === 'OtherUsersMessage' ? <div className="col-lg-2" /> : null}
     </div>
-    <div className="col-lg-2" />
-  </div>
-);
+  );
+};
+
+export default MessageItem;
