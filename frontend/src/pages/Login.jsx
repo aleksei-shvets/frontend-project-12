@@ -10,6 +10,7 @@ import useAuth from '../hooks/useAuth.js';
 import ROUTES from './route.js';
 import fetchRoutes from '../fetchApi/route.js';
 import InputComponent from '../components/InputComponent.jsx';
+import FormBox from '../containers/FormBox.jsx';
 
 const chatImg = require('../assets/images/chat.gif');
 
@@ -61,51 +62,45 @@ const Login = () => {
   });
 
   return (
-    <div className="d-flex flex-column h-100">
-      <div className="container-fluid h-100">
-        <div className="row justify-content-center align-content-center h-100">
-          <div className="col-12 col-md-8 col-xxl-6">
-            <Card className="shadow-sm">
-              <Card.Body className="p-5 row">
-                <div className="col-12 col-md-6 d-flex align-items-center justify-content-center">
-                  <Card.Img width={200} src={chatImg} />
-                </div>
-                <Form onSubmit={formik.handleSubmit} className="col-12 col-md-6 mt-3 ">
-                  <h1 className="text-center mb-2">{t('formHeaders.login')}</h1>
-                  <fieldset>
-                    <InputComponent
-                      fieldName="username"
-                      changeHandler={formik.handleChange}
-                      fieldValue={formik.values.username}
-                      isInvalidMessage={formik.errors.username}
-                      placeholderText={t('placeholders.nickname')}
-                      type="text"
-                      ref={inputRef}
-                    />
-                    <InputComponent
-                      fieldName="password"
-                      changeHandler={formik.handleChange}
-                      fieldValue={formik.values.password}
-                      isInvalidMessage={formik.errors.password}
-                      placeholderText={t('placeholders.password')}
-                      type="password"
-                    />
-                    {loginErrorEl(isNotAuth)}
-                    <Button type="submit" className="w-100 mt-4" variant="outline-secondary">{t('buttons.loginBtn')}</Button>
-                  </fieldset>
-                </Form>
-              </Card.Body>
-              <Card.Footer className="p-4">
-                <div className="text-center">
-                  <span>{t('questions.registrationQuestion')}</span>
-                  <a href="/signup">{t('buttons.regLink')}</a>
-                </div>
-              </Card.Footer>
-            </Card>
+    <FormBox>
+      <Card className="shadow-sm">
+        <Card.Body className="p-5 row">
+          <div className="col-12 col-md-6 d-flex align-items-center justify-content-center">
+            <Card.Img width={200} src={chatImg} />
           </div>
-        </div>
-      </div>
-    </div>
+          <Form onSubmit={formik.handleSubmit} className="col-12 col-md-6 mt-3 ">
+            <h1 className="text-center mb-2">{t('formHeaders.login')}</h1>
+            <fieldset>
+              <InputComponent
+                fieldName="username"
+                changeHandler={formik.handleChange}
+                fieldValue={formik.values.username}
+                isInvalidMessage={formik.errors.username}
+                placeholderText={t('placeholders.nickname')}
+                type="text"
+                ref={inputRef}
+              />
+              <InputComponent
+                fieldName="password"
+                changeHandler={formik.handleChange}
+                fieldValue={formik.values.password}
+                isInvalidMessage={formik.errors.password}
+                placeholderText={t('placeholders.password')}
+                type="password"
+              />
+              {loginErrorEl(isNotAuth)}
+              <Button type="submit" className="w-100 mt-4" variant="outline-secondary">{t('buttons.loginBtn')}</Button>
+            </fieldset>
+          </Form>
+        </Card.Body>
+        <Card.Footer className="p-4">
+          <div className="text-center">
+            <span>{t('questions.registrationQuestion')}</span>
+            <a href="/signup">{t('buttons.regLink')}</a>
+          </div>
+        </Card.Footer>
+      </Card>
+    </FormBox>
   );
 };
 

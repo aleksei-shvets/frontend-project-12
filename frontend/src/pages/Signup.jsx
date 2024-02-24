@@ -11,6 +11,7 @@ import ROUTES from './route.js';
 import fetchRoutes from '../fetchApi/route.js';
 import getShema from '../validation/validation.js';
 import InputComponent from '../components/InputComponent.jsx';
+import FormBox from '../containers/FormBox.jsx';
 
 const chatImg = require('../assets/images/chat.gif');
 
@@ -73,71 +74,65 @@ const Signup = () => {
   };
 
   return (
-    <div className="d-flex flex-column h-100">
-      <div className="container-fluid h-100">
-        <div className="row justify-content-center align-content-center h-100">
-          <div className="col-12 col-md-8 col-xxl-6">
-            <Card className="shadow-sm">
-              <Card.Body className="p-5 row">
-                <div className="col-12 col-md-6 d-flex align-items-center justify-content-center">
-                  <Card.Img width={200} src={chatImg} />
-                </div>
-                <Form onSubmit={formik.handleSubmit} className="col-12 col-md-6 mt-3 ">
-                  <h1 className="text-center mb-2">{t('formHeaders.registration')}</h1>
-                  <fieldset>
-                    <InputComponent
-                      blurHandler={() => formik.setFieldTouched('username', true)}
-                      inputClasses={formik.touched.username && formik.errors.username ? 'is-invalid' : ''}
-                      fieldName="username"
-                      type="text"
-                      changeHandler={(e) => {
-                        formik.handleChange(e);
-                        formik.setFieldTouched('username', true);
-                      }}
-                      fieldValue={formik.values.username}
-                      isInvalidMessage={formik.errors.username}
-                      placeholderText={t('placeholders.nickname')}
-                      touchedMarker={formik.touched.username}
-                      ref={inputNameRef}
-                    />
-                    {regErrorEl(regError)}
-                    <InputComponent
-                      blurHandler={() => formik.setFieldTouched('password', true)}
-                      inputClasses={formik.touched.password && formik.errors.password ? 'is-invalid' : ''}
-                      fieldName="password"
-                      type="password"
-                      changeHandler={(e) => {
-                        formik.handleChange(e);
-                        formik.setFieldTouched('password', true);
-                      }}
-                      fieldValue={formik.values.password}
-                      isInvalidMessage={formik.errors.password}
-                      placeholderText={t('placeholders.password')}
-                      touchedMarker={formik.touched.password}
-                    />
-                    <InputComponent
-                      blurHandler={() => formik.setFieldTouched('confirmPassword', true)}
-                      inputClasses={formik.touched.confirmPassword && formik.errors.confirmPassword ? 'is-invalid' : ''}
-                      fieldName="confirmPassword"
-                      type="password"
-                      changeHandler={(e) => {
-                        formik.handleChange(e);
-                        formik.setFieldTouched('confirmPassword', true);
-                      }}
-                      fieldValue={formik.values.confirmPassword}
-                      isInvalidMessage={formik.errors.confirmPassword}
-                      placeholderText={t('placeholders.confirmPassword')}
-                      touchedMarker={formik.touched.confirmPassword}
-                    />
-                    <Button type="submit" className="w-100 mt-4" variant="outline-secondary">{t('buttons.registrationBtn')}</Button>
-                  </fieldset>
-                </Form>
-              </Card.Body>
-            </Card>
+    <FormBox>
+      <Card className="shadow-sm">
+        <Card.Body className="p-5 row">
+          <div className="col-12 col-md-6 d-flex align-items-center justify-content-center">
+            <Card.Img width={200} src={chatImg} />
           </div>
-        </div>
-      </div>
-    </div>
+          <Form onSubmit={formik.handleSubmit} className="col-12 col-md-6 mt-3 ">
+            <h1 className="text-center mb-2">{t('formHeaders.registration')}</h1>
+            <fieldset>
+              <InputComponent
+                blurHandler={() => formik.setFieldTouched('username', true)}
+                inputClasses={formik.touched.username && formik.errors.username ? 'is-invalid' : ''}
+                fieldName="username"
+                type="text"
+                changeHandler={(e) => {
+                  formik.handleChange(e);
+                  formik.setFieldTouched('username', true);
+                }}
+                fieldValue={formik.values.username}
+                isInvalidMessage={formik.errors.username}
+                placeholderText={t('placeholders.nickname')}
+                touchedMarker={formik.touched.username}
+                ref={inputNameRef}
+              />
+              {regErrorEl(regError)}
+              <InputComponent
+                blurHandler={() => formik.setFieldTouched('password', true)}
+                inputClasses={formik.touched.password && formik.errors.password ? 'is-invalid' : ''}
+                fieldName="password"
+                type="password"
+                changeHandler={(e) => {
+                  formik.handleChange(e);
+                  formik.setFieldTouched('password', true);
+                }}
+                fieldValue={formik.values.password}
+                isInvalidMessage={formik.errors.password}
+                placeholderText={t('placeholders.password')}
+                touchedMarker={formik.touched.password}
+              />
+              <InputComponent
+                blurHandler={() => formik.setFieldTouched('confirmPassword', true)}
+                inputClasses={formik.touched.confirmPassword && formik.errors.confirmPassword ? 'is-invalid' : ''}
+                fieldName="confirmPassword"
+                type="password"
+                changeHandler={(e) => {
+                  formik.handleChange(e);
+                  formik.setFieldTouched('confirmPassword', true);
+                }}
+                fieldValue={formik.values.confirmPassword}
+                isInvalidMessage={formik.errors.confirmPassword}
+                placeholderText={t('placeholders.confirmPassword')}
+                touchedMarker={formik.touched.confirmPassword}
+              />
+              <Button type="submit" className="w-100 mt-4" variant="outline-secondary">{t('buttons.registrationBtn')}</Button>
+            </fieldset>
+          </Form>
+        </Card.Body>
+      </Card>
+    </FormBox>
   );
 };
 
