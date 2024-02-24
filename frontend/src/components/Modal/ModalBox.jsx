@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Modal from 'react-bootstrap/Modal';
 import { isShownSelector, modalActions } from '../../store/slices/modalSlice.js';
 
-const ModalContainer = () => {
+const ModalBox = () => {
   const isShownModal = useSelector((state) => isShownSelector(state));
   const dispatch = useDispatch();
   const hideModal = () => dispatch(modalActions.hideModal());
@@ -17,4 +17,4 @@ const ModalContainer = () => {
   );
 };
 
-export default ModalContainer;
+export default ModalBox;
