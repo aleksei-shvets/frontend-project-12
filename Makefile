@@ -18,4 +18,4 @@ start:
 
 build:
 	rm frontend/build -rf
-	npm run build
+	make -C frontend build
