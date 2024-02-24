@@ -13,7 +13,25 @@ import { channelActions, channelsSelector } from '../../store/slices/channelsSli
 import getShema from '../../validation/validation.js';
 import defaultChannelId from '../../constants/constants.js';
 
-const deleteChannelHandler = async (deletedChannelId, authToken, dispatcher) => {
+const addNewChannel = async ({ inputValue, token, dispatch }) => {
+  const response = await axios.post(fetchRoutes.channelsPath(), { name: inputValue }, {
+    headers: {
+      Authorization: token.Authorization,
+    },
+  });
+  dispatch(channelActions.addChannel(response.data));
+  dispatch(channelActions.switchChannel(response.data.id));
+};
+
+const renameChannel = async ({ updatedChannelId, inputValue, token }) => {
+  await axios.patch(fetchRoutes.updateChannelPath(updatedChannelId), { name: inputValue }, {
+    headers: {
+      Authorization: token.Authorization,
+    },
+  });
+};
+
+const deleteChannel = async (deletedChannelId, authToken, dispatcher) => {
   await axios
     .delete(fetchRoutes.updateChannelPath(deletedChannelId), {
       headers: {
@@ -25,24 +43,8 @@ const deleteChannelHandler = async (deletedChannelId, authToken, dispatcher) => 
 
 const getDataFetch = (type) => {
   const modalTypes = {
-    addingChannel: async ({ newChannel, token, dispatch }) => {
-      const response = await axios
-        .post(fetchRoutes.channelsPath(), newChannel, {
-          headers: {
-            Authorization: token.Authorization,
-          },
-        });
-      dispatch(channelActions.addChannel(response.data));
-      dispatch(channelActions.switchChannel(response.data.id));
-    },
-    renamingChannel: async ({ updatedChannelId, newChannel, token }) => {
-      await axios
-        .patch(fetchRoutes.updateChannelPath(updatedChannelId), newChannel, {
-          headers: {
-            Authorization: token.Authorization,
-          },
-        });
-    },
+    addingChannel: addNewChannel,
+    renamingChannel: renameChannel,
   };
   return modalTypes[type];
 };
@@ -74,12 +76,7 @@ const ModalForm = ({
   const updatedChannel = useSelector((state) => channelsSelector.selectAll(state))
     .find((channel) => channel.id === updatedChannelId);
 
-  const nameInitValue = () => {
-    if (modalType === 'renamingChannel') {
-      return updatedChannel.name;
-    }
-    return '';
-  };
+  const nameInitValue = () => (modalType === 'renamingChannel' ? updatedChannel.name : '');
 
   const connectionErrorEl = (isConnetionErr) => {
     if (isConnetionErr) {
@@ -98,14 +95,11 @@ const ModalForm = ({
     },
     validationSchema: channelNameSchema,
     onSubmit: (values) => {
-      const channelName = wordsFilter(values.nameInput);
+      const filtredValue = wordsFilter(values.nameInput);
       formik.setSubmitting(true);
       try {
-        const newChannel = {
-          name: channelName,
-        };
         getDataFetch(modalType)({
-          newChannel, token, updatedChannelId, dispatch,
+          token, updatedChannelId, dispatch, inputValue: filtredValue,
         });
         hideModal();
         toastHandler(true);
@@ -159,7 +153,7 @@ const ModalForm = ({
           variant="danger"
           onClick={(e) => {
             e.preventDefault();
-            deleteChannelHandler(updatedChannelId, token, dispatch);
+            deleteChannel(updatedChannelId, token, dispatch);
             hideModal();
             toastHandler(true);
           }}
