@@ -1,7 +1,7 @@
 import { createSlice, createEntityAdapter, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import getAuthHeader from '../../utils/getAuthHeader.js';
-import ROUTES from '../../fetchApi/route.js';
+import fetchRoutes from '../../fetchApi/route.js';
 import defaultChannelId from '../../constants/constants.js';
 
 const channelsAdapter = createEntityAdapter();
@@ -11,7 +11,7 @@ export const fetchChannelsThunk = createAsyncThunk(
   async () => {
     try {
       const token = getAuthHeader();
-      const response = await axios.get(ROUTES.channelsPath(), { headers: token });
+      const response = await axios.get(fetchRoutes.channelsPath(), { headers: token });
       console.log(response);
       return response;
     } catch (e) {
