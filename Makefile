@@ -5,7 +5,7 @@ install:
 	npm ci
 
 start-backend:
-	npx start-server
+	npx start-server -s ./frontend/build
 
 deploy:
 	git push heroku main
