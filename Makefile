@@ -4,17 +4,14 @@ lint-frontend:
 install:
 	npm ci
 
-start-frontend:
-	cd frontend && make start
-
 start-backend:
-	npx start-server
+	npx start-server -s ./frontend/build
 
 deploy:
 	git push heroku main
 
 start:
-	make start-backend && make start-frontend
+	make start-backend
 
 build:
 	rm frontend/build -rf
