@@ -15,5 +15,5 @@ start:
 
 build:
 	rm frontend/build -rf
-	make -C frontend build
+	make -C frontend & make build
 
