@@ -76,7 +76,7 @@ const Login = () => {
                 changeHandler={formik.handleChange}
                 fieldValue={formik.values.username}
                 isInvalidMessage={formik.errors.username}
-                placeholderText={t('placeholders.nickname')}
+                labelText={t('placeholders.nickname')}
                 type="text"
                 ref={inputRef}
               />
@@ -85,7 +85,7 @@ const Login = () => {
                 changeHandler={formik.handleChange}
                 fieldValue={formik.values.password}
                 isInvalidMessage={formik.errors.password}
-                placeholderText={t('placeholders.password')}
+                labelText={t('placeholders.password')}
                 type="password"
               />
               {loginErrorEl(isNotAuth)}
