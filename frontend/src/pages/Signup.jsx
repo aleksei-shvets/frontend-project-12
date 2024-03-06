@@ -94,7 +94,7 @@ const Signup = () => {
                 }}
                 fieldValue={formik.values.username}
                 isInvalidMessage={formik.errors.username}
-                placeholderText={t('placeholders.nickname')}
+                labelText={t('placeholders.username')}
                 touchedMarker={formik.touched.username}
                 ref={inputNameRef}
               />
@@ -110,8 +110,8 @@ const Signup = () => {
                 }}
                 fieldValue={formik.values.password}
                 isInvalidMessage={formik.errors.password}
-                placeholderText={t('placeholders.password')}
                 touchedMarker={formik.touched.password}
+                labelText={t('placeholders.password')}
               />
               <InputComponent
                 blurHandler={() => formik.setFieldTouched('confirmPassword', true)}
@@ -124,7 +124,7 @@ const Signup = () => {
                 }}
                 fieldValue={formik.values.confirmPassword}
                 isInvalidMessage={formik.errors.confirmPassword}
-                placeholderText={t('placeholders.confirmPassword')}
+                labelText={t('placeholders.confirmPassword')}
                 touchedMarker={formik.touched.confirmPassword}
               />
               <Button type="submit" className="w-100 mt-4" variant="outline-secondary">{t('buttons.registrationBtn')}</Button>

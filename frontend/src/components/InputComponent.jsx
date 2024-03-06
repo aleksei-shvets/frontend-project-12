@@ -2,7 +2,6 @@ import { Form, InputGroup } from 'react-bootstrap';
 import { forwardRef } from 'react';
 
 const InputComponent = forwardRef(({
-  placeholderText,
   changeHandler,
   fieldValue,
   isInvalidMessage,
@@ -11,15 +10,15 @@ const InputComponent = forwardRef(({
   touchedMarker,
   type,
   blurHandler,
+  labelText,
 }, ref) => (
   <Form.Group className="mb-4">
-    <Form.Label htmlFor={fieldName} />
+    <Form.Label htmlFor={fieldName}>{labelText}</Form.Label>
     <InputGroup hasValidation>
       <Form.Control
         required
         className={inputClasses}
         autoComplete={fieldName}
-        placeholder={placeholderText}
         id={fieldName}
         name={fieldName}
         type={type}
