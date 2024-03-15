@@ -7,10 +7,8 @@ import { useRollbar } from '@rollbar/react';
 import Form from 'react-bootstrap/Form';
 import fetchRoutes from '../fetchApi/route.js';
 import getAuthHeader from '../utils/getAuthHeader';
-// import { CurrentUserMessage, OtherUsersMessage } from './MessageItem.jsx';
 import useAuth from '../hooks/useAuth.js';
 import MessageItem from './MessageItem.jsx';
-// import store from '../store/index.js';
 
 const MessagesList = ({ messages, currentChannelId }) => {
   const rollbar = useRollbar();

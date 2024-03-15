@@ -1,4 +1,4 @@
-import cn from 'classnames';
+/* import cn from 'classnames';
 
 const MessageItem = ({ item, userType }) => {
   const containerClasses = cn('container', 'pl-3', 'mb-4', 'row', {
@@ -18,6 +18,17 @@ const MessageItem = ({ item, userType }) => {
         </div>
       </div>
       {userType === 'OtherUsersMessage' ? <div className="col-lg-2" /> : null}
+    </div>
+  );
+}; */
+import cn from 'classnames';
+
+const MessageItem = ({ item }) => {
+  const containerClasses = cn('container', 'pl-3', 'mb-4', 'row');
+
+  return (
+    <div className={containerClasses}>
+      <p>{`${item?.username}: ${item?.body}`}</p>
     </div>
   );
 };
