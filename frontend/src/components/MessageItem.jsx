@@ -1,4 +1,4 @@
-/* import cn from 'classnames';
+import cn from 'classnames';
 
 const MessageItem = ({ item, userType }) => {
   const containerClasses = cn('container', 'pl-3', 'mb-4', 'row', {
@@ -14,14 +14,14 @@ const MessageItem = ({ item, userType }) => {
       <div className="col-10">
         <div className={textsBoxClasses}>
           <p className="fw-bold m-0 small mb-2">{`${item?.username}:`}</p>
-          <p className="m-0">{item?.body}</p>
+          {item?.body}
         </div>
       </div>
       {userType === 'OtherUsersMessage' ? <div className="col-lg-2" /> : null}
     </div>
   );
-}; */
-import cn from 'classnames';
+};
+/* import cn from 'classnames';
 
 const MessageItem = ({ item }) => {
   const containerClasses = cn('container', 'pl-3', 'mb-4', 'row');
@@ -31,6 +31,6 @@ const MessageItem = ({ item }) => {
       <p>{`${item?.username}: ${item?.body}`}</p>
     </div>
   );
-};
+}; */
 
 export default MessageItem;
