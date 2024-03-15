@@ -21,16 +21,5 @@ const MessageItem = ({ item, userType }) => {
     </div>
   );
 };
-/* import cn from 'classnames';
-
-const MessageItem = ({ item }) => {
-  const containerClasses = cn('container', 'pl-3', 'mb-4', 'row');
-
-  return (
-    <div className={containerClasses}>
-      <p>{`${item?.username}: ${item?.body}`}</p>
-    </div>
-  );
-}; */
 
 export default MessageItem;
