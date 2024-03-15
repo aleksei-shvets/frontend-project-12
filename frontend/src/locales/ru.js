@@ -16,7 +16,8 @@ export default {
       username: 'Имя пользователя',
       password: 'Пароль',
       confirmPassword: 'Подтвердите пароль',
-      message: 'Введите сообщение...',
+      messageInput: 'Введите сообщение...',
+      newMessage: 'Новое сообщение',
     },
     formHeaders: {
       registration: 'Регистрация',
