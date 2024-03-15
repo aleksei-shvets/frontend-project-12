@@ -61,6 +61,7 @@ const MessagesList = ({ messages, currentChannelId }) => {
             <Form.Label hidden htmlFor="message">{t('placeholders.newMessage')}</Form.Label>
             <Form.Control
               onChange={formik.handleChange}
+              aria-label={t('placeholders.newMessage')}
               name="message"
               placeholder={t('placeholders.messageInput')}
               className="border-0 p-0 ps-2 form-control"
