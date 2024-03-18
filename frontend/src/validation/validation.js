@@ -5,7 +5,8 @@ export default (t, channelNames = []) => {
     .min(3, t('validationErrors.incorrectLength'))
     .max(20, t('validationErrors.incorrectLength'));
 
-  const requiredStringSchema = commonStringSchema.required(t('validationErrors.requiredFields'));
+  // const requiredStringSchema = commonStringSchema.required(t('validationErrors.requiredFields'));
+  const requiredStringSchema = commonStringSchema.required(t('validationErrors.incorrectLength'));
 
   const channelNameSchema = yup.object({
     nameInput: requiredStringSchema

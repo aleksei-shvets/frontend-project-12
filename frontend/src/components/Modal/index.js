@@ -1,7 +1,4 @@
 import { useTranslation } from 'react-i18next';
-// import AddChannelModal from './AddChannelModal.jsx';
-// import RenameChannelModal from './RenameChannelModal.jsx';
-// import RemoveChannelModal from './RemoveChannelModal.jsx';
 import Modal from './Modal.jsx';
 
 const modalTypes = {
