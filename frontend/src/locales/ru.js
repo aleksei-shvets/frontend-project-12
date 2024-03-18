@@ -18,6 +18,7 @@ export default {
       confirmPassword: 'Подтвердите пароль',
       messageInput: 'Введите сообщение...',
       newMessage: 'Новое сообщение',
+      channelsModalLabel: 'Имя канала',
     },
     formHeaders: {
       registration: 'Регистрация',

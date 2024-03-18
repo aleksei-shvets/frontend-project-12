@@ -123,6 +123,7 @@ const ModalForm = ({
         <Form.Group className="mb-3" id="exampleForm.ControlInput1">
           <Form.Label htmlFor="nameInput" className="visually-hidden" />
           <InputGroup hasValidation>
+            <Form.Label className="visually-hidden">{t('placeholders.channelsModalLabel')}</Form.Label>
             <Form.Control
               type="text"
               name="nameInput"
