@@ -19,6 +19,7 @@ export default {
       messageInput: 'Введите сообщение...',
       newMessage: 'Новое сообщение',
       channelsModalLabel: 'Имя канала',
+      channelControl: 'Управление каналом',
     },
     formHeaders: {
       registration: 'Регистрация',
@@ -52,7 +53,7 @@ export default {
     toastMessage: {
       removeChannel: 'Канал удален',
       renameChannel: 'Канал переименован',
-      addChannel: 'Канал добавлен',
+      addChannel: 'Канал создан',
     },
     userDirection: 'Но вы можете перейти ',
     messageCount_zero: '{{count}} сообщений',

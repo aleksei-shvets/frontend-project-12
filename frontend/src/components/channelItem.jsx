@@ -38,7 +38,9 @@ export const RemovableItem = ({
         split
         variant={variantColor()}
         id="dropdown-split-basic"
-      />
+      >
+        <span className="visually-hidden">{t('placeholders.channelControl')}</span>
+      </Dropdown.Toggle>
 
       <Dropdown.Menu variant="dark">
         <Dropdown.Item onClick={() => updateChannelHandler(channel.id, 'removingChannel')} as="button">{t('buttons.deleteBtn')}</Dropdown.Item>
