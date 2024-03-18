@@ -56,6 +56,7 @@ const ModalForm = ({
   const [connectionError, setConnectionError] = useState(null);
   const rollbar = useRollbar();
   filterProfanity.loadDictionary('ru');
+  filterProfanity.loadDictionary('en');
   const wordsFilter = (message) => filterProfanity.clean(message);
 
   const inputEl = useRef(null);
