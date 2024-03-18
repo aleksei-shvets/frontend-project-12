@@ -13,6 +13,7 @@ import MessageItem from './MessageItem.jsx';
 const MessagesList = ({ messages, currentChannelId }) => {
   const rollbar = useRollbar();
   filterProfanity.loadDictionary('ru');
+  filterProfanity.loadDictionary('en');
   const wordsFilter = (message) => filterProfanity.clean(message);
   const { t } = useTranslation();
   const inputEl = useRef(null);
