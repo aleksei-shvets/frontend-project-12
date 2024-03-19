@@ -122,7 +122,6 @@ const ModalForm = ({
       <Form onSubmit={formik.handleSubmit}>
         <Form.Group className="mb-3" id="exampleForm.ControlInput1">
           <InputGroup hasValidation>
-            <Form.Label htmlFor="nameInput" className="visually-hidden">{t('placeholders.channelsModalLabel')}</Form.Label>
             <Form.Control
               type="text"
               name="nameInput"
@@ -132,6 +131,7 @@ const ModalForm = ({
               isInvalid={!formik.isValid}
               ref={inputEl}
             />
+            <Form.Label htmlFor="nameInput" className="visually-hidden">{t('placeholders.channelsModalLabel')}</Form.Label>
             <Form.Control.Feedback tooltip type="invalid">
               {formik.errors.nameInput}
             </Form.Control.Feedback>
