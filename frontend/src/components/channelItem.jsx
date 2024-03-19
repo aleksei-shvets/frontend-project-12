@@ -39,7 +39,7 @@ export const RemovableItem = ({
         variant={variantColor()}
         id="dropdown-split-basic"
       >
-        <span className="visually-hidden">{t('placeholders.channelControl')}</span>
+        <span className="visually-hidden">{t('buttons.channelControl')}</span>
       </Dropdown.Toggle>
 
       <Dropdown.Menu variant="dark">

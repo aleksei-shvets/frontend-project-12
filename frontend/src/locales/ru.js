@@ -10,6 +10,7 @@ export default {
       renameBtn: 'Переименовать',
       regLink: 'Регистрация',
       mainPageLink: 'на главную страницу',
+      channelControl: 'Управление каналом',
     },
     placeholders: {
       nickname: 'Ваш ник',
@@ -19,7 +20,6 @@ export default {
       messageInput: 'Введите сообщение...',
       newMessage: 'Новое сообщение',
       channelsModalLabel: 'Имя канала',
-      channelControl: 'Управление каналом',
     },
     formHeaders: {
       registration: 'Регистрация',
