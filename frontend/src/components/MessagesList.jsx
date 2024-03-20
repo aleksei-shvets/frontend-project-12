@@ -11,8 +11,8 @@ import useAuth from '../hooks/useAuth.js';
 import MessageItem from './MessageItem.jsx';
 
 const MessagesList = ({ messages, currentChannelId }) => {
-  const rollbar = useRollbar();
   filterProfanity.loadDictionary('ru');
+  const rollbar = useRollbar();
   filterProfanity.loadDictionary('en');
   const wordsFilter = (message) => filterProfanity.clean(message);
   const { t } = useTranslation();
