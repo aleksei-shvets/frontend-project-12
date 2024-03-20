@@ -51,7 +51,7 @@ export default {
       incorrectRenameChannel: 'Должно быть уникальным',
     },
     toastMessage: {
-      removeChannel: 'Канал удален',
+      removeChannel: 'Канал удалён',
       renameChannel: 'Канал переименован',
       addChannel: 'Канал создан',
     },
