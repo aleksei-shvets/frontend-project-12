@@ -13,7 +13,7 @@ const InputComponent = forwardRef(({
   labelText,
 }, ref) => (
   <Form.Group className="mb-4">
-    <Form.Label htmlFor={fieldName}>{labelText}</Form.Label>
+    <Form.Label className="visually-hidden" htmlFor={fieldName}>{labelText}</Form.Label>
     <InputGroup hasValidation>
       <Form.Control
         required
@@ -21,6 +21,7 @@ const InputComponent = forwardRef(({
         autoComplete={fieldName}
         id={fieldName}
         name={fieldName}
+        placeholder={labelText}
         type={type}
         onChange={changeHandler}
         value={fieldValue}
