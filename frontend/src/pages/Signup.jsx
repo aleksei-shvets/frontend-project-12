@@ -45,10 +45,8 @@ const Signup = () => {
     onSubmit: async (values) => {
       try {
         const newUser = { username: values.username, password: values.password };
-        const response = await axios.post(fetchRoutes.signupPath(), newUser);
-        localStorage.setItem('userToken', JSON.stringify(response.data.token));
-        localStorage.setItem('username', JSON.stringify(response.data.username));
-        authHook.logIn();
+        const { data } = await axios.post(fetchRoutes.signupPath(), newUser);
+        authHook.logIn(data);
         navigate(ROUTES.home);
       } catch (err) {
         formik.setSubmitting(false);
