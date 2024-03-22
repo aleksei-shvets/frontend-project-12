@@ -20,13 +20,13 @@ export const RemovableItem = ({
     dispath(modalActions.setUpdatedChannelId(id));
   };
 
-  const variantColor = () => (Number(currentChannelId) === Number(channel.id) ? 'secondary' : 'light');
+  const variantColor = () => (Number(currentChannelId) === Number(channel.id) ? 'secondary' : null);
   const { t } = useTranslation();
   return (
     <Dropdown as={ButtonGroup} className="m-0 p-0 col w-100 container w-100">
       <Button
         variant={variantColor()}
-        className="text-start rounded-start-pill w-100"
+        className="w-100 rounded-0 text-start text-truncate"
         onClick={() => handleChoose(channel.id)}
       >
         <span className="me-1">#</span>
@@ -34,7 +34,7 @@ export const RemovableItem = ({
       </Button>
 
       <Dropdown.Toggle
-        className="rounded-end-pill"
+        className="rounded-0"
         split
         variant={variantColor()}
         id="dropdown-split-basic"
@@ -56,7 +56,7 @@ export const UnremovableItem = ({ channel, handleChoose, currentChannelId }) => 
     onClick={() => handleChoose(channel.id)}
     type="button"
     variant={(Number(currentChannelId) === Number(channel.id) ? 'secondary' : 'light')}
-    className="w-100 rounded-pill text-start mb-1"
+    className="w-100 rounded-0 text-start text-truncate"
   >
     <span className="me-1">#</span>
     {channel.name}

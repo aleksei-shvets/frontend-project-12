@@ -46,10 +46,8 @@ const Login = () => {
       setIsNotAuth(false);
       try {
         formik.setSubmitting(true);
-        const response = await axios.post(fetchRoutes.loginPath(), values);
-        localStorage.setItem('userToken', JSON.stringify(response.data.token));
-        localStorage.setItem('username', JSON.stringify(response.data.username));
-        authHook.logIn();
+        const { data } = await axios.post(fetchRoutes.loginPath(), values);
+        authHook.logIn(data);
         navigate(ROUTES.home);
         formik.setSubmitting(false);
       } catch (err) {

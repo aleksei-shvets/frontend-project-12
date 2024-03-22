@@ -4,28 +4,34 @@ import {
 import AutorizeContext from '../contexts/authContext.js';
 
 const AuthProvider = ({ children }) => {
-  const isLogged = localStorage.getItem('userToken');
-  const isLoggedUser = JSON.parse(localStorage.getItem('username'));
-  const [loggedIn, setLoggedIn] = useState(isLogged);
-  const [username, setUsername] = useState(isLoggedUser);
+  const initState = () => (localStorage.getItem('user')
+    ? (localStorage.getItem('user'))
+    : null);
 
-  const setUser = useCallback(() => setUsername(isLoggedUser));
-  const logIn = useCallback(() => setLoggedIn(true));
+  const [username, setUsername] = useState(initState);
+
+  const setUser = useCallback((currentUser) => setUsername(currentUser), []);
+
+  const logIn = useCallback((userData) => {
+    localStorage.setItem('user', JSON.stringify(userData.username));
+    localStorage.setItem('userToken', JSON.stringify(userData.token));
+    setUser(userData.username);
+  }, [setUser]);
+
   const logOut = useCallback(() => {
+    localStorage.removeItem('user');
     localStorage.removeItem('userToken');
-    setLoggedIn(false);
-  });
+    setUsername('');
+  }, [username]);
 
-  const prop = useMemo(() => ({
-    loggedIn,
+  const propMemo = useMemo(() => ({
     logIn,
     logOut,
     username,
-    setUser,
-  }), [loggedIn, logIn, logOut, username, setUser]);
+  }), [logIn, logOut, username]);
 
   return (
-    <AutorizeContext.Provider value={prop}>
+    <AutorizeContext.Provider value={propMemo}>
       {children}
     </AutorizeContext.Provider>
   );

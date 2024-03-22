@@ -9,7 +9,7 @@ const Nav = () => {
       <div className="container">
         <a className="navbar-brand" href="/">Hexlet Chat</a>
         {
-          authHook.loggedIn
+          authHook.username
             ? <button onClick={authHook.logOut} type="button" className="action btn bg-info">{t('buttons.logoutBtn')}</button>
             : null
         }
