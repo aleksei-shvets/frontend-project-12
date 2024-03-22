@@ -1,4 +1,3 @@
-// import { Button } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 
 const ChannelsHeader = ({ addChannelHandle }) => {
