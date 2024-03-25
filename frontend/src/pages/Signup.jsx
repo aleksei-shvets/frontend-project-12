@@ -19,7 +19,7 @@ const Signup = () => {
   const { t } = useTranslation();
   const authHook = useAuth();
   const navigate = useNavigate();
-  const [regError, setRegErrorEl] = useState(null);
+  const [regError, setRegError] = useState(null);
   const inputNameRef = useRef();
   const { signupSchema } = getShema(t);
   useEffect(() => {
@@ -29,9 +29,9 @@ const Signup = () => {
   useEffect(() => {
     if (regError && inputNameRef.current) {
       inputNameRef.current.select();
-      setRegErrorEl(t('fetchErrors.incorrectSignup'));
+      setRegError(t('fetchErrors.incorrectSignup'));
     } else {
-      setRegErrorEl(null);
+      setRegError(null);
     }
   }, [regError]);
 
@@ -51,10 +51,10 @@ const Signup = () => {
       } catch (err) {
         formik.setSubmitting(false);
         if (err.response.status === 409) {
-          setRegErrorEl(t('fetchErrors.incorrectSignup'));
+          setRegError(t('fetchErrors.incorrectSignup'));
         }
         if (err.isAxiosError && err.response.status !== 409) {
-          setRegErrorEl(t('fetchErrors.connectionError'));
+          setRegError(t('fetchErrors.connectionError'));
         }
       }
     },
