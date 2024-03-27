@@ -55,12 +55,11 @@ const MessagesList = ({ messages, currentChannelId }) => {
         ))}
       </div>
       <div className="mt-auto px-5 py-3">
-        <Form onSubmit={formik.handleSubmit} className="py-1 border rounded-2">
+        <Form onSubmit={formik.handleSubmit} className="py-1 border rounded-2" aria-label={t('placeholders.newMessage')}>
           <div className="input-group has-validation">
             <Form.Control
               required
               onChange={formik.handleChange}
-              aria-label={t('placeholders.newMessage')}
               name="message"
               placeholder={t('placeholders.messageInput')}
               className="border-0 p-0 ps-2 form-control"
