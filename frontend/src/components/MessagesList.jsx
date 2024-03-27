@@ -55,14 +55,15 @@ const MessagesList = ({ messages, currentChannelId }) => {
         ))}
       </div>
       <div className="mt-auto px-5 py-3">
-        <Form onSubmit={formik.handleSubmit} className="py-1 border rounded-2" aria-label={t('placeholders.newMessage')}>
-          <div className="input-group has-validation">
+        <Form onSubmit={formik.handleSubmit} className="py-1 border rounded-2">
+          <Form.Group className="input-group has-validation">
             <Form.Control
               required
+              aria-label={t('placeholders.newMessage')}
               onChange={formik.handleChange}
               name="message"
               placeholder={t('placeholders.messageInput')}
-              className="border-0 p-0 ps-2 form-control"
+              className="border-0 p-0 ps-2"
               value={formik.values.message}
               ref={inputEl}
             />
@@ -72,7 +73,7 @@ const MessagesList = ({ messages, currentChannelId }) => {
               </svg>
               <span className="visually-hidden">{t('buttons.sendBtn')}</span>
             </button>
-          </div>
+          </Form.Group>
         </Form>
       </div>
     </>
