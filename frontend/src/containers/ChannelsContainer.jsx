@@ -3,15 +3,11 @@ import { channelsSelector, currentChannelIdSelector, channelActions } from '../s
 import ChannelsHeader from '../components/ChannelsHeader.jsx';
 import ChannelsList from '../components/ChannelsList.jsx';
 import { modalActions } from '../store/slices/modalSlice.js';
-// import store from '../store/index.js';
 
 const ChannelsContainer = () => {
   const dispath = useDispatch();
   const channels = useSelector((state) => channelsSelector.selectAll(state));
   const currentChannelId = useSelector((state) => currentChannelIdSelector(state));
-  /* const currentChannel = useSelector(
-    (state) => channelsSelector.selectById(state, currentChannelId),
-  ); */
   const handleChoose = (id) => {
     dispath(channelActions.switchChannel(id));
   };
