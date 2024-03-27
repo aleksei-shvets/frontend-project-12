@@ -17,9 +17,17 @@ const MessagesList = ({ messages, currentChannelId }) => {
   const wordsFilter = (message) => filterProfanity.clean(message);
   const { t } = useTranslation();
   const inputEl = useRef(null);
+  const listRef = useRef(null);
   useEffect(() => {
     inputEl.current.focus();
   }, [currentChannelId]);
+
+  useEffect(() => {
+    if (listRef.current) {
+      listRef.current.scrollTo(0, listRef.current.scrollHeight);
+    }
+  }, []);
+
   const authHook = useAuth();
   const userName = authHook.username;
   const formik = useFormik({
@@ -47,7 +55,7 @@ const MessagesList = ({ messages, currentChannelId }) => {
   });
   return (
     <>
-      <div id="messages-box" className="chat-messages overflow-auto px-5 ">
+      <div ref={listRef} id="messages-box" className="chat-messages overflow-auto px-5 ">
         {messages.map((item) => (
           item.username === userName
             ? <MessageItem key={item.id} item={item} userType="CurrentUserMessage" />
