@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { Provider, ErrorBoundary } from '@rollbar/react'; // Provider imports 'rollbar'
+import { Provider, ErrorBoundary } from '@rollbar/react';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import InitialApp from './init.js';

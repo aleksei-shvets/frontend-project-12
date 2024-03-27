@@ -1,11 +1,8 @@
 import { createSlice, createEntityAdapter, createAsyncThunk } from '@reduxjs/toolkit';
-// import { useRollbar } from '@rollbar/react';
 import axios from 'axios';
 import getAuthHeader from '../../utils/getAuthHeader.js';
 import fetchRoutes from '../../fetchApi/route.js';
 import { channelActions } from './channelsSlice.js';
-
-// const rollbar = useRollbar();
 
 export const fetchMessagesThunk = createAsyncThunk(
   'messages/fetchMessages',
@@ -15,7 +12,6 @@ export const fetchMessagesThunk = createAsyncThunk(
       const response = await axios.get(fetchRoutes.messagesPath(), { headers: token });
       return response;
     } catch (e) {
-      // rollbar.error('Fetching messages', e);
       return e;
     }
   },

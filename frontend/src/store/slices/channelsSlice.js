@@ -12,7 +12,6 @@ export const fetchChannelsThunk = createAsyncThunk(
     try {
       const token = getAuthHeader();
       const response = await axios.get(fetchRoutes.channelsPath(), { headers: token });
-      console.log(response);
       return response;
     } catch (e) {
       return e;
