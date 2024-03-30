@@ -63,7 +63,16 @@ const MessagesList = ({ messages, currentChannelId }) => {
         ))}
       </div>
       <div className="mt-auto px-5 py-3">
-        <Form onSubmit={formik.handleSubmit} className="py-1 border rounded-2">
+        <Form
+          onKeyPress={(e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+              e.preventDefault();
+              formik.handleSubmit();
+            }
+          }}
+          onSubmit={formik.handleSubmit}
+          className="py-1 border rounded-2"
+        >
           <Form.Group className="input-group has-validation">
             <Form.Control
               required
@@ -76,12 +85,6 @@ const MessagesList = ({ messages, currentChannelId }) => {
               ref={inputEl}
             />
             <button
-              onKeyPress={(e) => {
-                if (e.key === 'Enter' && !e.shiftKey) {
-                  e.preventDefault();
-                  formik.handleSubmit();
-                }
-              }}
               type="submit"
               className="btn btn-group-vertical"
             >
