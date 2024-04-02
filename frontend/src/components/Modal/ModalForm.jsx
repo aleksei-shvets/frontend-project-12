@@ -3,7 +3,7 @@ import { useFormik } from 'formik';
 import { useSelector } from 'react-redux';
 import { useEffect, useRef, useState } from 'react';
 import { useRollbar } from '@rollbar/react';
-import * as filterProfanity from 'leo-profanity';
+import filter from 'leo-profanity';
 import axios from 'axios';
 import Button from 'react-bootstrap/Button';
 import fetchRoutes from '../../fetchApi/route.js';
@@ -55,9 +55,9 @@ const ModalForm = ({
   const token = getAuthHeader();
   const [connectionError, setConnectionError] = useState(null);
   const rollbar = useRollbar();
-  filterProfanity.loadDictionary('ru');
-  filterProfanity.loadDictionary('en');
-  const wordsFilter = (message) => filterProfanity.clean(message);
+  filter.loadDictionary('en');
+  filter.add(filter.getDictionary('ru'));
+  const wordsFilter = (message) => filter.clean(message);
 
   const inputEl = useRef(null);
   useEffect(() => {

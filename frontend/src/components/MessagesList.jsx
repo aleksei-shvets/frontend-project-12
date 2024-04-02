@@ -1,5 +1,5 @@
 import { useFormik } from 'formik';
-import * as filterProfanity from 'leo-profanity';
+import filter from 'leo-profanity';
 import { useEffect, useRef } from 'react';
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
@@ -11,10 +11,10 @@ import useAuth from '../hooks/useAuth.js';
 import MessageItem from './MessageItem.jsx';
 
 const MessagesList = ({ messages, currentChannelId }) => {
-  filterProfanity.loadDictionary('ru');
+  filter.loadDictionary('en');
+  filter.add(filter.getDictionary('ru'));
   const rollbar = useRollbar();
-  filterProfanity.loadDictionary('en');
-  const wordsFilter = (message) => filterProfanity.clean(message);
+  const wordsFilter = (message) => filter.clean(message);
   const { t } = useTranslation();
   const inputEl = useRef(null);
   const listRef = useRef(null);
