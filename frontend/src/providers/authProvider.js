@@ -4,8 +4,8 @@ import {
 import AutorizeContext from '../contexts/authContext.js';
 
 const AuthProvider = ({ children }) => {
-  const loggedUser = localStorage.getItem('user');
-  const initUserState = JSON.parse(loggedUser) || null;
+  // const loggedUser = localStorage.getItem('user');
+  const initUserState = null;
 
   const [username, setUsername] = useState(initUserState);
 
