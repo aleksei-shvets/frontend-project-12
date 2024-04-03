@@ -6,12 +6,18 @@ import { useTranslation } from 'react-i18next';
 import { useRollbar } from '@rollbar/react';
 import Form from 'react-bootstrap/Form';
 import { InputGroup } from 'react-bootstrap';
+import { useSelector } from 'react-redux';
 import fetchRoutes from '../fetchApi/route.js';
 import getAuthHeader from '../utils/getAuthHeader';
 import useAuth from '../hooks/useAuth.js';
 import MessageItem from './MessageItem.jsx';
+import { currentChannelIdSelector } from '../store/slices/channelsSlice.js';
+import { messagesSelectors } from '../store/slices/messagesSlice.js';
 
-const MessagesList = ({ messages, currentChannelId }) => {
+const MessagesList = () => {
+  const currentChannelId = useSelector((state) => currentChannelIdSelector(state));
+  const messages = useSelector((state) => messagesSelectors.selectAll(state))
+    .filter((message) => Number(message.channelId) === Number(currentChannelId));
   filter.loadDictionary('en');
   filter.add(filter.getDictionary('ru'));
   const rollbar = useRollbar();
