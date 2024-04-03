@@ -4,10 +4,19 @@ import {
 import AutorizeContext from '../contexts/authContext.js';
 
 const AuthProvider = ({ children }) => {
-  // const loggedUser = localStorage.getItem('user');
-  const initUserState = null;
+  const isloggedUser = localStorage.getItem('user');
+  // const initUserState = isloggedUser ? JSON.parse(isloggedUser) : null;
 
-  const [username, setUsername] = useState(initUserState);
+  const [username, setUsername] = useState(null);
+
+  const getToken = useCallback(() => {
+    if (isloggedUser) {
+      const userToken = JSON.parse(localStorage.getItem('userToken'));
+      return { Authorization: `Bearer ${userToken}` };
+    }
+
+    return {};
+  });
 
   const setUser = useCallback((currentUser) => setUsername(currentUser), []);
 
@@ -27,7 +36,8 @@ const AuthProvider = ({ children }) => {
     logIn,
     logOut,
     username,
-  }), [logIn, logOut, username]);
+    getToken,
+  }), [logIn, logOut, username, getToken]);
 
   return (
     <AutorizeContext.Provider value={propMemo}>
