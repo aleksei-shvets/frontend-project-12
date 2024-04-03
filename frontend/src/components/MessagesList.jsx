@@ -5,6 +5,7 @@ import axios from 'axios';
 import { useTranslation } from 'react-i18next';
 import { useRollbar } from '@rollbar/react';
 import Form from 'react-bootstrap/Form';
+import { InputGroup } from 'react-bootstrap';
 import fetchRoutes from '../fetchApi/route.js';
 import getAuthHeader from '../utils/getAuthHeader';
 import useAuth from '../hooks/useAuth.js';
@@ -26,7 +27,7 @@ const MessagesList = ({ messages, currentChannelId }) => {
     if (listRef.current) {
       listRef.current.scrollTo(0, listRef.current.scrollHeight);
     }
-  }, []);
+  }, [messages]);
 
   const authHook = useAuth();
   const userName = authHook.username;
@@ -73,7 +74,7 @@ const MessagesList = ({ messages, currentChannelId }) => {
           onSubmit={formik.handleSubmit}
           className="py-1 border rounded-2"
         >
-          <Form.Group className="input-group has-validation">
+          <InputGroup hasValidation className="input-group">
             <Form.Control
               required
               aria-label={t('placeholders.newMessage')}
@@ -93,7 +94,7 @@ const MessagesList = ({ messages, currentChannelId }) => {
               </svg>
               <span className="visually-hidden">{t('buttons.sendBtn')}</span>
             </button>
-          </Form.Group>
+          </InputGroup>
         </Form>
       </div>
     </>
