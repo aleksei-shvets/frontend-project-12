@@ -12,7 +12,7 @@ export const fetchChannelsThunk = createAsyncThunk(
     try {
       const token = getAuthHeader();
       const response = await axios.get(fetchRoutes.channelsPath(), { headers: token });
-      return response;
+      return response.data;
     } catch (e) {
       return e;
     }
@@ -49,7 +49,7 @@ const channelsSlice = createSlice({
       .addCase(fetchChannelsThunk.fulfilled, (state, action) => {
         state.statusbar = statusName.loaded;
         state.errors = null;
-        channelsAdapter.addMany(state, action.payload.data);
+        channelsAdapter.addMany(state, action.payload);
       })
       .addCase(fetchChannelsThunk.rejected, (state, action) => {
         state.statusbar = 'failed';

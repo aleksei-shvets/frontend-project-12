@@ -10,7 +10,7 @@ export const fetchMessagesThunk = createAsyncThunk(
     try {
       const token = getAuthHeader();
       const response = await axios.get(fetchRoutes.messagesPath(), { headers: token });
-      return response;
+      return response.data;
     } catch (e) {
       return e;
     }
@@ -41,7 +41,7 @@ const messagesSlice = createSlice({
       .addCase(fetchMessagesThunk.fulfilled, (state, action) => {
         state.statusbar = statusName.loaded;
         state.errors = null;
-        messagesAdapter.addMany(state, action.payload.data);
+        messagesAdapter.addMany(state, action.payload);
       })
       .addCase(channelActions.removeChannel, (state, action) => {
         const removedChannelId = action.payload;
