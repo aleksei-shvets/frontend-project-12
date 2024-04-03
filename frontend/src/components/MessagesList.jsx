@@ -7,7 +7,7 @@ import { useRollbar } from '@rollbar/react';
 import Form from 'react-bootstrap/Form';
 import { InputGroup } from 'react-bootstrap';
 import fetchRoutes from '../fetchApi/route.js';
-// import getAuthHeader from '../utils/getAuthHeader';
+import getAuthHeader from '../utils/getAuthHeader';
 import useAuth from '../hooks/useAuth.js';
 import MessageItem from './MessageItem.jsx';
 
@@ -36,7 +36,7 @@ const MessagesList = ({ messages, currentChannelId }) => {
       message: '',
     },
     onSubmit: async (values) => {
-      const token = authHook.getToken();
+      const token = getAuthHeader();
       formik.setSubmitting(true);
       try {
         const newMessage = {
