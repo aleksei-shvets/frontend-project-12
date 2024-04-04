@@ -17,7 +17,8 @@ import { messagesSelectors } from '../store/slices/messagesSlice.js';
 const MessagesList = () => {
   const currentChannelId = useSelector((state) => currentChannelIdSelector(state));
   const messages = useSelector((state) => messagesSelectors.selectAll(state))
-    .filter((message) => Number(message.channelId) === Number(currentChannelId));
+    .filter((messages) => Number(message.channelId) === Number(currentChannelId));
+  console.log(message);
   filter.loadDictionary('en');
   filter.add(filter.getDictionary('ru'));
   const rollbar = useRollbar();
