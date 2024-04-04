@@ -4,10 +4,10 @@ import {
 import AutorizeContext from '../contexts/authContext.js';
 
 const AuthProvider = ({ children }) => {
-  // const isloggedUser = localStorage.getItem('user');
-  // const initUserState = isloggedUser ? JSON.parse(isloggedUser) : null;
+  const isloggedUser = localStorage.getItem('user');
+  const initUserState = isloggedUser ? JSON.parse(isloggedUser) : null;
 
-  const [username, setUsername] = useState(null);
+  const [username, setUsername] = useState(initUserState);
 
   const setUser = useCallback((currentUser) => setUsername(currentUser), []);
 
