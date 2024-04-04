@@ -11,6 +11,12 @@ import getAuthHeader from '../utils/getAuthHeader';
 import useAuth from '../hooks/useAuth.js';
 import MessageItem from './MessageItem.jsx';
 
+const fetchMessage = async (newMessage) => {
+  const token = getAuthHeader();
+  await axios
+    .post(fetchRoutes.messagesPath(), newMessage, { headers: token });
+};
+
 const MessagesList = ({ messages, currentChannelId }) => {
   filter.loadDictionary('en');
   filter.add(filter.getDictionary('ru'));
@@ -35,8 +41,8 @@ const MessagesList = ({ messages, currentChannelId }) => {
     initialValues: {
       message: '',
     },
-    onSubmit: async (values) => {
-      const token = getAuthHeader();
+    onSubmit: (values) => {
+      // const token = getAuthHeader();
       formik.setSubmitting(true);
       try {
         const newMessage = {
@@ -44,8 +50,9 @@ const MessagesList = ({ messages, currentChannelId }) => {
           channelId: currentChannelId,
           username: userName,
         };
-        await axios
-          .post(fetchRoutes.messagesPath(), newMessage, { headers: token });
+        fetchMessage(newMessage);
+        /* await axios
+          .post(fetchRoutes.messagesPath(), newMessage, { headers: token }); */
         formik.resetForm();
       } catch (e) {
         rollbar.error('Adding message', e);
@@ -65,12 +72,6 @@ const MessagesList = ({ messages, currentChannelId }) => {
       </div>
       <div className="mt-auto px-5 py-3">
         <Form
-          onKeyPress={(e) => {
-            if (e.key === 'Enter' && !e.shiftKey) {
-              e.preventDefault();
-              formik.handleSubmit();
-            }
-          }}
           onSubmit={formik.handleSubmit}
           className="py-1 border rounded-2"
         >
