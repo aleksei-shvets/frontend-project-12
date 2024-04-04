@@ -8,7 +8,7 @@ import Signup from './pages/Signup.jsx';
 import Home from './pages/Home.jsx';
 import NotFound from './pages/NotFound.jsx';
 import AuthProvider from './providers/authProvider.js';
-import SocketProvider from './providers/socketProvider.js';
+// import SocketProvider from './providers/socketProvider.js';
 import ROUTES from './pages/route.js';
 import useAuth from './hooks/useAuth.js';
 import Nav from './components/Nav.jsx';
@@ -23,24 +23,22 @@ const PrivateRoute = ({ children }) => {
 
 const App = () => (
   <AuthProvider>
-    <SocketProvider>
-      <Nav />
-      <BrowserRouter>
-        <Routes>
-          <Route path={ROUTES.login} element={<Login />} />
-          <Route path={ROUTES.signup} element={<Signup />} />
-          <Route path={ROUTES.notFound} element={<NotFound />} />
-          <Route
-            path={ROUTES.home}
-            element={(
-              <PrivateRoute>
-                <Home />
-              </PrivateRoute>
-            )}
-          />
-        </Routes>
-      </BrowserRouter>
-    </SocketProvider>
+    <Nav />
+    <BrowserRouter>
+      <Routes>
+        <Route path={ROUTES.login} element={<Login />} />
+        <Route path={ROUTES.signup} element={<Signup />} />
+        <Route path={ROUTES.notFound} element={<NotFound />} />
+        <Route
+          path={ROUTES.home}
+          element={(
+            <PrivateRoute>
+              <Home />
+            </PrivateRoute>
+          )}
+        />
+      </Routes>
+    </BrowserRouter>
   </AuthProvider>
 );
 
