@@ -26,6 +26,7 @@ const SocketProvider = ({ children, newSocket }) => {
       });
 
       socket.on('newChannel', (payload) => {
+        console.log(payload);
         dispatch(channelActions.addChannel(payload));
       });
 
