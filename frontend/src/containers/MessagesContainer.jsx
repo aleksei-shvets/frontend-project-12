@@ -1,10 +1,12 @@
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { useEffect } from 'react';
 import { channelsSelector, currentChannelIdSelector } from '../store/slices/channelsSlice.js';
-import { messagesSelectors } from '../store/slices/messagesSlice.js';
+import { messagesSelectors, fetchMessagesThunk } from '../store/slices/messagesSlice.js';
 import MessagesHeader from '../components/MessagesHeader.jsx';
 import MessagesList from '../components/MessagesList.jsx';
 
 const MessagesContainer = () => {
+  const dispatch = useDispatch();
   const currentChannelId = useSelector((state) => currentChannelIdSelector(state));
   const currentChannel = useSelector(
     (state) => channelsSelector.selectById(state, currentChannelId),
@@ -12,6 +14,11 @@ const MessagesContainer = () => {
   const messages = useSelector((state) => messagesSelectors.selectAll(state))
     .filter((message) => Number(message.channelId) === Number(currentChannelId));
   const messagesCout = messages.length;
+  //
+  useEffect(() => {
+    dispatch(fetchMessagesThunk());
+  }, [dispatch]);
+  //
   return (
     <div className="col p-0 h-100">
       <div className="d-flex flex-column h-100">
