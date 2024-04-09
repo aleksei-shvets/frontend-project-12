@@ -15,13 +15,13 @@ const AuthProvider = ({ children }) => {
     localStorage.setItem('user', JSON.stringify(userData.username));
     localStorage.setItem('userToken', JSON.stringify(userData.token));
     setUser(userData.username);
-  }, [setUser]);
+  }, []);
 
   const logOut = useCallback(() => {
     localStorage.removeItem('user');
     localStorage.removeItem('userToken');
-    setUsername('');
-  }, [username]);
+    setUser('');
+  }, []);
 
   const propMemo = useMemo(() => ({
     logIn,
