@@ -6,8 +6,8 @@ import { modalActions } from '../store/slices/modalSlice.js';
 
 const ChannelsContainer = () => {
   const dispath = useDispatch();
-  const channels = useSelector((state) => channelsSelector.selectAll(state));
-  const currentChannelId = useSelector((state) => currentChannelIdSelector(state));
+  const channels = useSelector(channelsSelector.selectAll);
+  const currentChannelId = useSelector(currentChannelIdSelector);
   const handleChoose = (id) => {
     dispath(channelActions.switchChannel(id));
   };

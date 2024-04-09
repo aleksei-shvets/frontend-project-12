@@ -9,7 +9,7 @@ const MessagesContainer = () => {
   const currentChannel = useSelector(
     (state) => channelsSelector.selectById(state, currentChannelId),
   );
-  const messages = useSelector((state) => messagesSelectors.selectAll(state))
+  const messages = useSelector(messagesSelectors.selectAll)
     .filter((message) => Number(message.channelId) === Number(currentChannelId));
   const messagesCout = messages.length;
 
