@@ -29,9 +29,6 @@ const Signup = () => {
   useEffect(() => {
     if (regError && inputNameRef.current) {
       inputNameRef.current.select();
-      setRegError(t('fetchErrors.incorrectSignup'));
-    } else {
-      setRegError(null);
     }
   }, [regError]);
 
@@ -46,16 +43,18 @@ const Signup = () => {
       try {
         const newUser = { username: values.username, password: values.password };
         const { data } = await axios.post(fetchRoutes.signupPath(), newUser);
+        console.log(data);
         authHook.logIn(data);
         navigate(ROUTES.home);
       } catch (err) {
-        formik.setSubmitting(false);
         if (err.response.status === 409) {
           setRegError(t('fetchErrors.incorrectSignup'));
         }
         if (err.isAxiosError && err.response.status !== 409) {
           setRegError(t('fetchErrors.connectionError'));
         }
+      } finally {
+        formik.setSubmitting(false);
       }
     },
   });
