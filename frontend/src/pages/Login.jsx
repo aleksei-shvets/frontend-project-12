@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
-  Form, Button, Card, FloatingLabel,
+  Form, Button, Card,
 } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import axios from 'axios';
@@ -69,38 +69,32 @@ const Login = () => {
           <Form onSubmit={formik.handleSubmit} className="col-12 col-md-6 mt-3 ">
             <h1 className="text-center mb-2">{t('formHeaders.login')}</h1>
             <Form.Floating>
-              <Form.Label className="visually-hidden" htmlFor="username">{t('placeholders.nickname')}</Form.Label>
-              <FloatingLabel label={t('placeholders.nickname')} htmlFor="username">
-                <Form.Control
-                  className="mb-4"
-                  type="text"
-                  id="username"
-                  name="username"
-                  placeholder={t('placeholders.username')}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  isInvalid={formik.touched.username && formik.errors.username}
-                  value={formik.values.username}
-                  touchedMarker={formik.touched.username}
-                />
-              </FloatingLabel>
+              <Form.Control
+                className="mb-4"
+                type="text"
+                id="username"
+                name="username"
+                placeholder={t('placeholders.username')}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                isInvalid={formik.touched.username && formik.errors.username}
+                value={formik.values.username}
+              />
+              <Form.Label htmlFor="username">{t('placeholders.nickname')}</Form.Label>
             </Form.Floating>
             <Form.Floating>
-              <FloatingLabel label={t('placeholders.password')} htmlFor="password">
-                <Form.Label className="visually-hidden" htmlFor="username">{t('placeholders.password')}</Form.Label>
-                <Form.Control
-                  className="mb-4"
-                  id="password"
-                  name="password"
-                  type="password"
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  isInvalid={formik.touched.password && formik.errors.password}
-                  value={formik.values.password}
-                  touchedMarker={formik.touched.password}
-                  placeholder={t('placeholders.password')}
-                />
-              </FloatingLabel>
+              <Form.Control
+                className="mb-4"
+                id="password"
+                name="password"
+                type="password"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                isInvalid={formik.touched.password && formik.errors.password}
+                value={formik.values.password}
+                placeholder={t('placeholders.password')}
+              />
+              <Form.Label htmlFor="password">{t('placeholders.password')}</Form.Label>
             </Form.Floating>
             {loginErrorEl(isNotAuth)}
             <Button type="submit" className="w-100 mt-4" variant="outline-secondary">{t('buttons.loginBtn')}</Button>

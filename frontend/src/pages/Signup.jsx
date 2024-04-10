@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
-  Form, Button, Card, FloatingLabel,
+  Form, Button, Card,
 } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import axios from 'axios';
@@ -76,11 +76,11 @@ const Signup = () => {
           </div>
           <Form onSubmit={formik.handleSubmit} className="col-12 col-md-6 mt-3 ">
             <h1 className="text-center mb-2">{t('formHeaders.registration')}</h1>
-            <Form.Floating>
-              <Form.Label className="visually-hidden" htmlFor="username">{t('placeholders.username')}</Form.Label>
-              <FloatingLabel label={t('placeholders.username')} htmlFor="username">
+            <fieldset>
+              <Form.Floating>
                 <Form.Control
                   className="mb-4"
+                  autoComplete="username"
                   type="text"
                   id="username"
                   name="username"
@@ -89,20 +89,16 @@ const Signup = () => {
                   onBlur={formik.handleBlur}
                   isInvalid={formik.errors.username}
                   value={formik.values.username}
-                  touchedMarker={formik.touched.username && formik.errors.username}
                   ref={inputNameRef}
                 />
-                <Form.Control.Feedback tooltip type="invalid">
-                  {formik.errors.username}
-                </Form.Control.Feedback>
-              </FloatingLabel>
-            </Form.Floating>
-            {regErrorEl(regError)}
-            <Form.Floating>
-              <Form.Label className="visually-hidden" htmlFor="username">{t('placeholders.password')}</Form.Label>
-              <FloatingLabel label={t('placeholders.password')} htmlFor="password">
+                <Form.Label htmlFor="username">{t('placeholders.username')}</Form.Label>
+                <Form.Control.Feedback tooltip type="invalid">{formik.errors.username}</Form.Control.Feedback>
+              </Form.Floating>
+              {regErrorEl(regError)}
+              <Form.Floating>
                 <Form.Control
                   className="mb-4"
+                  autoComplete="password"
                   id="password"
                   name="password"
                   type="password"
@@ -110,19 +106,15 @@ const Signup = () => {
                   onBlur={formik.handleBlur}
                   isInvalid={formik.errors.password}
                   value={formik.values.password}
-                  touchedMarker={formik.touched.password && formik.errors.password}
                   placeholder={t('placeholders.password')}
                 />
-                <Form.Control.Feedback tooltip type="invalid">
-                  {formik.errors.password}
-                </Form.Control.Feedback>
-              </FloatingLabel>
-            </Form.Floating>
-            <Form.Floating>
-              <Form.Label className="visually-hidden" htmlFor="username">{t('placeholders.confirmPassword')}</Form.Label>
-              <FloatingLabel label={t('placeholders.confirmPassword')} htmlFor="confirmPassword">
+                <Form.Label htmlFor="password">{t('placeholders.password')}</Form.Label>
+                <Form.Control.Feedback tooltip type="invalid">{formik.errors.password}</Form.Control.Feedback>
+              </Form.Floating>
+              <Form.Floating>
                 <Form.Control
                   className="mb-4"
+                  autoComplete="confirmPassword"
                   id="confirmPassword"
                   name="confirmPassword"
                   type="password"
@@ -130,15 +122,13 @@ const Signup = () => {
                   onBlur={formik.handleBlur}
                   isInvalid={formik.errors.confirmPassword}
                   value={formik.values.confirmPassword}
-                  placeholder={t('placeholders.confirmPassword')}
-                  touchedMarker={formik.touched.confirmPassword && formik.errors.confirmPassword}
+                  placeholder="{t('placeholders.confirmPassword')}"
                 />
-                <Form.Control.Feedback tooltip type="invalid">
-                  {formik.errors.confirmPassword}
-                </Form.Control.Feedback>
-              </FloatingLabel>
-            </Form.Floating>
-            <Button type="submit" className="w-100 mt-4" variant="outline-secondary">{t('buttons.registrationBtn')}</Button>
+                <Form.Label htmlFor="confirmPassword">{t('placeholders.confirmPassword')}</Form.Label>
+                <Form.Control.Feedback tooltip type="invalid">{formik.errors.confirmPassword}</Form.Control.Feedback>
+              </Form.Floating>
+              <Button type="submit" className="w-100 mt-4" variant="outline-secondary">{t('buttons.registrationBtn')}</Button>
+            </fieldset>
           </Form>
         </Card.Body>
       </Card>
