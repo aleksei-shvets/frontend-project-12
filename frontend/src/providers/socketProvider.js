@@ -21,12 +21,10 @@ const SocketProvider = ({ children, newSocket }) => {
   useEffect(() => {
     if (socket) {
       socket.on('newMessage', (payload) => {
-        console.log(payload);
         dispatch(messageActions.addMessage(payload));
       });
 
       socket.on('newChannel', (payload) => {
-        console.log(payload);
         dispatch(channelActions.addChannel(payload));
       });
 
