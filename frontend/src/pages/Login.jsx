@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
-  Form, Button, Card,
+  Form, Button, Card, FloatingLabel,
 } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import axios from 'axios';
@@ -9,7 +9,7 @@ import { useFormik } from 'formik';
 import useAuth from '../hooks/useAuth.js';
 import ROUTES from './route.js';
 import fetchRoutes from '../fetchApi/route.js';
-import InputComponent from '../components/InputComponent.jsx';
+// import InputComponent from '../components/InputComponent.jsx';
 import FormBox from '../containers/FormBox.jsx';
 
 const chatImg = require('../assets/images/chat.gif');
@@ -68,27 +68,42 @@ const Login = () => {
           </div>
           <Form onSubmit={formik.handleSubmit} className="col-12 col-md-6 mt-3 ">
             <h1 className="text-center mb-2">{t('formHeaders.login')}</h1>
-            <fieldset>
-              <InputComponent
-                fieldName="username"
-                changeHandler={formik.handleChange}
-                fieldValue={formik.values.username}
-                isInvalidMessage={formik.errors.username}
-                labelText={t('placeholders.nickname')}
-                type="text"
-                ref={inputRef}
-              />
-              <InputComponent
-                fieldName="password"
-                changeHandler={formik.handleChange}
-                fieldValue={formik.values.password}
-                isInvalidMessage={formik.errors.password}
-                labelText={t('placeholders.password')}
-                type="password"
-              />
-              {loginErrorEl(isNotAuth)}
-              <Button type="submit" className="w-100 mt-4" variant="outline-secondary">{t('buttons.loginBtn')}</Button>
-            </fieldset>
+            <Form.Floating>
+              <Form.Label className="visually-hidden" htmlFor="username">{t('placeholders.nickname')}</Form.Label>
+              <FloatingLabel label={t('placeholders.nickname')} htmlFor="username">
+                <Form.Control
+                  className="mb-4"
+                  type="text"
+                  id="username"
+                  name="username"
+                  placeholder={t('placeholders.username')}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  isInvalid={formik.touched.username && formik.errors.username}
+                  value={formik.values.username}
+                  touchedMarker={formik.touched.username}
+                />
+              </FloatingLabel>
+            </Form.Floating>
+            <Form.Floating>
+              <FloatingLabel label={t('placeholders.password')} htmlFor="password">
+                <Form.Label className="visually-hidden" htmlFor="username">{t('placeholders.password')}</Form.Label>
+                <Form.Control
+                  className="mb-4"
+                  id="password"
+                  name="password"
+                  type="password"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  isInvalid={formik.touched.password && formik.errors.password}
+                  value={formik.values.password}
+                  touchedMarker={formik.touched.password}
+                  placeholder={t('placeholders.password')}
+                />
+              </FloatingLabel>
+            </Form.Floating>
+            {loginErrorEl(isNotAuth)}
+            <Button type="submit" className="w-100 mt-4" variant="outline-secondary">{t('buttons.loginBtn')}</Button>
           </Form>
         </Card.Body>
         <Card.Footer className="p-4">
