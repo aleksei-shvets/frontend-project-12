@@ -4,23 +4,21 @@ import {
 import AutorizeContext from '../contexts/authContext.js';
 
 const AuthProvider = ({ children }) => {
-  // const isloggedUser = localStorage.getItem('user');
-  // const initUserState = isloggedUser ? JSON.parse(isloggedUser) : null;
+  const isloggedUser = localStorage.getItem('user');
+  const initUserState = isloggedUser ? JSON.parse(isloggedUser) : null;
 
-  const [username, setUsername] = useState(null);
+  const [username, setUsername] = useState(initUserState);
 
-  const setUser = useCallback((currentUser) => setUsername(currentUser), []);
-
-  const logIn = useCallback((userData) => {
+  const logIn = (userData) => {
     localStorage.setItem('user', JSON.stringify(userData.username));
     localStorage.setItem('userToken', JSON.stringify(userData.token));
-    setUser(userData.username);
-  }, []);
+    setUsername(userData.username);
+  };
 
   const logOut = useCallback(() => {
     localStorage.removeItem('user');
     localStorage.removeItem('userToken');
-    setUser('');
+    setUsername('');
   }, []);
 
   const propMemo = useMemo(() => ({
