@@ -71,6 +71,7 @@ const Login = () => {
             <Form.Floating>
               <Form.Control
                 className="mb-4"
+                autoComplete="username"
                 type="text"
                 id="username"
                 name="username"
@@ -85,6 +86,7 @@ const Login = () => {
             <Form.Floating>
               <Form.Control
                 className="mb-4"
+                autoComplete="password"
                 id="password"
                 name="password"
                 type="password"
