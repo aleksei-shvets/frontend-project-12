@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   Form, Button, Card,
@@ -20,9 +20,9 @@ const Signup = () => {
   const authHook = useAuth();
   const navigate = useNavigate();
   const [regError, setRegError] = useState(null);
-  const inputNameRef = useRef();
+  // const inputNameRef = useRef();
   const { signupSchema } = getShema(t);
-  useEffect(() => {
+  /* useEffect(() => {
     inputNameRef.current.focus();
   }, []);
 
@@ -30,7 +30,7 @@ const Signup = () => {
     if (regError && inputNameRef.current) {
       inputNameRef.current.select();
     }
-  }, [regError]);
+  }, [regError]); */
 
   const formik = useFormik({
     initialValues: {
@@ -43,29 +43,18 @@ const Signup = () => {
       try {
         const newUser = { username: values.username, password: values.password };
         const { data } = await axios.post(fetchRoutes.signupPath(), newUser);
-        console.log(data);
+        setRegError(false);
         authHook.logIn(data);
         navigate(ROUTES.home);
       } catch (err) {
         if (err.response.status === 409) {
-          setRegError(t('fetchErrors.incorrectSignup'));
+          setRegError(true);
         }
       } finally {
         formik.setSubmitting(false);
       }
     },
   });
-
-  const regErrorEl = (errMessage) => {
-    if (errMessage) {
-      return (
-        <div className="sm text-danger">
-          {errMessage}
-        </div>
-      );
-    }
-    return null;
-  };
 
   return (
     <FormBox>
@@ -89,12 +78,10 @@ const Signup = () => {
                   onBlur={formik.handleBlur}
                   isInvalid={formik.errors.username}
                   value={formik.values.username}
-                  ref={inputNameRef}
                 />
                 <Form.Label htmlFor="username">{t('placeholders.username')}</Form.Label>
                 <Form.Control.Feedback tooltip type="invalid">{formik.errors.username}</Form.Control.Feedback>
               </Form.Floating>
-              {regErrorEl(regError)}
               <Form.Floating>
                 <Form.Control
                   className="mb-4"
@@ -127,6 +114,7 @@ const Signup = () => {
                 <Form.Label htmlFor="confirmPassword">{t('placeholders.confirmPassword')}</Form.Label>
                 <Form.Control.Feedback tooltip type="invalid">{formik.errors.confirmPassword}</Form.Control.Feedback>
               </Form.Floating>
+              {regError ? <div className="sm text-danger">{t('fetchErrors.incorrectSignup')}</div> : null}
               <Button type="submit" className="w-100 mt-4" variant="outline-secondary">{t('buttons.registrationBtn')}</Button>
             </fieldset>
           </Form>
