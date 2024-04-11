@@ -67,14 +67,14 @@ const ModalForm = ({
     }
   }, []);
 
-  const channelNames = useSelector((state) => channelsSelector.selectAll(state))
+  const channelNames = useSelector(channelsSelector.selectAll)
     .map((channel) => channel.name);
 
   const { channelNameSchema } = getShema(t, channelNames);
 
   const updatedChannelId = useSelector(getUpdatedChannelId);
 
-  const updatedChannel = useSelector((state) => channelsSelector.selectAll(state))
+  const updatedChannel = useSelector(channelsSelector.selectAll)
     .find((channel) => channel.id === updatedChannelId);
 
   const nameInitValue = () => (modalType === 'renamingChannel' ? updatedChannel.name : '');
