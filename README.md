@@ -1,10 +1,8 @@
 #
 
-## Project "chat(Slack)"  | [Demo](https://frontend-project-12-j40x.onrender.com)
+## Project "Chat"  | [Demo](https://frontend-project-12-j40x.onrender.com)
 
-[![Actions Status](https://github.com/aleksei-shvets/frontend-project-12/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/aleksei-shvets/frontend-project-12/actions)
-
-[![Maintainability](https://api.codeclimate.com/v1/badges/1f62b6893875a49c8e10/maintainability)](https://codeclimate.com/github/aleksei-shvets/frontend-project-12/maintainability)
+[![Actions Status](https://github.com/aleksei-shvets/frontend-project-12/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/aleksei-shvets/frontend-project-12/actions) [![Maintainability](https://api.codeclimate.com/v1/badges/1f62b6893875a49c8e10/maintainability)](https://codeclimate.com/github/aleksei-shvets/frontend-project-12/maintainability)
 
 ### About App
 
@@ -25,6 +23,10 @@ Technologies used:
 
 ### Installation
 
-`make install`
-`make build`
-`make start`
+Install the project locally and execute the following commands in sequence
+
+```
+make install
+make build
+make start
+```
