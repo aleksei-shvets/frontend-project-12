@@ -20,7 +20,7 @@ i18next
     },
   });
 
-const newSocket = io('http://localhost:5001', {
+const newSocket = io('http://localhost', {
   transports: ['websocket'],
 });
 
