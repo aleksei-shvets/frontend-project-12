@@ -65,7 +65,7 @@ const ModalForm = ({
       inputEl.current.focus();
       inputEl.current.select();
     }
-  }, []);
+  }, [modalType]);
 
   const channelNames = useSelector(channelsSelector.selectAll)
     .map((channel) => channel.name);

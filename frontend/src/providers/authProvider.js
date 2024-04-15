@@ -9,17 +9,17 @@ const AuthProvider = ({ children }) => {
 
   const [username, setUsername] = useState(initUserState);
 
-  const logIn = (userData) => {
+  const logIn = useCallback((userData) => {
     localStorage.setItem('user', JSON.stringify(userData.username));
     localStorage.setItem('userToken', JSON.stringify(userData.token));
     setUsername(userData.username);
-  };
+  });
 
   const logOut = useCallback(() => {
     localStorage.removeItem('user');
     localStorage.removeItem('userToken');
     setUsername('');
-  }, []);
+  });
 
   const propMemo = useMemo(() => ({
     logIn,

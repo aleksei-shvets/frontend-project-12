@@ -41,7 +41,7 @@ const Home = () => {
       notify(notifyMessage[modalType]);
       setIsToast(false);
     }
-  }, [isToast]);
+  }, [isToast, notifyMessage, modalType]);
 
   useEffect(() => {
     const fetchData = async () => {

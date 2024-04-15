@@ -37,7 +37,7 @@ const SocketProvider = ({ children, newSocket }) => {
         dispatch(channelActions.renameChannel({ id, changes: { name } }));
       });
     }
-  }, [socket]);
+  });
 
   return (
     <SocketContext.Provider value={socket}>
