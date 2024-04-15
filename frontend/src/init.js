@@ -20,9 +20,7 @@ i18next
     },
   });
 
-const newSocket = io('http://localhost', {
-  transports: ['websocket'],
-});
+const newSocket = io();
 
 const InitialApp = () => (
   <I18nextProvider i18n={i18next} defaultNS="translation">
