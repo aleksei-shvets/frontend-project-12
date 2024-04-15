@@ -4,7 +4,6 @@ import { Provider, ErrorBoundary } from '@rollbar/react';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import InitialApp from './init.js';
-import reportWebVitals from './reportWebVitals.js';
 
 const rollbarConfig = {
   accessToken: '4b987b57e0a942219b45621aef79f7c6',
@@ -22,5 +21,3 @@ root.render(
     </Provider>
   </React.StrictMode>,
 );
-
-reportWebVitals();

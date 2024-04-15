@@ -42,7 +42,6 @@ const MessagesList = ({ messages, currentChannelId }) => {
       message: '',
     },
     onSubmit: (values) => {
-      // const token = getAuthHeader();
       formik.setSubmitting(true);
       try {
         const newMessage = {
@@ -51,8 +50,6 @@ const MessagesList = ({ messages, currentChannelId }) => {
           username: userName,
         };
         fetchMessage(newMessage);
-        /* await axios
-          .post(fetchRoutes.messagesPath(), newMessage, { headers: token }); */
         formik.resetForm();
       } catch (e) {
         rollbar.error('Adding message', e);
