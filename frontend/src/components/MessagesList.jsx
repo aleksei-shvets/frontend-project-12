@@ -7,17 +7,16 @@ import { useRollbar } from '@rollbar/react';
 import Form from 'react-bootstrap/Form';
 import { InputGroup } from 'react-bootstrap';
 import fetchRoutes from '../fetchApi/route.js';
-import getAuthHeader from '../utils/getAuthHeader';
 import useAuth from '../hooks/useAuth.js';
 import MessageItem from './MessageItem.jsx';
 
-const fetchMessage = async (newMessage) => {
-  const token = getAuthHeader();
+const fetchMessage = async (newMessage, token) => {
   await axios
     .post(fetchRoutes.messagesPath(), newMessage, { headers: token });
 };
 
 const MessagesList = ({ messages, currentChannelId }) => {
+  const authHook = useAuth();
   filter.loadDictionary('en');
   filter.add(filter.getDictionary('ru'));
   const rollbar = useRollbar();
@@ -25,6 +24,7 @@ const MessagesList = ({ messages, currentChannelId }) => {
   const { t } = useTranslation();
   const inputEl = useRef(null);
   const listRef = useRef(null);
+  const token = authHook.getAuthHeader();
   useEffect(() => {
     inputEl.current.focus();
   }, [currentChannelId]);
@@ -35,7 +35,6 @@ const MessagesList = ({ messages, currentChannelId }) => {
     }
   }, [messages]);
 
-  const authHook = useAuth();
   const userName = authHook.username;
   const formik = useFormik({
     initialValues: {
@@ -49,7 +48,7 @@ const MessagesList = ({ messages, currentChannelId }) => {
           channelId: currentChannelId,
           username: userName,
         };
-        fetchMessage(newMessage);
+        fetchMessage(newMessage, token);
         formik.resetForm();
       } catch (e) {
         rollbar.error('Adding message', e);

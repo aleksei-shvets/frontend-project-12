@@ -9,6 +9,16 @@ const AuthProvider = ({ children }) => {
 
   const [username, setUsername] = useState(initUserState);
 
+  const getAuthHeader = useCallback(() => {
+    const userToken = JSON.parse(localStorage.getItem('userToken'));
+
+    if (userToken) {
+      return { Authorization: `Bearer ${userToken}` };
+    }
+
+    return {};
+  });
+
   const logIn = useCallback((userData) => {
     localStorage.setItem('user', JSON.stringify(userData.username));
     localStorage.setItem('userToken', JSON.stringify(userData.token));
@@ -25,7 +35,8 @@ const AuthProvider = ({ children }) => {
     logIn,
     logOut,
     username,
-  }), [logIn, logOut, username]);
+    getAuthHeader,
+  }), [logIn, logOut, username, getAuthHeader]);
 
   return (
     <AutorizeContext.Provider value={propMemo}>

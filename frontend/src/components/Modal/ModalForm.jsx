@@ -7,11 +7,11 @@ import filter from 'leo-profanity';
 import axios from 'axios';
 import Button from 'react-bootstrap/Button';
 import fetchRoutes from '../../fetchApi/route.js';
-import getAuthHeader from '../../utils/getAuthHeader.js';
 import { getUpdatedChannelId } from '../../store/slices/modalSlice.js';
 import { channelActions, channelsSelector } from '../../store/slices/channelsSlice.js';
 import getShema from '../../validation/validation.js';
 import defaultChannelId from '../../constants/constants.js';
+import useAuth from '../../hooks/useAuth.js';
 
 const addNewChannel = async ({ inputValue, token, dispatch }) => {
   const response = await axios.post(fetchRoutes.channelsPath(), { name: inputValue }, {
@@ -52,7 +52,8 @@ const getDataFetch = (type) => {
 const ModalForm = ({
   toastHandler, modalType, t, hideModal, dispatch,
 }) => {
-  const token = getAuthHeader();
+  const authContext = useAuth();
+  const token = authContext.getAuthHeader();
   const [connectionError, setConnectionError] = useState(null);
   const rollbar = useRollbar();
   filter.loadDictionary('en');
