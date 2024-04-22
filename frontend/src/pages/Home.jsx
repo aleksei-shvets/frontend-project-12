@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Container } from 'react-bootstrap';
-import { toast } from 'react-toastify';
+// import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
 import 'react-toastify/dist/ReactToastify.css';
 import ChannelsContainer from '../containers/ChannelsContainer.jsx';
@@ -10,6 +10,7 @@ import { fetchChannelsThunk } from '../store/slices/channelsSlice.js';
 import { fetchMessagesThunk } from '../store/slices/messagesSlice.js';
 import ModalItem from '../components/Modal/index.js';
 import { isShownSelector, getModalTypeSelector } from '../store/slices/modalSlice.js';
+import notify from '../components/notify.js';
 
 const Home = () => {
   const { t } = useTranslation();
@@ -25,7 +26,7 @@ const Home = () => {
   };
 
   useEffect(() => {
-    const notify = (message) => {
+  /*   const notify = (message) => {
       toast.success(message, {
         position: 'top-center',
         autoClose: 5000,
@@ -36,7 +37,7 @@ const Home = () => {
         progress: undefined,
         theme: 'light',
       });
-    };
+    }; */
     if (isToast) {
       notify(notifyMessage[modalType]);
       setIsToast(false);
