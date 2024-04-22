@@ -52,8 +52,8 @@ const getDataFetch = (type) => {
 const ModalForm = ({
   toastHandler, modalType, t, hideModal, dispatch,
 }) => {
-  const authContext = useAuth();
-  const token = authContext.getAuthHeader();
+  const authHook = useAuth();
+  const token = authHook.getAuthHeader();
   const [connectionError, setConnectionError] = useState(null);
   const rollbar = useRollbar();
   filter.loadDictionary('en');
