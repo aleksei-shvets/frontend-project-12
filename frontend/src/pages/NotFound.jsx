@@ -1,5 +1,6 @@
 import { Card } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
+import ROUTES from './route';
 
 const notFoundImg = require('../assets/images/notfound.gif');
 
@@ -19,7 +20,7 @@ const NotFound = () => {
                   <h4 className="text-muted text-center mb-4">{t('fetchErrors.notfoundPage')}</h4>
                   <p className="text-muted text-center mb-4">
                     {t('userDirection')}
-                    <a href="/">{t('buttons.mainPageLink')}</a>
+                    <a href={ROUTES.home}>{t('buttons.mainPageLink')}</a>
                   </p>
                 </div>
               </Card.Body>
