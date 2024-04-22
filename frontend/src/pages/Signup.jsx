@@ -20,17 +20,7 @@ const Signup = () => {
   const authHook = useAuth();
   const navigate = useNavigate();
   const [regError, setRegError] = useState(null);
-  // const inputNameRef = useRef();
   const { signupSchema } = getShema(t);
-  /* useEffect(() => {
-    inputNameRef.current.focus();
-  }, []);
-
-  useEffect(() => {
-    if (regError && inputNameRef.current) {
-      inputNameRef.current.select();
-    }
-  }, [regError]); */
 
   const formik = useFormik({
     initialValues: {
