@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Container } from 'react-bootstrap';
-// import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
 import 'react-toastify/dist/ReactToastify.css';
 import ChannelsContainer from '../containers/ChannelsContainer.jsx';
@@ -26,18 +25,6 @@ const Home = () => {
   };
 
   useEffect(() => {
-  /*   const notify = (message) => {
-      toast.success(message, {
-        position: 'top-center',
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: 'light',
-      });
-    }; */
     if (isToast) {
       notify(notifyMessage[modalType]);
       setIsToast(false);
