@@ -7,7 +7,6 @@ import Login from './pages/Login.jsx';
 import Signup from './pages/Signup.jsx';
 import Home from './pages/Home.jsx';
 import NotFound from './pages/NotFound.jsx';
-import AuthProvider from './providers/authProvider.js';
 import ROUTES from './pages/route.js';
 import useAuth from './hooks/useAuth.js';
 import Nav from './components/Nav.jsx';
@@ -21,7 +20,7 @@ const PrivateRoute = ({ children }) => {
 };
 
 const App = () => (
-  <AuthProvider>
+  <>
     <Nav />
     <BrowserRouter>
       <Routes>
@@ -38,7 +37,7 @@ const App = () => (
         />
       </Routes>
     </BrowserRouter>
-  </AuthProvider>
+  </>
 );
 
 export default App;
