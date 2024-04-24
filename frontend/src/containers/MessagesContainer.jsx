@@ -9,15 +9,13 @@ const MessagesContainer = () => {
   const currentChannel = useSelector(
     (state) => channelsSelector.selectById(state, currentChannelId),
   );
-  /*   const messages = useSelector(messagesSelectors.selectAll)
-    .filter((message) => Number(message.channelId) === Number(currentChannelId));
-    */
+
   const messages = useSelector((state) => selectMessagesByChannelId(state, currentChannelId));
-  const messagesCout = messages.length;
+  const messagesCount = messages.length;
   return (
     <div className="col p-0 h-100">
       <div className="d-flex flex-column h-100">
-        <MessagesHeader currentChannel={currentChannel} messagesCout={messagesCout} />
+        <MessagesHeader currentChannel={currentChannel} messagesCount={messagesCount} />
         <MessagesList messages={messages} currentChannelId={currentChannelId} />
       </div>
     </div>
