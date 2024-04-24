@@ -1,5 +1,7 @@
 /* eslint-disable no-param-reassign */
-import { createSlice, createEntityAdapter, createAsyncThunk } from '@reduxjs/toolkit';
+import {
+  createSlice, createEntityAdapter, createAsyncThunk, createSelector,
+} from '@reduxjs/toolkit';
 import axios from 'axios';
 import fetchRoutes from '../../fetchApi/route.js';
 import { channelActions } from './channelsSlice.js';
@@ -55,4 +57,13 @@ const messagesSlice = createSlice({
 
 export const { actions: messageActions } = messagesSlice;
 export const messagesSelectors = messagesAdapter.getSelectors((state) => state.messages);
+
+const selectAllMessages = (state) => messagesSelectors.selectAll(state);
+
+export const selectMessagesByChannelId = createSelector(
+  [selectAllMessages, (_, currentChannelId) => currentChannelId],
+  (allMessages, currentChannelId) => allMessages
+    .filter((message) => Number(message.channelId) === Number(currentChannelId)),
+);
+
 export default messagesSlice.reducer;
