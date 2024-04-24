@@ -1,8 +1,9 @@
 import { useSelector } from 'react-redux';
 import { channelsSelector, currentChannelIdSelector } from '../store/slices/channelsSlice.js';
-import { selectMessagesByChannelId } from '../store/slices/messagesSlice.js';
+// import { selectMessagesByChannelId } from '../store/slices/messagesSlice.js';
 import MessagesHeader from '../components/MessagesHeader.jsx';
 import MessagesList from '../components/MessagesList.jsx';
+import { msgSelectors } from '../store/slices/selectors.js';
 
 const MessagesContainer = () => {
   const currentChannelId = useSelector((state) => currentChannelIdSelector(state));
@@ -10,7 +11,8 @@ const MessagesContainer = () => {
     (state) => channelsSelector.selectById(state, currentChannelId),
   );
 
-  const messages = useSelector((state) => selectMessagesByChannelId(state, currentChannelId));
+  const messages = useSelector((state) => msgSelectors
+    .filtredMessages(state, currentChannelId));
   const messagesCount = messages.length;
   return (
     <div className="col p-0 h-100">

@@ -59,9 +59,9 @@ const channelsSlice = createSlice({
   },
 });
 
-export const statusbarSelector = (state) => state.channels.statusbar;
+// export const statusbarSelector = (state) => state.channels.statusbar;
 export const currentChannelIdSelector = (state) => state.channels.currentChannelId;
-export const getChannelsSelector = (state) => state.channels.enteties;
+// export const getChannelsSelector = (state) => state.channels.enteties;
 export const { actions: channelActions } = channelsSlice;
 export const channelsSelector = channelsAdapter.getSelectors((state) => state.channels);
 
