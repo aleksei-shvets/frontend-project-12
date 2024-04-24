@@ -8,14 +8,14 @@ import MessagesContainer from '../containers/MessagesContainer.jsx';
 import { fetchChannelsThunk } from '../store/slices/channelsSlice.js';
 import { fetchMessagesThunk } from '../store/slices/messagesSlice.js';
 import ModalItem from '../components/Modal/index.js';
-import { isShownSelector, getModalTypeSelector } from '../store/slices/modalSlice.js';
 import notify from '../components/notify.js';
+import { modalSelectors } from '../store/slices/selectors.js';
 
 const Home = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const isShownModal = useSelector(isShownSelector);
-  const modalType = useSelector(getModalTypeSelector);
+  const isShownModal = useSelector(modalSelectors.isShownSelector);
+  const modalType = useSelector(modalSelectors.getModalTypeSelector);
   const [isToast, setIsToast] = useState(false);
 
   const notifyMessage = {

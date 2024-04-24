@@ -1,10 +1,11 @@
 import { useDispatch, useSelector } from 'react-redux';
 import Modal from 'react-bootstrap/Modal';
-import { isShownSelector, modalActions } from '../../store/slices/modalSlice.js';
+import { modalActions } from '../../store/slices/modalSlice.js';
 import ModalForm from './ModalForm.jsx';
+import { modalSelectors } from '../../store/slices/selectors.js';
 
 const ModalComponent = ({ t, modalType, toastHandler }) => {
-  const isShownModal = useSelector((state) => isShownSelector(state));
+  const isShownModal = useSelector((state) => modalSelectors.isShownSelector(state));
   const dispatch = useDispatch();
   const hideModal = () => dispatch(modalActions.hideModal());
 

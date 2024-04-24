@@ -2,6 +2,10 @@ import { selectMessagesByChannelId, baseMessagesSelectors } from './messagesSlic
 
 import { baseChannelsSelectors, currentChannelIdSelector } from './channelsSlice.js';
 
+import {
+  isShownSelector, getModalTypeSelector, getUpdatedChannelId,
+} from './modalSlice.js';
+
 export const messageSelectors = {
   ...baseMessagesSelectors,
   filtredMessages: selectMessagesByChannelId,
@@ -10,4 +14,8 @@ export const messageSelectors = {
 export const channelSelectors = {
   ...baseChannelsSelectors,
   currentChannelIdSelector,
+};
+
+export const modalSelectors = {
+  isShownSelector, getModalTypeSelector, getUpdatedChannelId,
 };

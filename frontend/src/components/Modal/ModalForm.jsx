@@ -7,12 +7,11 @@ import filter from 'leo-profanity';
 import axios from 'axios';
 import Button from 'react-bootstrap/Button';
 import fetchRoutes from '../../fetchApi/route.js';
-import { getUpdatedChannelId } from '../../store/slices/modalSlice.js';
 import { channelActions } from '../../store/slices/channelsSlice.js';
 import getShema from '../../validation/validation.js';
 import defaultChannelId from '../../constants/constants.js';
 import useAuth from '../../hooks/useAuth.js';
-import { channelSelectors } from '../../store/slices/selectors.js';
+import { channelSelectors, modalSelectors } from '../../store/slices/selectors.js';
 
 const addNewChannel = async ({ inputValue, token, dispatch }) => {
   const response = await axios.post(fetchRoutes.channelsPath(), { name: inputValue }, {
@@ -74,7 +73,7 @@ const ModalForm = ({
 
   const { channelNameSchema } = getShema(t, channelNames);
 
-  const updatedChannelId = useSelector(getUpdatedChannelId);
+  const updatedChannelId = useSelector(modalSelectors.getUpdatedChannelId);
 
   const updatedChannel = useSelector(channelSelectors.selectAll)
     .find((channel) => channel.id === updatedChannelId);
