@@ -1,14 +1,13 @@
-import { selectMessagesByChannelId, messagesSelectors } from './messagesSlice.js';
-import {
-  channelsSelector, currentChannelIdSelector,
-} from './channelsSlice.js';
+import { selectMessagesByChannelId, baseMessagesSelectors } from './messagesSlice.js';
 
-export const msgSelectors = {
-  ...messagesSelectors,
+import { baseChannelsSelectors, currentChannelIdSelector } from './channelsSlice.js';
+
+export const messageSelectors = {
+  ...baseMessagesSelectors,
   filtredMessages: selectMessagesByChannelId,
 };
 
-export const cnSelectors = {
-  ...channelsSelector,
+export const channelSelectors = {
+  ...baseChannelsSelectors,
   currentChannelIdSelector,
 };

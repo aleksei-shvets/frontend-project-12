@@ -56,9 +56,9 @@ const messagesSlice = createSlice({
 });
 
 export const { actions: messageActions } = messagesSlice;
-export const messagesSelectors = messagesAdapter.getSelectors((state) => state.messages);
+export const baseMessagesSelectors = messagesAdapter.getSelectors((state) => state.messages);
 
-const selectAllMessages = (state) => messagesSelectors.selectAll(state);
+const selectAllMessages = (state) => baseMessagesSelectors.selectAll(state);
 
 export const selectMessagesByChannelId = createSelector(
   [selectAllMessages, (_, currentChannelId) => currentChannelId],

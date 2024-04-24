@@ -1,14 +1,14 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { currentChannelIdSelector, channelActions } from '../store/slices/channelsSlice.js';
-import { cnSelectors } from '../store/slices/selectors.js';
+import { channelActions } from '../store/slices/channelsSlice.js';
+import { channelSelectors } from '../store/slices/selectors.js';
 import ChannelsHeader from '../components/ChannelsHeader.jsx';
 import ChannelsList from '../components/ChannelsList.jsx';
 import { modalActions } from '../store/slices/modalSlice.js';
 
 const ChannelsContainer = () => {
   const dispath = useDispatch();
-  const channels = useSelector(cnSelectors.selectAll);
-  const currentChannelId = useSelector(currentChannelIdSelector);
+  const channels = useSelector(channelSelectors.selectAll);
+  const currentChannelId = useSelector(channelSelectors.currentChannelIdSelector);
   const handleChoose = (id) => {
     dispath(channelActions.switchChannel(id));
   };
