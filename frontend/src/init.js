@@ -11,40 +11,38 @@ import 'bootstrap';
 import store from './store/index.js';
 import AuthProvider from './providers/authProvider.js';
 import 'react-toastify/dist/ReactToastify.css';
+import rollbarConfig from '../rollbarConfig.js';
 
-const rollbarConfig = {
-  accessToken: '4b987b57e0a942219b45621aef79f7c6',
-  environment: 'production',
+const Init = ({ children }) => {
+  i18next
+    .use(initReactI18next)
+    .init({
+      resources,
+      debug: true,
+      fallbackLng: 'ru',
+      interpolation: {
+        escapeValue: false,
+      },
+    });
+
+  const newSocket = io();
+
+  return (
+    <AuthProvider>
+      <I18nextProvider i18n={i18next} defaultNS="translation">
+        <RollbarProvider config={rollbarConfig}>
+          <ErrorBoundary>
+            <Provider store={store}>
+              <SocketProvider newSocket={newSocket}>
+                {children}
+                <ToastContainer />
+              </SocketProvider>
+            </Provider>
+          </ErrorBoundary>
+        </RollbarProvider>
+      </I18nextProvider>
+    </AuthProvider>
+  );
 };
-
-i18next
-  .use(initReactI18next)
-  .init({
-    resources,
-    debug: true,
-    fallbackLng: 'ru',
-    interpolation: {
-      escapeValue: false,
-    },
-  });
-
-const newSocket = io();
-
-const Init = ({ children }) => (
-  <AuthProvider>
-    <I18nextProvider i18n={i18next} defaultNS="translation">
-      <RollbarProvider config={rollbarConfig}>
-        <ErrorBoundary>
-          <Provider store={store}>
-            <SocketProvider newSocket={newSocket}>
-              {children}
-              <ToastContainer />
-            </SocketProvider>
-          </Provider>
-        </ErrorBoundary>
-      </RollbarProvider>
-    </I18nextProvider>
-  </AuthProvider>
-);
 
 export default Init;
