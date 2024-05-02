@@ -11,7 +11,7 @@ import 'bootstrap';
 import store from './store/index.js';
 import AuthProvider from './providers/authProvider.js';
 import 'react-toastify/dist/ReactToastify.css';
-import rollbarConfig from '../rollbarConfig.js';
+import rollbarConfig from './config/rollbarConfig.js';
 
 const Init = ({ children }) => {
   i18next
