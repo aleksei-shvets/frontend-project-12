@@ -4,13 +4,12 @@ import MessagesList from '../components/MessagesList.jsx';
 import { messageSelectors, channelSelectors } from '../store/slices/selectors.js';
 
 const MessagesContainer = () => {
-  const currentChannelId = useSelector((state) => channelSelectors.currentChannelIdSelector(state));
-  const currentChannel = useSelector(
-    (state) => channelSelectors.selectById(state, currentChannelId),
-  );
+  const currentChannelId = useSelector(channelSelectors.currentChannelIdSelector);
 
-  const messages = useSelector((state) => messageSelectors
-    .filtredMessages(state, currentChannelId));
+  const currentChannel = useSelector(channelSelectors.currentChannel);
+
+  const messages = useSelector(messageSelectors.filtredMessages);
+
   const messagesCount = messages.length;
 
   return (

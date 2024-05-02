@@ -58,12 +58,22 @@ const messagesSlice = createSlice({
 export const { actions: messageActions } = messagesSlice;
 export const baseMessagesSelectors = messagesAdapter.getSelectors((state) => state.messages);
 
-const selectAllMessages = (state) => baseMessagesSelectors.selectAll(state);
+// const selectAllMessages = (state) => baseMessagesSelectors.selectAll(state);
 
-export const selectMessagesByChannelId = createSelector(
+/* export const selectMessagesByChannelId = createSelector(
   [selectAllMessages, (_, currentChannelId) => currentChannelId],
   (allMessages, currentChannelId) => allMessages
     .filter((message) => Number(message.channelId) === Number(currentChannelId)),
+); */
+
+export const filtredMessages = createSelector(
+  (state) => state,
+  (state) => {
+    const { currentChannelId } = state.channels;
+    const messages = baseMessagesSelectors.selectAll(state);
+    return messages
+      .filter((message) => Number(message.channelId) === Number(currentChannelId));
+  },
 );
 
 export default messagesSlice.reducer;
