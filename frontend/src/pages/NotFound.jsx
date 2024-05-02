@@ -1,6 +1,6 @@
 import { Card } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
-import ROUTES from './route';
+import { ROUTES } from '../routes.js';
 
 const notFoundImg = require('../assets/images/notfound.gif');
 

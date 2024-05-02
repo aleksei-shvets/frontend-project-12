@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { useRollbar } from '@rollbar/react';
 import Form from 'react-bootstrap/Form';
 import { InputGroup } from 'react-bootstrap';
-import fetchRoutes from '../fetchApi/route.js';
+import { fetchRoutes } from '../routes.js';
 import useAuth from '../hooks/useAuth.js';
 import MessageItem from './MessageItem.jsx';
 

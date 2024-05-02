@@ -3,7 +3,7 @@ import {
   createSlice, createEntityAdapter, createAsyncThunk, createSelector,
 } from '@reduxjs/toolkit';
 import axios from 'axios';
-import fetchRoutes from '../../fetchApi/route.js';
+import { fetchRoutes } from '../../routes.js';
 import { channelActions } from './channelsSlice.js';
 
 export const fetchMessagesThunk = createAsyncThunk(

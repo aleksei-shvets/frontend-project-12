@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 import { createSlice, createEntityAdapter, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-import fetchRoutes from '../../fetchApi/route.js';
+import { fetchRoutes } from '../../routes.js';
 import defaultChannelId from '../../constants/constants.js';
 
 const channelsAdapter = createEntityAdapter();

@@ -7,7 +7,7 @@ import Login from './pages/Login.jsx';
 import Signup from './pages/Signup.jsx';
 import Home from './pages/Home.jsx';
 import NotFound from './pages/NotFound.jsx';
-import ROUTES from './pages/route.js';
+import { ROUTES } from './routes.js';
 import useAuth from './hooks/useAuth.js';
 import Nav from './components/Nav.jsx';
 

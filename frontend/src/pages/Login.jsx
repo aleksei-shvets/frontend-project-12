@@ -7,8 +7,7 @@ import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 import { useFormik } from 'formik';
 import useAuth from '../hooks/useAuth.js';
-import ROUTES from './route.js';
-import fetchRoutes from '../fetchApi/route.js';
+import { fetchRoutes, ROUTES } from '../routes.js';
 import FormBox from '../containers/FormBox.jsx';
 
 const chatImg = require('../assets/images/chat.gif');

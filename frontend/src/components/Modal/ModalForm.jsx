@@ -6,7 +6,7 @@ import { useRollbar } from '@rollbar/react';
 import filter from 'leo-profanity';
 import axios from 'axios';
 import Button from 'react-bootstrap/Button';
-import fetchRoutes from '../../fetchApi/route.js';
+import { fetchRoutes } from '../../routes.js';
 import { channelActions } from '../../store/slices/channelsSlice.js';
 import getShema from '../../validation/validation.js';
 import defaultChannelId from '../../constants/constants.js';
