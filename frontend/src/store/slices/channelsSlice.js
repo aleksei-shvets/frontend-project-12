@@ -68,7 +68,6 @@ export const baseChannelsSelectors = channelsAdapter.getSelectors((state) => sta
 
 export const currentChannel = (state) => {
   const { currentChannelId } = state.channels;
-  console.log(currentChannelId);
   return baseChannelsSelectors.selectById(state, currentChannelId);
 };
 
