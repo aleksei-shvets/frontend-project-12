@@ -12,6 +12,7 @@ import store from './store/index.js';
 import AuthProvider from './providers/authProvider.js';
 import 'react-toastify/dist/ReactToastify.css';
 import rollbarConfig from './config/rollbarConfig.js';
+import ProfanityProvider from './providers/profanityProvider.js';
 
 const Init = ({ children }) => {
   i18next
@@ -30,16 +31,18 @@ const Init = ({ children }) => {
   return (
     <AuthProvider>
       <I18nextProvider i18n={i18next} defaultNS="translation">
-        <RollbarProvider config={rollbarConfig}>
-          <ErrorBoundary>
-            <Provider store={store}>
-              <SocketProvider newSocket={newSocket}>
-                {children}
-                <ToastContainer />
-              </SocketProvider>
-            </Provider>
-          </ErrorBoundary>
-        </RollbarProvider>
+        <ProfanityProvider>
+          <RollbarProvider config={rollbarConfig}>
+            <ErrorBoundary>
+              <Provider store={store}>
+                <SocketProvider newSocket={newSocket}>
+                  {children}
+                  <ToastContainer />
+                </SocketProvider>
+              </Provider>
+            </ErrorBoundary>
+          </RollbarProvider>
+        </ProfanityProvider>
       </I18nextProvider>
     </AuthProvider>
   );

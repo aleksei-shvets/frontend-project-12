@@ -3,7 +3,7 @@ import { useFormik } from 'formik';
 import { useSelector } from 'react-redux';
 import { useEffect, useRef, useState } from 'react';
 import { useRollbar } from '@rollbar/react';
-import filter from 'leo-profanity';
+// import filter from 'leo-profanity';
 import axios from 'axios';
 import Button from 'react-bootstrap/Button';
 import { fetchRoutes } from '../../routes.js';
@@ -11,6 +11,7 @@ import { channelActions } from '../../store/slices/channelsSlice.js';
 import getShema from '../../validation/validation.js';
 import defaultChannelId from '../../constants/constants.js';
 import useAuth from '../../hooks/useAuth.js';
+import useProfanity from '../../hooks/useProfanity.js';
 import { channelSelectors, modalSelectors } from '../../store/slices/selectors.js';
 
 const addNewChannel = async ({ inputValue, token, dispatch }) => {
@@ -56,9 +57,10 @@ const ModalForm = ({
   const token = authHook.getAuthHeader();
   const [connectionError, setConnectionError] = useState(null);
   const rollbar = useRollbar();
-  filter.loadDictionary('en');
-  filter.add(filter.getDictionary('ru'));
-  const wordsFilter = (message) => filter.clean(message);
+  // filter.loadDictionary('en');
+  // filter.add(filter.getDictionary('ru'));
+  const profanity = useProfanity();
+  const wordsFilter = (message) => profanity(message);
 
   const inputEl = useRef(null);
   useEffect(() => {
