@@ -9,12 +9,16 @@ import { channelActions } from './channelsSlice.js';
 export const fetchMessagesThunk = createAsyncThunk(
   'messages/fetchMessages',
   async (header) => {
-    try {
-      const response = await axios.get(fetchRoutes.messagesPath(), { headers: header });
-      return response.data;
-    } catch (e) {
-      return e;
-    }
+    const response = await axios.get(fetchRoutes.messagesPath(), { headers: header });
+    return response.data;
+  },
+);
+
+export const fetchMessage = createAsyncThunk(
+  'messages/newMessage',
+  async ({ header, newMessage }) => {
+    await axios
+      .post(fetchRoutes.messagesPath(), newMessage, { headers: header });
   },
 );
 

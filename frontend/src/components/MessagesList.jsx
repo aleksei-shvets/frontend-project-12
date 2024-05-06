@@ -1,21 +1,17 @@
 import { useFormik } from 'formik';
 import { useEffect, useRef } from 'react';
-import axios from 'axios';
 import { useTranslation } from 'react-i18next';
 import { useRollbar } from '@rollbar/react';
+import { useDispatch } from 'react-redux';
 import Form from 'react-bootstrap/Form';
 import { InputGroup } from 'react-bootstrap';
-import { fetchRoutes } from '../routes.js';
 import useAuth from '../hooks/useAuth.js';
 import MessageItem from './MessageItem.jsx';
 import useProfanity from '../hooks/useProfanity.js';
-
-const fetchMessage = async (newMessage, token) => {
-  await axios
-    .post(fetchRoutes.messagesPath(), newMessage, { headers: token });
-};
+import { fetchMessage } from '../store/slices/messagesSlice.js';
 
 const MessagesList = ({ messages, currentChannelId }) => {
+  const dispatch = useDispatch();
   const authHook = useAuth();
   const rollbar = useRollbar();
   const profanity = useProfanity();
@@ -23,7 +19,7 @@ const MessagesList = ({ messages, currentChannelId }) => {
   const { t } = useTranslation();
   const inputEl = useRef(null);
   const listRef = useRef(null);
-  const token = authHook.getAuthHeader();
+  const header = authHook.getAuthHeader();
   useEffect(() => {
     inputEl.current.focus();
   }, [currentChannelId]);
@@ -47,7 +43,7 @@ const MessagesList = ({ messages, currentChannelId }) => {
           channelId: currentChannelId,
           username: userName,
         };
-        fetchMessage(newMessage, token);
+        dispatch(fetchMessage({ header, newMessage }));
         formik.resetForm();
       } catch (e) {
         rollbar.error('Adding message', e);
