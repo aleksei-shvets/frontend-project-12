@@ -10,13 +10,17 @@ import { fetchMessagesThunk } from '../store/slices/messagesSlice.js';
 import ModalItem from '../components/Modal/index.js';
 import notify from '../components/notify.js';
 import { modalSelectors } from '../store/slices/selectors.js';
+import useAuth from '../hooks/useAuth.js';
 
 const Home = () => {
+  const authHook = useAuth();
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const isShownModal = useSelector(modalSelectors.isShownSelector);
   const modalType = useSelector(modalSelectors.getModalTypeSelector);
   const [isToast, setIsToast] = useState(false);
+
+  const header = authHook.getAuthHeader();
 
   const notifyMessage = {
     addingChannel: t('toastMessage.addChannel'),
@@ -33,8 +37,8 @@ const Home = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      await dispatch(fetchChannelsThunk());
-      await dispatch(fetchMessagesThunk());
+      await dispatch(fetchChannelsThunk(header));
+      await dispatch(fetchMessagesThunk(header));
     };
 
     fetchData();

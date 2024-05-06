@@ -10,11 +10,9 @@ const channelsAdapter = createEntityAdapter();
 
 export const fetchChannelsThunk = createAsyncThunk(
   'channels/fetchChannels',
-  async () => {
+  async (header) => {
     try {
-      const userToken = JSON.parse(localStorage.getItem('userToken'));
-      const token = { Authorization: `Bearer ${userToken}` };
-      const response = await axios.get(fetchRoutes.channelsPath(), { headers: token });
+      const response = await axios.get(fetchRoutes.channelsPath(), { headers: header });
       return response.data;
     } catch (e) {
       return e;

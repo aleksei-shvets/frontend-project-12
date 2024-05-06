@@ -8,11 +8,9 @@ import { channelActions } from './channelsSlice.js';
 
 export const fetchMessagesThunk = createAsyncThunk(
   'messages/fetchMessages',
-  async () => {
+  async (header) => {
     try {
-      const userToken = JSON.parse(localStorage.getItem('userToken'));
-      const token = { Authorization: `Bearer ${userToken}` };
-      const response = await axios.get(fetchRoutes.messagesPath(), { headers: token });
+      const response = await axios.get(fetchRoutes.messagesPath(), { headers: header });
       return response.data;
     } catch (e) {
       return e;
