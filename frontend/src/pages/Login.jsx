@@ -1,26 +1,30 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   Form, Button, Card,
 } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
-import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
 import { useFormik } from 'formik';
 import useAuth from '../hooks/useAuth.js';
-import { fetchRoutes, ROUTES } from '../routes.js';
+import { ROUTES } from '../routes.js';
 import FormBox from '../containers/FormBox.jsx';
+import { loginThunk } from '../store/slices/channelsSlice.js';
+import { channelSelectors } from '../store/slices/selectors.js';
 
 const chatImg = require('../assets/images/chat.gif');
 
 const Login = () => {
+  const dispatch = useDispatch();
   const { t } = useTranslation();
   const authHook = useAuth();
   const navigate = useNavigate();
-  const [isNotAuth, setIsNotAuth] = useState(false);
-  const inputRef = useRef();
 
-  const loginErrorEl = (errMessage) => {
-    if (errMessage) {
+  const inputRef = useRef();
+  const fetchErrors = useSelector(channelSelectors.getErrors);
+
+  const loginErrorEl = (err) => {
+    if (err && err === 'incorrectLogin') {
       return (
         <div className="sm text-danger">
           {t('fetchErrors.incorrectLogin')}
@@ -29,6 +33,7 @@ const Login = () => {
     }
     return null;
   };
+
   useEffect(() => {
     if (inputRef.current) {
       inputRef.current.focus();
@@ -41,18 +46,14 @@ const Login = () => {
       password: '',
     },
     onSubmit: async (values) => {
-      setIsNotAuth(false);
       try {
         formik.setSubmitting(true);
-        const { data } = await axios.post(fetchRoutes.loginPath(), values);
-        authHook.logIn(data);
+        const data = await dispatch(loginThunk(values));
+        authHook.logIn(data.payload);
         navigate(ROUTES.home);
         formik.setSubmitting(false);
       } catch (err) {
         formik.setSubmitting(false);
-        if (err.isAxiosError && err.response.status === 401) {
-          setIsNotAuth(true);
-        }
       }
     },
   });
@@ -96,7 +97,7 @@ const Login = () => {
               />
               <Form.Label htmlFor="password">{t('placeholders.password')}</Form.Label>
             </Form.Floating>
-            {loginErrorEl(isNotAuth)}
+            {fetchErrors ? loginErrorEl(fetchErrors) : null}
             <Button type="submit" className="w-100 mt-4" variant="outline-secondary">{t('buttons.loginBtn')}</Button>
           </Form>
         </Card.Body>

@@ -11,14 +11,27 @@ const channelsAdapter = createEntityAdapter();
 export const fetchChannelsThunk = createAsyncThunk(
   'channels/fetchChannels',
   async (header) => {
-    try {
-      const response = await axios.get(fetchRoutes.channelsPath(), { headers: header });
-      return response.data;
-    } catch (e) {
-      return e;
-    }
+    const response = await axios.get(fetchRoutes.channelsPath(), { headers: header });
+    return response.data;
   },
 );
+
+export const loginThunk = createAsyncThunk(
+  'loginThunk',
+  async (user) => {
+    const { data } = await axios.post(fetchRoutes.loginPath(), user);
+    return data;
+  },
+);
+
+export const signupThunk = createAsyncThunk(
+  'signupThunk',
+  async (newUser) => {
+    const { data } = await axios.post(fetchRoutes.signupPath(), newUser);
+    return data;
+  },
+);
+
 const statusName = {
   loading: 'loading',
   loaded: 'loaded',
@@ -55,13 +68,28 @@ const channelsSlice = createSlice({
       .addCase(fetchChannelsThunk.rejected, (state, action) => {
         state.statusbar = 'failed';
         state.errors = action.error;
+      })
+      .addCase(loginThunk.rejected, (state, action) => {
+        if (action.error.message
+          && action.error.message === 'Request failed with status code 401') {
+          state.errors = 'incorrectLogin';
+        }
+      })
+      .addCase(signupThunk.rejected, (state, action) => {
+        if (action.error.message
+          && action.error.message === 'Request failed with status code 409') {
+          state.errors = 'incorrectSignup';
+        }
+      })
+      .addCase(signupThunk.pending, (state) => {
+        state.errors = null;
       });
   },
 });
 
 export const currentChannelIdSelector = (state) => state.channels.currentChannelId;
 export const { actions: channelActions } = channelsSlice;
-
+export const getErrors = (state) => state.channels.errors;
 export const baseChannelsSelectors = channelsAdapter.getSelectors((state) => state.channels);
 
 export const currentChannel = (state) => {

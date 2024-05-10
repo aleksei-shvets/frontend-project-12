@@ -1,24 +1,40 @@
-import { useState } from 'react';
+/* eslint-disable consistent-return */
+// import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   Form, Button, Card,
 } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
-import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
 import { useFormik } from 'formik';
 import useAuth from '../hooks/useAuth.js';
-import { fetchRoutes, ROUTES } from '../routes.js';
+import { ROUTES } from '../routes.js';
 import getShema from '../validation/validation.js';
 import FormBox from '../containers/FormBox.jsx';
+import { channelSelectors } from '../store/slices/selectors.js';
+import { signupThunk } from '../store/slices/channelsSlice.js';
 
 const chatImg = require('../assets/images/chat.gif');
 
 const Signup = () => {
+  const dispatch = useDispatch();
   const { t } = useTranslation();
   const authHook = useAuth();
   const navigate = useNavigate();
-  const [regError, setRegError] = useState(null);
   const { signupSchema } = getShema(t);
+
+  const fetchErrors = useSelector(channelSelectors.getErrors);
+
+  const signupErrorEl = (err) => {
+    if (err && err === 'incorrectSignup') {
+      return (
+        <div className="sm text-danger">
+          {t('fetchErrors.incorrectSignup')}
+        </div>
+      );
+    }
+    return null;
+  };
 
   const formik = useFormik({
     initialValues: {
@@ -30,14 +46,11 @@ const Signup = () => {
     onSubmit: async (values) => {
       try {
         const newUser = { username: values.username, password: values.password };
-        const { data } = await axios.post(fetchRoutes.signupPath(), newUser);
-        setRegError(false);
-        authHook.logIn(data);
+        const data = await dispatch(signupThunk(newUser));
+        authHook.logIn(data.payload);
         navigate(ROUTES.home);
       } catch (err) {
-        if (err.response.status === 409) {
-          setRegError(true);
-        }
+        return err;
       } finally {
         formik.setSubmitting(false);
       }
@@ -102,7 +115,7 @@ const Signup = () => {
                 <Form.Label htmlFor="confirmPassword">{t('placeholders.confirmPassword')}</Form.Label>
                 <Form.Control.Feedback tooltip type="invalid">{formik.errors.confirmPassword}</Form.Control.Feedback>
               </Form.Floating>
-              {regError ? <div className="sm text-danger">{t('fetchErrors.incorrectSignup')}</div> : null}
+              {fetchErrors ? signupErrorEl(fetchErrors) : null}
               <Button type="submit" className="w-100 mt-4" variant="outline-secondary">{t('buttons.registrationBtn')}</Button>
             </fieldset>
           </Form>

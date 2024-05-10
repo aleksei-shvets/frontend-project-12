@@ -1,6 +1,8 @@
 import { filtredMessages, baseMessagesSelectors } from './messagesSlice.js';
 
-import { baseChannelsSelectors, currentChannelIdSelector, currentChannel } from './channelsSlice.js';
+import {
+  baseChannelsSelectors, currentChannelIdSelector, currentChannel, getErrors,
+} from './channelsSlice.js';
 
 import {
   isShownSelector, getModalTypeSelector, getUpdatedChannelId,
@@ -15,6 +17,7 @@ export const channelSelectors = {
   ...baseChannelsSelectors,
   currentChannelIdSelector,
   currentChannel,
+  getErrors,
 };
 
 export const modalSelectors = {
