@@ -5,12 +5,12 @@ import AutorizeContext from '../contexts/authContext.js';
 
 const AuthProvider = ({ children }) => {
   const isloggedUser = localStorage.getItem('user');
-  const initUserState = isloggedUser ? JSON.parse(isloggedUser) : null;
+  const initUserState = isloggedUser || null;
 
   const [username, setUsername] = useState(initUserState);
 
   const getAuthHeader = useCallback(() => {
-    const userToken = JSON.parse(localStorage.getItem('userToken'));
+    const userToken = localStorage.getItem('userToken');
 
     if (userToken) {
       return { Authorization: `Bearer ${userToken}` };
@@ -20,8 +20,8 @@ const AuthProvider = ({ children }) => {
   });
 
   const logIn = useCallback((userData) => {
-    localStorage.setItem('user', JSON.stringify(userData.username));
-    localStorage.setItem('userToken', JSON.stringify(userData.token));
+    localStorage.setItem('user', userData.username);
+    localStorage.setItem('userToken', userData.token);
     setUsername(userData.username);
   });
 
