@@ -25,12 +25,13 @@ const Home = () => {
 
   const header = authHook.getAuthHeader();
 
+  const notifyMessage = {
+    addingChannel: t('toastMessage.addChannel'),
+    removingChannel: t('toastMessage.removeChannel'),
+    renamingChannel: t('toastMessage.renameChannel'),
+  };
+
   useEffect(() => {
-    const notifyMessage = {
-      addingChannel: t('toastMessage.addChannel'),
-      removingChannel: t('toastMessage.removeChannel'),
-      renamingChannel: t('toastMessage.renameChannel'),
-    };
     if (isToast) {
       notify(notifyMessage[modalType], 'success');
       setIsToast(false);
