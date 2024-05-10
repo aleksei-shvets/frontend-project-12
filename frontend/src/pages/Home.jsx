@@ -8,8 +8,8 @@ import MessagesContainer from '../containers/MessagesContainer.jsx';
 import { fetchChannelsThunk } from '../store/slices/channelsSlice.js';
 import { fetchMessagesThunk } from '../store/slices/messagesSlice.js';
 import ModalItem from '../components/Modal/index.js';
-import notify from '../components/notify.js';
-import { modalSelectors } from '../store/slices/selectors.js';
+import { modalNotify, errNetworkNotify } from '../components/notify.js';
+import { modalSelectors, channelSelectors, messageSelectors } from '../store/slices/selectors.js';
 import useAuth from '../hooks/useAuth.js';
 
 const Home = () => {
@@ -19,6 +19,9 @@ const Home = () => {
   const isShownModal = useSelector(modalSelectors.isShownSelector);
   const modalType = useSelector(modalSelectors.getModalTypeSelector);
   const [isToast, setIsToast] = useState(false);
+
+  const channelErrors = useSelector(channelSelectors.getChannelErrors);
+  const messageErrors = useSelector(messageSelectors.getMessageErrors);
 
   const header = authHook.getAuthHeader();
 
@@ -30,10 +33,16 @@ const Home = () => {
 
   useEffect(() => {
     if (isToast) {
-      notify(notifyMessage[modalType]);
+      modalNotify(notifyMessage[modalType]);
       setIsToast(false);
     }
   }, [isToast, notifyMessage, modalType]);
+
+  useEffect(() => {
+    if (channelErrors === 'networkErr' || messageErrors === 'networkErr') {
+      errNetworkNotify(t('fetchErrors.connectionError'));
+    }
+  }, [channelErrors]);
 
   useEffect(() => {
     const fetchData = async () => {

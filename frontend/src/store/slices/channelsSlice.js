@@ -1,4 +1,3 @@
-/* eslint-disable no-param-reassign */
 import {
   createSlice, createEntityAdapter, createAsyncThunk,
 } from '@reduxjs/toolkit';
@@ -67,18 +66,29 @@ const channelsSlice = createSlice({
       })
       .addCase(fetchChannelsThunk.rejected, (state, action) => {
         state.statusbar = 'failed';
-        state.errors = action.error;
+        if (action.error.message
+          && action.error.message === 'Network Error') {
+          state.errors = 'networkErr';
+        }
       })
       .addCase(loginThunk.rejected, (state, action) => {
         if (action.error.message
           && action.error.message === 'Request failed with status code 401') {
           state.errors = 'incorrectLogin';
         }
+        if (action.error.message
+          && action.error.message === 'Network Error') {
+          state.errors = 'networkErr';
+        }
       })
       .addCase(signupThunk.rejected, (state, action) => {
         if (action.error.message
           && action.error.message === 'Request failed with status code 409') {
           state.errors = 'incorrectSignup';
+        }
+        if (action.error.message
+          && action.error.message === 'Network Error') {
+          state.errors = 'networkErr';
         }
       })
       .addCase(signupThunk.pending, (state) => {
@@ -89,7 +99,7 @@ const channelsSlice = createSlice({
 
 export const currentChannelIdSelector = (state) => state.channels.currentChannelId;
 export const { actions: channelActions } = channelsSlice;
-export const getErrors = (state) => state.channels.errors;
+export const getChannelErrors = (state) => state.channels.errors;
 export const baseChannelsSelectors = channelsAdapter.getSelectors((state) => state.channels);
 
 export const currentChannel = (state) => {

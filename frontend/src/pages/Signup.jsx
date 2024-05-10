@@ -23,13 +23,20 @@ const Signup = () => {
   const navigate = useNavigate();
   const { signupSchema } = getShema(t);
 
-  const fetchErrors = useSelector(channelSelectors.getErrors);
+  const fetchErrors = useSelector(channelSelectors.getChannelErrors);
 
   const signupErrorEl = (err) => {
     if (err && err === 'incorrectSignup') {
       return (
         <div className="sm text-danger">
           {t('fetchErrors.incorrectSignup')}
+        </div>
+      );
+    }
+    if (err && err === 'networkErr') {
+      return (
+        <div className="sm text-danger">
+          {t('fetchErrors.connectionError')}
         </div>
       );
     }

@@ -21,13 +21,20 @@ const Login = () => {
   const navigate = useNavigate();
 
   const inputRef = useRef();
-  const fetchErrors = useSelector(channelSelectors.getErrors);
+  const fetchErrors = useSelector(channelSelectors.getChannelErrors);
 
   const loginErrorEl = (err) => {
     if (err && err === 'incorrectLogin') {
       return (
         <div className="sm text-danger">
           {t('fetchErrors.incorrectLogin')}
+        </div>
+      );
+    }
+    if (err && err === 'networkErr') {
+      return (
+        <div className="sm text-danger">
+          {t('fetchErrors.connectionError')}
         </div>
       );
     }

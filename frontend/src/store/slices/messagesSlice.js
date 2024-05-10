@@ -48,6 +48,18 @@ const messagesSlice = createSlice({
         state.errors = null;
         messagesAdapter.addMany(state, action.payload);
       })
+      .addCase(fetchMessagesThunk.rejected, (state, action) => {
+        if (action.error.message
+          && action.error.message === 'Network Error') {
+          state.errors = 'networkErr';
+        }
+      })
+      .addCase(fetchMessage.rejected, (state, action) => {
+        if (action.error.message
+          && action.error.message === 'Network Error') {
+          state.errors = 'networkErr';
+        }
+      })
       .addCase(channelActions.removeChannel, (state, action) => {
         const removedChannelId = action.payload;
         const filtredMessages = Object.values(state.entities)
@@ -59,7 +71,7 @@ const messagesSlice = createSlice({
 
 export const { actions: messageActions } = messagesSlice;
 export const baseMessagesSelectors = messagesAdapter.getSelectors((state) => state.messages);
-
+export const getMessageErrors = (state) => state.messages.errors;
 export const filtredMessages = createSelector(
   (state) => state,
   (state) => {
