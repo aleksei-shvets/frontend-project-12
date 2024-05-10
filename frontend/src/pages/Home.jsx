@@ -25,18 +25,17 @@ const Home = () => {
 
   const header = authHook.getAuthHeader();
 
-  const notifyMessage = {
-    addingChannel: t('toastMessage.addChannel'),
-    removingChannel: t('toastMessage.removeChannel'),
-    renamingChannel: t('toastMessage.renameChannel'),
-  };
-
   useEffect(() => {
+    const notifyMessage = {
+      addingChannel: t('toastMessage.addChannel'),
+      removingChannel: t('toastMessage.removeChannel'),
+      renamingChannel: t('toastMessage.renameChannel'),
+    };
     if (isToast) {
       modalNotify(notifyMessage[modalType]);
       setIsToast(false);
     }
-  }, [isToast, notifyMessage, modalType]);
+  }, [isToast, modalType]);
 
   useEffect(() => {
     if (channelErrors === 'networkErr' || messageErrors === 'networkErr') {
