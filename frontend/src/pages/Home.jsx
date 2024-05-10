@@ -8,7 +8,7 @@ import MessagesContainer from '../containers/MessagesContainer.jsx';
 import { fetchChannelsThunk } from '../store/slices/channelsSlice.js';
 import { fetchMessagesThunk } from '../store/slices/messagesSlice.js';
 import ModalItem from '../components/Modal/index.js';
-import { modalNotify, errNetworkNotify } from '../components/notify.js';
+import notify from '../components/notify.js';
 import { modalSelectors, channelSelectors, messageSelectors } from '../store/slices/selectors.js';
 import useAuth from '../hooks/useAuth.js';
 
@@ -32,16 +32,17 @@ const Home = () => {
       renamingChannel: t('toastMessage.renameChannel'),
     };
     if (isToast) {
-      modalNotify(notifyMessage[modalType]);
+      notify(notifyMessage[modalType], 'success');
       setIsToast(false);
     }
   }, [isToast, modalType]);
 
   useEffect(() => {
+    const errMessage = t('fetchErrors.connectionError');
     if (channelErrors === 'networkErr' || messageErrors === 'networkErr') {
-      errNetworkNotify(t('fetchErrors.connectionError'));
+      notify(errMessage, 'error');
     }
-  }, [channelErrors]);
+  }, [messageErrors, channelErrors]);
 
   useEffect(() => {
     const fetchData = async () => {
